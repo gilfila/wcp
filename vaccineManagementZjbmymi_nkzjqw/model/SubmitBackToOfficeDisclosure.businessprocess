@@ -1,0 +1,17 @@
+{
+  "id": 1,
+  "name": "SubmitBackToOfficeDisclosure",
+  "label": "Submit Back To Office Disclosure",
+  "description": "Business Process Type for Submit Back To Office Disclosure",
+  "targetBusinessObject": "BackToOfficeDisclosure",
+  "useForOrchestrate": true,
+  "approvalStep": {
+    "actions": [
+      "APPROVE",
+      "DENY"
+    ]
+  },
+  "details": {
+    "pageRoute": "/viewDisclosureEvent/{eventId}"
+  }
+}

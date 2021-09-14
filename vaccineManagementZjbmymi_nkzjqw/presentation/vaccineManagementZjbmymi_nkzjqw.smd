@@ -1,0 +1,21 @@
+{
+  "id": "vaccineManagementZjbmymi_nkzjqw",
+  "languages": [
+    {
+      "code": "en-US",
+      "description": "English"
+    }
+  ],
+  "siteAuth": {
+    "authTypes": [
+      {
+        "scheme": "SSO",
+        "id": "sso"
+      }
+    ]
+  },
+  "siteId": "vaccineManagementZjbmymi_nkzjqw",
+  "cdnEnabled": true,
+  "siteProperties": [ ],
+  "applicationId": "vaccineManagementZjbmymi_nkzjqw"
+}

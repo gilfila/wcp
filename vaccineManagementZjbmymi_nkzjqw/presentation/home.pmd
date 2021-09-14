@@ -1,0 +1,477 @@
+{
+  "id": "home",
+  "script": "<%
+             var cleanDate = function(date) {
+                 var cleanDate;
+                 var newDate;
+
+                 cleanDate = string:substring(date, 3, string:length(date));
+                 newDate = string:replaceSubstring(string:replaceSubstring(cleanDate, '00:00:00 UTC', ''), '/ null', '');
+
+                 return newDate
+             }
+
+             var checkFutureDates = function() {
+                 if(date:after(self.value,today.value)) {
+                     self.setError('Please choose a date in the past');
+                 } else {
+                     self.clearError();
+                 }
+
+             }
+
+             var getFirstDateInOffice = function() {
+                 var fourteenDaysFromToday = date:add(self.value, 'DAY', 14);
+                 var firstDate = fourteenDaysFromToday;
+                 if(date:after(today.value, fourteenDaysFromToday) || (date:year(today.value) == date:year(fourteenDaysFromToday) &&
+                     date:month(today.value) == date:month(fourteenDaysFromToday) &&
+                     date:extractValue('DAY', today.value) == date:extractValue('DAY', fourteenDaysFromToday))) {
+                     firstDate = date:add(today.value, 'DAY', 1);
+                 }
+
+                 return firstDate;
+             }
+             %>",
+  "endPoints": [
+    {
+      "baseUrlType": "workday-common",
+      "name": "me",
+      "authType": "sso",
+      "url": "workers/me?view=workerProfile"
+    },
+    {
+      "baseUrlType": "workday-common",
+      "name": "userInfo",
+      "authType": "sso",
+      "url": "userInfo"
+    },
+    {
+      "name": "workerPhotoUrl",
+      "baseUrlType": "workday-common",
+      "url": "workers/me?view=workerPhotoWIDView",
+      "authType": "sso"
+    },
+    {
+      "baseUrlType": "workday-wql",
+      "name": "disclosureHistory",
+      "authType": "sso",
+      "url": "<% 'data?query=' + string:urlEncode('select isVerified, disclosureType, vaccineManufacturer, fullyVaccinatedDate, isBooster, boosterDate, createdMoment FROM ') + string:urlEncode(site.applicationId) + string:urlEncode('_backToOfficeDisclosures where submittedBy=') + me.id + string:urlEncode(' ORDER BY createdMoment DESC') %>"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "uploadVerificationFile",
+        "baseUrlType": "workday-app",
+        "url": "disclosureVerificationFile",
+        "authType": "sso",
+        "exclude": "<% empty verificationFile.children %>",
+        "httpMethod": "POST",
+        "multiPartFileLast": true
+      },
+      {
+        "name": "createDisclosure",
+        "baseUrlType": "workday-orchestration",
+        "url": "VaccineManagement/launch",
+        "httpMethod": "POST",
+        "exclude": "<% empty fullyVaccinatedDate.value  || empty manufacturer.value[0] || empty verificationFile.children %>",
+        "authType": "sso",
+        "values": [
+          {
+            "outboundPath": "disclosureType",
+            "value": "<% disclosure.value[0] %>"
+          },
+          {
+            "outboundPath": "submittedBy",
+            "value": "<% me.id %>"
+          },
+          {
+            "outboundPath": "fullyVaccinatedDate",
+            "value": "<% fullyVaccinatedDate.value %>"
+          },
+          {
+            "outboundPath": "optIn",
+            "value": "<% optIn.value[0] %>"
+          },
+          {
+            "outboundPath": "firstDateBackToOffice",
+            "value": "<% firstDateInOffice.value %>"
+          },
+          {
+            "outboundPath": "vaccineManufacturer",
+            "value": "<% manufacturer.value[0] %>"
+          },
+          {
+            "outboundPath": "isVerified",
+            "value": "<% false %>"
+          },
+          {
+            "outboundPath": "imageID",
+            "value": "<% uploadVerificationFile.id %>"
+          }
+        ]
+      }
+    ],
+    "responseErrorDetail": {
+      "errorSummary": "<% error %>",
+      "errors": "<% errors.map(item => { item.error }); %>"
+    }
+  },
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "Vaccine Management/Back to Office Management"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "section",
+          "columnWidthRatios": [
+            0.3,
+            0.7
+          ],
+          "horizontal": true,
+          "children": [
+            {
+              "type": "section",
+              "horizontal": true,
+              "children": [
+                {
+                  "type": "image",
+                  "id": "workerPhoto",
+                  "sizingHint": "THUMBNAIL",
+                  "defaultPhoto": false,
+                  "userPhoto": true,
+                  "endPoint": {
+                    "baseUrlType": "workday-common",
+                    "url": "<% 'workerRawPhotoData/' + workerPhotoUrl.workerPhotos.id %>",
+                    "authType": "sso"
+                  },
+                  "render": "<% empty workerPhotoUrl.workerPhotos.id ? false : true %>"
+                },
+                {
+                  "type": "section",
+                  "title": "<% me.descriptor %>",
+                  "horizontal": true,
+                  "children": [
+                    {
+                      "label": "Business Title",
+                      "type": "readOnlyText",
+                      "value": "<% me.businessTitle %>"
+                    },
+                    {
+                      "label": "Organization",
+                      "type": "readOnlyText",
+                      "value": "<% me.primarySupervisoryOrganization.descriptor %>"
+                    },
+                    {
+                      "label": "Work Location",
+                      "type": "readOnlyText",
+                      "value": "<% me.location.descriptor %>"
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
+                      "enabled": "false"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "title": "BACK TO OFFICE POLICY & SITE CARDS",
+                  "horizontal": true,
+                  "children": [
+                    {
+                      "type": "richText",
+                      "value": "Please review the following documents:
+
+<ul>
+<li><a href='https://www.workday.com'>Healthy Workplace Policy</a> </li>
+<li><a href='https://www.workday.com'>Site Information Cards</a> </li>
+</ul>",
+                      "enabled": "false"
+                    },
+                    {
+                      "id": "checkBoxAcceptConditions",
+                      "label": "I have read and acknowledged the information provided.",
+                      "type": "checkBox",
+                      "required": true
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
+                      "enabled": "false"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "title": "BACK TO OFFICE STATUS",
+                  "horizontal": true,
+                  "children": [
+                    {
+                      "type": "dropdown",
+                      "id": "optIn",
+                      "label": "Back To Office Options",
+                      "instanceList": [
+                        {
+                          "id": "Office",
+                          "descriptor": "I prefer to return to the office"
+                        },
+                        {
+                          "id": "Hybrid",
+                          "descriptor": "I prefer a few days a week in the office"
+                        },
+                        {
+                          "id": "Home",
+                          "descriptor": "I prefer to continue working from home"
+                        }
+                      ],
+                      "required": "true"
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
+                      "enabled": "false"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "title": "DISCLOSURE TYPE",
+                  "horizontal": true,
+                  "children": [
+                    {
+                      "type": "dropdown",
+                      "id": "disclosure",
+                      "label": "Disclosure Type",
+                      "instanceList": [
+                        {
+                          "id": "Dose1",
+                          "descriptor": "Vaccine Dose 1"
+                        },
+                        {
+                          "id": "Dose2",
+                          "descriptor": "Vaccine Dose 2"
+                        },
+                        {
+                          "id": "Test",
+                          "descriptor": "Test"
+                        },
+                        {
+                          "id": "Booster",
+                          "descriptor": "Booster"
+                        },
+                        {
+                          "id": "NotVaccinated",
+                          "descriptor": "Not Vaccinated"
+                        }
+                      ],
+                      "required": "true"
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
+                      "enabled": "false"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "title": "PROOF OF VACCINATION",
+                  "children": [
+                    {
+                      "type": "section",
+                      "children": [
+                        {
+                          "type": "text",
+                          "enabled": false,
+                          "value": "This section allows you to share proof of COVID-19 vaccination."
+                        },
+                        {
+                          "label": "I verify I am fully vaccinated for COVID-19. (At least two weeks after your second shot for Pfizer or Moderna, or at least two weeks after a single shot of Johnson & Johnson).",
+                          "id": "verification",
+                          "type": "checkBox",
+                          "required": false
+                        },
+                        {
+                          "type": "dropdown",
+                          "id": "manufacturer",
+                          "label": "Vaccine Manufacturer",
+                          "instanceList": [
+                            {
+                              "id": "Pfizer",
+                              "descriptor": "Pfizer"
+                            },
+                            {
+                              "id": "Moderna",
+                              "descriptor": "Moderna"
+                            },
+                            {
+                              "id": "Johnson & Johnson",
+                              "descriptor": "Johnson & Johnson"
+                            },
+                            {
+                              "id": "AstraZeneca",
+                              "descriptor": "AstraZeneca"
+                            },
+                            {
+                              "id": "NotAvailable",
+                              "descriptor": "N/A"
+                            }
+                          ],
+                          "required": false
+                        },
+                        {
+                          "type": "date",
+                          "id": "fullyVaccinatedDate",
+                          "label": "Date of final vaccination. This is the date of your second shot for Pfizer or Moderna, or the date of your single Johnson & Johnson shot.",
+                          "required": true,
+                          "onChange": "<%
+                                           checkFutureDates();
+                                           firstDateInOffice.value = getFirstDateInOffice();
+                                           firstDate.value = 'First date you are eligible to return to the office: '+  '<b>' + cleanDate(string:toString(getFirstDateInOffice())) +'</b>' ;
+                                       %>"
+                        },
+                        {
+                          "type": "richText",
+                          "id": "firstDate",
+                          "value": "First date you are eligible to return to the office: ",
+                          "enabled": "false"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "date",
+                      "label": "Today",
+                      "id": "today",
+                      "value": "<% date:formatDateWithTimeZones(string:toString(date:getTodaysDate(date:getDateTimeZone(clientTimeZone))), 'Europe/London', 'yyyy-MM-dd HH:mm:ss.SSS', userInfo.data[0].timezone, 'yyyy-MM-dd') %>",
+                      "visible": false
+                    },
+                    {
+                      "type": "date",
+                      "label": "First Date in Office",
+                      "id": "firstDateInOffice",
+                      "visible": false
+                    },
+                    {
+                      "type": "fieldSet",
+                      "horizontal": false,
+                      "sorted": false,
+                      "children": [
+                        {
+                          "type": "hidden",
+                          "value": "<% me.id %>",
+                          "valueOutBinding": "uploadVerificationFile:data:uploadedBy.id"
+                        },
+                        {
+                          "type": "hidden",
+                          "value": "<% date:formatDateWithTimeZones(string:toString(date:getTodaysDate(date:getDateTimeZone(clientTimeZone))), 'Europe/London', 'yyyy-MM-dd HH:mm:ss.SSS', userInfo.data[0].timezone, 'yyyy-MM-dd') %>",
+                          "valueOutBinding": "uploadVerificationFile:data:uploadedDate"
+                        },
+                        {
+                          "type": "hidden",
+                          "id": "image",
+                          "value": "cid:image",
+                          "valueOutBinding": "uploadVerificationFile:data:file"
+                        },
+                        {
+                          "type": "richText",
+                          "id": "attachText",
+                          "value": "Please attach a copy of your COVID-19 vaccination card. Ensure your name, vaccine manufacturer and date of vaccination(s) are clearly visible in the image. Allowed file types include <b style='color:red;'>gif, jpg, jpeg and png</b>.",
+                          "enabled": false
+                        },
+                        {
+                          "type": "fileUploader",
+                          "required": true,
+                          "id": "verificationFile",
+                          "label": "Attachment",
+                          "singular": "<% true %>",
+                          "compact": "<% false %>",
+                          "fileTypes": "gif,jpg,jpeg,png",
+                          "valueOutBinding": "uploadVerificationFile:image"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "section",
+              "horizontal": true,
+              "render": "<% !empty disclosureHistory.data %>",
+              "children": [
+                {
+                  "type": "grid",
+                  "gridType": "LIST",
+                  "multiViewStylingEnabled": true,
+                  "id": "Histories",
+                  "rows": "<% disclosureHistory.data %>",
+                  "rowVariableName": "history",
+                  "enabled": false,
+                  "doNotAdd": true,
+                  "doNotRemove": true,
+                  "label": "My Vaccine Management/Back To Office History",
+                  "columns": [
+                    {
+                      "type": "column",
+                      "id": "columnVaccineManufacturer",
+                      "columnId": "columnVaccineManufacturer",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% history.vaccineManufacturer %>"
+                      },
+                      "label": "Vaccine Manufacturer"
+                    },
+                    {
+                      "type": "column",
+                      "id": "columnDisclosureType",
+                      "columnId": "columnDisclosureType",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% history.disclosureType %>"
+                      },
+                      "label": "DisclosureType"
+                    },
+                    {
+                      "type": "column",
+                      "id": "columnFullyVaccinatedDate",
+                      "columnId": "columnFullyVaccinatedDate",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% history.fullyVaccinatedDate %>"
+                      },
+                      "label": "Fully Vaccinated Date"
+                    },
+                    {
+                      "type": "column",
+                      "id": "columnCreatedMoment",
+                      "columnId": "columnCreatedMoment",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% date:formatDateWithTimeZones(string:replaceSubstring(history.createdMoment, 'T', ' ') , 'Europe/London', 'yyyy-MM-dd HH:mm:ss.SSS', userInfo.data[0].timezone, 'yyyy-MM-dd') %>"
+                      },
+                      "label": "Submission Date"
+                    },
+                    {
+                      "type": "column",
+                      "id": "status",
+                      "columnId": "status",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% history.isVerified ? 'Verified': 'In Progress' %>"
+                      },
+                      "label": "Verification Status"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "id": 1,
+  "name": "BackToOfficeDisclosure",
+  "label": "Back To Office Disclosure",
+  "defaultSecurityDomains": [
+    "ManageBackToOfficeDisclosure"
+  ],
+  "defaultCollection": {
+    "name": "backToOfficeDisclosures",
+    "label": "Back To Office Disclosures"
+  },
+  "fields": [
+    {
+      "id": 1,
+      "name": "disclosureType",
+      "label": "Disclosure Type",
+      "type": "TEXT"
+    },
+    {
+      "id": 2,
+      "name": "vaccineManufacturer",
+      "label": "Vaccine Manufacturer",
+      "type": "TEXT"
+    },
+    {
+      "id": 3,
+      "name": "fullyVaccinatedDate",
+      "label": "Fully Vaccinated Date",
+      "type": "DATE",
+      "precision": "DAY"
+    },
+    {
+      "id": 4,
+      "name": "firstDateBackToOffice",
+      "label": "First Date Back to Office",
+      "type": "DATE",
+      "precision": "DAY"
+    },
+    {
+      "id": 5,
+      "name": "submittedBy",
+      "type": "SINGLE_INSTANCE",
+      "label": "Submitted By",
+      "target": "WORKER",
+      "secureByTarget": true
+    },
+    {
+      "id": 6,
+      "name": "isVerified",
+      "type": "BOOLEAN",
+      "label": "Is Verified"
+    },
+    {
+      "id": 7,
+      "name": "image",
+      "type": "SINGLE_INSTANCE",
+      "label": "Image",
+      "target": "DisclosureVerificationFile"
+    },
+    {
+      "id": 8,
+      "name": "isBooster",
+      "type": "BOOLEAN",
+      "label": "Is Booster"
+    },
+    {
+      "id": 9,
+      "name": "boosterDate",
+      "label": "Booster Date",
+      "type": "DATE",
+      "precision": "DAY"
+    },
+    {
+      "id": 10,
+      "name": "optIn",
+      "label": "Return to Office Preference",
+      "type": "TEXT"
+    }
+
+  ]
+}

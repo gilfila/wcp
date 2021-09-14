@@ -1,0 +1,85 @@
+{
+  "id": "viewDisclosureEvent",
+  "endPoints": [
+    {
+      "name": "event",
+      "baseUrlType": "workday-bp",
+      "url": "<% 'events/' + queryParams.eventId %>",
+      "authType": "sso"
+    },
+    {
+      "name": "disclosure",
+      "baseUrlType": "workday-app",
+      "url": "<% 'backToOfficeDisclosures/' + event.for.id %>",
+      "authType": "sso"
+    }
+  ],
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "title": {
+      "type": "title",
+      "label": "Review Employee Back To Office Disclosure submission"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "instanceList",
+          "label": "Worker",
+          "instanceList": [
+            {
+              "id": "<% disclosure.submittedBy.id %>",
+              "wid": "<% disclosure.submittedBy.id %>",
+              "descriptor": "<% disclosure.submittedBy.descriptor %>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "disclosureType",
+          "label": "Disclosure Type",
+          "value": "<% disclosure.disclosureType %>"
+        },
+        {
+          "type": "text",
+          "id": "vaccineManufacturer",
+          "label": "Vaccine Manufacturer",
+          "value": "<% disclosure.vaccineManufacturer %>"
+        },
+        {
+          "type": "text",
+          "id": "fullyVaccinatedDate",
+          "label": "Fully Vaccinated Date",
+          "value": "<% disclosure.fullyVaccinatedDate %>"
+        },
+        {
+          "type": "text",
+          "id": "optIn",
+          "label": "In-office preference",
+          "value": "<% disclosure.optIn %>"
+        },
+        {
+          "type": "image",
+          "render": "<% empty disclosure.image.id ? false : true %>",
+          "sizingHint": "INLINE",
+          "endPoint": {
+            "url": "<% 'disclosureVerificationFile/' + disclosure.image.id %>",
+            "baseUrlType": "workday-app",
+            "authType": "sso"
+          }
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": "false",
+          "value": "Powered By Workday Extend"
+        }
+      ]
+    }
+  }
+}
