@@ -82,6 +82,10 @@
             "value": "<% disclosure.value[0] %>"
           },
           {
+            "outboundPath": "exemptionType",
+            "value": "<% exemption.value[0] %>"
+          },
+          {
             "outboundPath": "submittedBy",
             "value": "<% me.id %>"
           },
@@ -266,6 +270,38 @@
                         {
                           "id": "NotVaccinated",
                           "descriptor": "Not Vaccinated"
+                        }
+                      ],
+                      "required": "true"
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
+                      "enabled": "false"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "title": "EXEMPTION TYPE",
+                  "horizontal": true,
+                  "children": [
+                    {
+                      "type": "dropdown",
+                      "id": "exemption",
+                      "label": "Exemption Type",
+                      "instanceList": [
+                        {
+                          "id": "Medical",
+                          "descriptor": "Medical"
+                        },
+                        {
+                          "id": "Religious",
+                          "descriptor": "Religious"
+                        },
+                        {
+                          "id": "Personal",
+                          "descriptor": "Personal"
                         }
                       ],
                       "required": "true"

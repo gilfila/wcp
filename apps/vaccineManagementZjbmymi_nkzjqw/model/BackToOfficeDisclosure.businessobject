@@ -75,6 +75,12 @@
       "name": "optIn",
       "label": "Return to Office Preference",
       "type": "TEXT"
+    },
+    {
+      "id": 11,
+      "name": "exemptionType",
+      "label": "Exemption Type",
+      "type": "TEXT"
     }
 
   ]
