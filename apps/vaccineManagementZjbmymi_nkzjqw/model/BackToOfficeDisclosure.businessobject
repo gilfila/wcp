@@ -24,8 +24,8 @@
     },
     {
       "id": 3,
-      "name": "fullyVaccinatedDate",
-      "label": "Fully Vaccinated Date",
+      "name": "disclosureDate",
+      "label": "Disclosure Date",
       "type": "DATE",
       "precision": "DAY"
     },

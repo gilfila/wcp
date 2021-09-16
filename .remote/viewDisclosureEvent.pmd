@@ -49,9 +49,9 @@
         },
         {
           "type": "text",
-          "id": "disclosureDate",
+          "id": "fullyVaccinatedDate",
           "label": "Fully Vaccinated Date",
-          "value": "<% disclosure.disclosureDate %>"
+          "value": "<% disclosure.fullyVaccinatedDate %>"
         },
         {
           "type": "text",

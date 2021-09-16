@@ -103,7 +103,7 @@
           },
           {
             "outboundPath": "vaccineManufacturer",
-            "value": "<% empty manufacturer.value[0] ? 'N/A' : manufacturer.value[0] %>"
+            "value": "<% manufacturer.value[0] %>"
           },
           {
             "outboundPath": "isVerified",
@@ -111,7 +111,7 @@
           },
           {
             "outboundPath": "imageID",
-            "value": "<% empty uploadVerificationFile.id ? null : uploadVerificationFile.id  %>"
+            "value": "<% uploadVerificationFile.id %>"
           }
         ]
       }
@@ -250,18 +250,6 @@
                       "type": "dropdown",
                       "id": "disclosure",
                       "label": "Disclosure Type",
-                      "onChange": "<%
-                                   if ( disclosure.value[0] == 'Dose1' || disclosure.value[0] == 'Dose2') {
-                                            manufacturer.setVisible(true);
-                                            firstDate.setVisible(true);
-                                            firstDateInOffice.setVisible(true);
-                                   }
-                                       else {
-                                       manufacturer.setVisible(false);
-                                       firstDate.setVisible(false);
-                                       firstDateInOffice.setVisible(false);
-                                   }
-                                   %>",
                       "instanceList": [
                         {
                           "id": "Dose1",

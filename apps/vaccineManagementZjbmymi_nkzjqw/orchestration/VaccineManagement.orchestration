@@ -315,7 +315,7 @@
                     {
                         "param":{
                             "description":"",
-                            "name":"fullyVaccinatedDate",
+                            "name":"disclosureDate",
                             "type":"String"
                         },
                         "expr":{
@@ -323,7 +323,7 @@
                                 \"InputFromUserJSON\",
                                 \"json\"
                             ).stringAtJsonPath(
-                                \"$.fullyVaccinatedDate\"
+                                \"$.disclosureDate\"
                             )",
                             "_meta":{
                                 "type":[
@@ -357,6 +357,29 @@
                         },
                         "type":"String",
                         "id":"3TnlPTFv"
+                    },
+                    {
+                        "param":{
+                            "description":"",
+                            "name":"exemptionType",
+                            "type":"String"
+                        },
+                        "expr":{
+                            "expr":"data(
+                                \"InputFromUserJSON\",
+                                \"json\"
+                            ).stringAtJsonPath(
+                                \"$.exemptionType\"
+                            )",
+                            "_meta":{
+                                "type":[
+                                    "Expr",
+                                    "String"
+                                ]
+                            }
+                        },
+                        "type":"String",
+                        "id":"v940Ez4y"
                     }
                 ],
                 "_meta":{
@@ -507,7 +530,7 @@
                         },
                         {
                             "path":{
-                                "value":"$.fullyVaccinatedDate",
+                                "value":"$.disclosureDate",
                                 "_meta":{
                                     "type":"JsonPath"
                                 }
@@ -515,7 +538,7 @@
                             "expr":{
                                 "expr":"data(
                                     \"SetInitialValues\",
-                                    \"fullyVaccinatedDate\"
+                                    \"disclosureDate\"
                                 )",
                                 "_meta":{
                                     "type":[
@@ -539,6 +562,29 @@
                                 "expr":"data(
                                     \"SetInitialValues\",
                                     \"vaccineManufacturer\"
+                                )",
+                                "_meta":{
+                                    "type":[
+                                        "Expr",
+                                        "String"
+                                    ]
+                                }
+                            },
+                            "_meta":{
+                                "type":"Mapping"
+                            }
+                        },
+                        {
+                            "path":{
+                                "value":"$.exemptionType",
+                                "_meta":{
+                                    "type":"JsonPath"
+                                }
+                            },
+                            "expr":{
+                                "expr":"data(
+                                    \"SetInitialValues\",
+                                    \"exemptionType\"
                                 )",
                                 "_meta":{
                                     "type":[
@@ -1097,8 +1143,9 @@
                         \"image\":{
                             \"id\":\"@PLACEHOLDER@\"
                         },
-                        \"fullyVaccinatedDate\":\"@PLACEHOLDER@\",
-                        \"vaccineManufacturer\":\"@PLACEHOLDER@\"
+                        \"disclosureDate\":\"@PLACEHOLDER@\",
+                        \"vaccineManufacturer\":\"@PLACEHOLDER@\",
+                        \"exemptionType\":\"@PLACEHOLDER@\"
                     }",
                     "_meta":{
                         "type":"String"
