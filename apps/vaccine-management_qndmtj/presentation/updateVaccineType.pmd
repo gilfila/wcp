@@ -1,0 +1,72 @@
+{
+  "id": "updateVaccineType",
+  "endPoints": [
+    {
+      "name": "vaccineTypes",
+      "baseUrlType": "app",
+      "url": "<% 'vaccineTypes/' + queryParams.vaccineTypeId %>",
+      "authType": "sso"
+    },
+    {
+      "name": "selectedWorker",
+      "baseUrlType": "workdayCommon",
+      "url": "workers/me",
+      "authType": "sso"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "updateVaccineType",
+        "baseUrlType": "app",
+        "url": "<% 'vaccineTypes/' + queryParams.vaccineTypeId %>",
+        "authType": "sso",
+        "httpMethod": "PUT",
+        "values": [
+          {
+            "outboundPath": "createdBy.id",
+            "value": "<% selectedWorker.id %>"
+          }
+        ]
+      }
+    ]
+  },
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "pageType": "edit",
+    "title": {
+      "type": "title",
+      "label": "Update Vaccination Type",
+      "enabled": false
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "checkBox",
+          "id": "enabled",
+          "label": "Enabled",
+          "value": "<% vaccineTypes.enabled %>",
+          "valueOutBinding": "updateVaccineType.enabled"
+        },
+        {
+          "type": "text",
+          "id": "vaccineTypeID",
+          "label": "Vaccine Type ID",
+          "required": "true",
+          "value": "<% vaccineTypes.vaccineTypeID %>",
+          "valueOutBinding": "updateVaccineType.vaccineTypeID"
+        },
+        {
+          "type": "text",
+          "id": "vaccineTypeName",
+          "label": "Vaccine Type Name",
+          "required": "true",
+          "value": "<% vaccineTypes.vaccineTypeName %>",
+          "valueOutBinding": "updateVaccineType.vaccineTypeName"
+        }
+      ]
+    }
+  }
+}

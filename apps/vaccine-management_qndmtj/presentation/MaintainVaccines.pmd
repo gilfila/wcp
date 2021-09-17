@@ -1,0 +1,50 @@
+{
+  "id": "MaintainVaccines",
+  "endPoints": [
+  ],
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "title": {
+      "type": "title",
+      "label": "Maintain Vaccines"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "button",
+          "action": "PRIMARY",
+          "label": "Manage Vaccine Types",
+          "taskReference": {
+            "taskId": "ManageVaccineType"
+          }
+        },
+        {
+          "type": "button",
+          "action": "PRIMARY",
+          "label": "Manage Manufacturers",
+          "taskReference": {
+            "taskId": "manageManufacturers"
+          }
+        },
+        {
+          "type": "button",
+          "action": "PRIMARY",
+          "label": "Manage Shots",
+          "taskReference": {
+            "taskId": "manageShot"
+          }
+        },
+        {
+          "type": "button",
+          "action": "PRIMARY",
+          "label": "Manage Site Types",
+          "taskReference": {
+            "taskId": "manageSiteType"
+          }
+        }
+      ]
+    }
+  }
+}

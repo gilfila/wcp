@@ -1,0 +1,40 @@
+{
+  "id": 3,
+  "name": "VaccineType",
+  "label": "Vaccine Type",
+  "defaultSecurityDomains": [
+    "ManageVaccines"
+  ],
+  "defaultCollection": {
+    "name": "vaccineTypes",
+    "label": "Vaccine Types"
+  },
+  "fields": [
+    {
+      "id": 1,
+      "name": "enabled",
+      "label": "Enabled",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 2,
+      "name": "vaccineTypeID",
+      "label": "Vaccine Type ID",
+      "type": "TEXT"
+    },
+    {
+      "id": 3,
+      "name": "vaccineTypeName",
+      "label": "Vaccine Type Name",
+      "type": "TEXT"
+    },
+    {
+      "id": 4,
+      "name": "createdBy",
+      "type": "SINGLE_INSTANCE",
+      "label": "Created By",
+      "target": "WORKER",
+      "secureByTarget": true
+    }
+  ]
+}

@@ -67,6 +67,7 @@
         "authType": "sso",
         "exclude": "<% empty verificationFile.children %>",
         "httpMethod": "POST",
+        "allowEmptyValue":true,
         "multiPartFileLast": true
       },
       {
@@ -132,8 +133,8 @@
         {
           "type": "section",
           "columnWidthRatios": [
-            0.3,
-            0.7
+            0.4,
+            0.6
           ],
           "horizontal": true,
           "children": [
@@ -183,7 +184,7 @@
                 },
                 {
                   "type": "section",
-                  "title": "BACK TO OFFICE POLICY & SITE CARDS",
+                  "title": "Back To Office Policy & Site Cards",
                   "horizontal": true,
                   "children": [
                     {
@@ -211,7 +212,7 @@
                 },
                 {
                   "type": "section",
-                  "title": "BACK TO OFFICE STATUS",
+                  "title": "Back To Office Status",
                   "horizontal": true,
                   "children": [
                     {
@@ -243,7 +244,7 @@
                 },
                 {
                   "type": "section",
-                  "title": "DISCLOSURE TYPE",
+                  "title": "Vaccine / Testing Disclosure",
                   "horizontal": true,
                   "children": [
                     {
@@ -251,7 +252,7 @@
                       "id": "disclosure",
                       "label": "Disclosure Type",
                       "onChange": "<%
-                                   if ( disclosure.value[0] == 'Dose1' || disclosure.value[0] == 'Dose2') {
+                                   if ( disclosure.value[0] == 'Dose 1' || disclosure.value[0] == 'Dose 2') {
                                             manufacturer.setVisible(true);
                                             firstDate.setVisible(true);
                                             firstDateInOffice.setVisible(true);
@@ -264,11 +265,11 @@
                                    %>",
                       "instanceList": [
                         {
-                          "id": "Dose1",
+                          "id": "Dose 1",
                           "descriptor": "Vaccine Dose 1"
                         },
                         {
-                          "id": "Dose2",
+                          "id": "Dose 2",
                           "descriptor": "Vaccine Dose 2"
                         },
                         {
@@ -276,11 +277,7 @@
                           "descriptor": "Test"
                         },
                         {
-                          "id": "Booster",
-                          "descriptor": "Booster"
-                        },
-                        {
-                          "id": "NotVaccinated",
+                          "id": "Not Vaccinated",
                           "descriptor": "Not Vaccinated"
                         }
                       ],
@@ -295,8 +292,9 @@
                 },
                 {
                   "type": "section",
-                  "title": "EXEMPTION TYPE",
+                  "title": "Exemption Type",
                   "horizontal": true,
+                  "render": false,
                   "children": [
                     {
                       "type": "dropdown",
@@ -327,7 +325,7 @@
                 },
                 {
                   "type": "section",
-                  "title": "PROOF OF VACCINATION",
+                  "title": "Record Proof of Vaccination or Test Results",
                   "children": [
                     {
                       "type": "section",
@@ -374,7 +372,7 @@
                         {
                           "type": "date",
                           "id": "disclosureDate",
-                          "label": "Date of Disclosure. ",
+                          "label": "Date of final vaccination or testing date. This is the date of your second shot for Pfizer, AstraZeneca or Moderna, or the date of your single Johnson & Johnson shot. If you are submitting a Test, this is the date your test was taken.",
                           "required": true,
                           "onChange": "<%
                                            checkFutureDates();
@@ -432,7 +430,7 @@
                         },
                         {
                           "type": "fileUploader",
-                          "required": true,
+                          "required": false,
                           "id": "verificationFile",
                           "label": "Attachment",
                           "singular": "<% true %>",
@@ -463,16 +461,6 @@
                   "doNotRemove": true,
                   "label": "My Vaccine Management/Back To Office History",
                   "columns": [
-                    {
-                      "type": "column",
-                      "id": "columnVaccineManufacturer",
-                      "columnId": "columnVaccineManufacturer",
-                      "cellTemplate": {
-                        "type": "text",
-                        "value": "<% history.vaccineManufacturer %>"
-                      },
-                      "label": "Vaccine Manufacturer"
-                    },
                     {
                       "type": "column",
                       "id": "columnDisclosureType",

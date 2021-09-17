@@ -1,0 +1,105 @@
+{
+  "id": "viewVaccineEvent",
+  "endPoints": [
+    {
+      "name": "event",
+      "baseUrlType": "workday-bp",
+      "url": "<% 'events/' + queryParams.eventId %>",
+      "authType": "sso"
+    },
+    {
+      "name": "vaccine",
+      "baseUrlType": "app",
+      "url": "<% 'vaccines/' + event.for.id %>",
+      "authType": "sso"
+    },
+    {
+      "name": "vaccineTypes",
+      "baseUrlType": "app",
+      "url": "<% 'vaccineTypes/' + vaccine.vaccineType.id %>",
+      "authType": "sso"
+    },
+    {
+      "name": "vaccineManufacturers",
+      "baseUrlType": "app",
+      "url": "<% 'vaccineManufacturers/' + vaccine.manufacturer.id %>",
+      "authType": "sso"
+    },
+    {
+      "name": "vaccineShots",
+      "baseUrlType": "app",
+      "url": "<% 'vaccineShots/' + vaccine.shotNumber.id %>",
+      "authType": "sso"
+    },
+    {
+      "name": "vaccineSiteTypes",
+      "baseUrlType": "app",
+      "url": "<% 'vaccineSiteTypes/' + vaccine.siteType.id %>",
+      "authType": "sso"
+    }
+  ],
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "title": {
+      "type": "title",
+      "label": "Vaccine Details"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "text",
+          "id": "vaccineType",
+          "label": "Vaccine Type",
+          "value": " <% vaccineTypes.vaccineTypeName %>"
+        },
+        {
+          "type": "date",
+          "label": "Date Administered",
+          "value": "<% vaccine.dateAdministered %>"
+        },
+        {
+          "type": "text",
+          "id": "manufacturer",
+          "label": "Vaccine Manufacturer",
+          "value": " <% vaccineManufacturers.manufacturerName %>"
+        },
+        {
+          "type": "text",
+          "id": "shotNumber",
+          "label": "Shot Number",
+          "value": " <% vaccineShots.vaccineShotName %>"
+        },
+        {
+          "type": "text",
+          "id": "lotNumber",
+          "label": "Shot Lot Number",
+          "value": "<% vaccine.lotNumber %>"
+        },
+        {
+          "type": "text",
+          "id": "siteType",
+          "label": "Vaccine Site Type",
+          "value": " <% vaccineSiteTypes.vaccineSiteName %>"
+        },
+        {
+          "type": "text",
+          "id": "siteName",
+          "label": "Site Name (CVS, Kroger, xyz Stadium, etc.)",
+          "value": "<% vaccine.siteName %>"
+        },
+        {
+          "type": "image",
+          "sizingHint": "INLINE",
+          "endPoint": {
+            "url": "vaccineImages/<% vaccine.image.id %>",
+            "baseUrlType": "app",
+            "authType": "sso"
+          },
+          "render": "<% (!(empty(vaccine.image))) %>"
+        }
+      ]
+    }
+  }
+}

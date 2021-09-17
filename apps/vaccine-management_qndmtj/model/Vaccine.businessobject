@@ -1,0 +1,82 @@
+{
+  "id": 6,
+  "name": "Vaccine",
+  "label": "Vaccine",
+  "defaultSecurityDomains": [
+    "ManageVaccines"
+  ],
+  "defaultCollection": {
+    "name": "vaccines",
+    "label": "Vaccines"
+  },
+  "fields": [
+    {
+      "id": 1,
+      "name": "dateAdministered",
+      "label": "Date Administered",
+      "type": "DATE",
+      "precision": "DAY"
+    },
+    {
+      "id": 2,
+      "name": "shotNumber",
+      "label": "Shot Number",
+      "type": "SINGLE_INSTANCE",
+      "target": "VaccineShot"
+    },
+    {
+      "id": 3,
+      "name": "manufacturer",
+      "label": "Manufacturer",
+      "type": "SINGLE_INSTANCE",
+      "target": "VaccineManufacturer"
+    },
+    {
+      "id": 4,
+      "name": "lotNumber",
+      "label": "Lot Number",
+      "type": "TEXT"
+    },
+    {
+      "id": 5,
+      "name": "siteType",
+      "label": "Vaccination Site Type",
+      "type": "SINGLE_INSTANCE",
+      "target": "VaccineSiteType"
+    },
+    {
+      "id": 6,
+      "name": "siteName",
+      "label": "Site Name",
+      "type": "TEXT"
+    },
+    {
+      "id": 7,
+      "name": "vaccineType",
+      "label": "Vaccine Type",
+      "type": "SINGLE_INSTANCE",
+      "target": "VaccineType"
+    },
+    {
+      "id": 8,
+      "name": "createdBy",
+      "type": "SINGLE_INSTANCE",
+      "label": "Created By",
+      "target": "WORKER",
+      "secureByTarget": true
+    },
+    {
+      "id":9,
+      "name":"image",
+      "type":"SINGLE_INSTANCE",
+      "label":"Image",
+      "target":"VaccineImage"
+    },
+    {
+      "id": 10,
+      "name": "enabled",
+      "label": "Enabled",
+      "type": "BOOLEAN"
+    }
+  ]
+}

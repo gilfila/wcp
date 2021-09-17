@@ -1,0 +1,80 @@
+{
+  "id": "createManufacturer",
+  "endPoints": [
+    {
+      "name": "selectedWorker",
+      "baseUrlType": "workdayCommon",
+      "url": "workers/me",
+      "authType": "sso"
+    },
+    {
+      "name": "vaccineTypes",
+      "baseUrlType": "app",
+      "url": "vaccineTypes",
+      "authType": "sso"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "manufacturer",
+        "baseUrlType": "app",
+        "url": "vaccineManufacturers",
+        "httpMethod": "POST",
+        "authType": "sso",
+        "values": [
+          {
+            "outboundPath": "createdBy.id",
+            "value": "<% selectedWorker.id %>"
+          }
+        ]
+      }
+    ]
+  },
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "pageType": "edit",
+    "title": {
+      "type": "title",
+      "label": "Create Manufacturer",
+      "enabled": false
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "dropdown",
+          "id": "vaccinetype",
+          "label": "Vaccine Type",
+          "required": "true",
+          "displayKey": "vaccineTypeName",
+          "values": "<% vaccineTypes.data %>",
+          "valueOutBinding": "manufacturer.vaccineType.id"
+        },
+        {
+          "type": "checkBox",
+          "id": "enabled",
+          "label": "Enabled",
+          "required": "true",
+          "value": "<% true %>",
+          "valueOutBinding": "manufacturer.enabled"
+        },
+        {
+          "type": "text",
+          "id": "manufacturerID",
+          "label": "Manufacturer ID",
+          "required": "true",
+          "valueOutBinding": "manufacturer.manufacturerID"
+        },
+        {
+          "type": "text",
+          "id": "manufacturerName",
+          "label": "Manufacturer Name",
+          "required": "true",
+          "valueOutBinding": "manufacturer.manufacturerName"
+        }
+      ]
+    }
+  }
+}

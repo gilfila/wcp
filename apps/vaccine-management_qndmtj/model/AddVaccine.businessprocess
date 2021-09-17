@@ -1,0 +1,19 @@
+{
+  "id": 1,
+  "name": "AddVaccine",
+  "label": "Add Vaccine",
+  "description": "Business Process Type for Add Vaccine",
+  "targetBusinessObject": "Vaccine",
+  "approvalStep": {
+    "actions": [
+      "APPROVE",
+      "DENY",
+      "SEND_BACK"
+    ],
+    "pageRoute": "/vaccineEvent/{eventId}"
+  },
+  "revisePageRoute": "/reviseVaccine/{eventStepId}",
+  "details": {
+    "pageRoute": "/vaccineEvent/{eventId}"
+  }
+}

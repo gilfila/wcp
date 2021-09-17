@@ -1,0 +1,222 @@
+{
+  "id": "addVaccine",
+  "endPoints": [
+    {
+      "name": "selectedWorker",
+      "baseUrlType": "workdayCommon",
+      "url": "workers/me",
+      "authType": "sso"
+    },
+    {
+      "name": "vaccineTypes",
+      "baseUrlType": "app",
+      "url": "vaccineTypes",
+      "authType": "sso"
+    },
+    {
+      "name": "vaccineManufacturers",
+      "baseUrlType": "app",
+      "url": "vaccineManufacturers",
+      "authType": "sso"
+    },
+    {
+      "name": "vaccineShots",
+      "baseUrlType": "app",
+      "url": "vaccineShots",
+      "authType": "sso"
+    },
+    {
+      "name": "vaccineSiteTypes",
+      "baseUrlType": "app",
+      "url": "vaccineSiteTypes",
+      "authType": "sso"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "vaccineImage",
+        "baseUrlType": "app",
+        "url": "vaccineImages",
+        "httpMethod": "POST",
+        "authType": "sso",
+        "exclude": "<% empty(imageFileUploader.children) %>",
+        "multiPartFileLast": true
+      },
+      {
+        "name": "vaccine",
+        "baseUrlType": "app",
+        "url": "vaccines",
+        "httpMethod": "POST",
+        "authType": "sso",
+        "values": [
+          {
+            "outboundPath": "createdBy.id",
+            "value": "<% selectedWorker.id %>"
+          },
+          {
+            "outboundPath": "image.id",
+            "value": "<% (!empty(vaccineImage.id)) ? vaccineImage.id : null %>"
+          }
+        ]
+      },
+      {
+        "name": "createVaccineEvent",
+        "baseUrlType": "app",
+        "url": "addVaccineEvents",
+        "httpMethod": "POST",
+        "authType": "sso",
+        "values": [
+          {
+            "outboundPath": "businessProcessTarget.id",
+            "value": "<% vaccine.id %>"
+          }
+        ]
+      }
+    ]
+  },
+  "script": "<%
+             var filteredResults = function(dataEndpoint, vtype) {
+                 var final = [];
+                 var instance;
+                 for (instance : dataEndpoint.data) {
+                     if ((instance.enabled == true) && (instance.vaccineType.id == vtype)) {
+                         final.add(instance);
+                     }
+                 }
+                 return final;
+             };
+  %>",
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "pageType": "edit",
+    "title": {
+      "type": "title",
+      "label": "Add Vaccine",
+      "enabled": false
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "hidden",
+          "id": "enabled",
+          "label": "Enabled",
+          "value": "<% true %>",
+          "valueOutBinding": "vaccine.enabled"
+        },
+        {
+          "type": "dropdown",
+          "id": "vaccinetype",
+          "label": "Vaccine Type",
+          "required": "true",
+          "displayKey": "vaccineTypeName",
+          "values": "<% vaccineTypes.data.filter(x => {x.enabled == true}) %>",
+          "valueOutBinding": "vaccine.vaccineType.id",
+          "onChange": "<% dateAdministered.setEnabled(true);
+                          manufacturer.setEnabled(true);
+                          shotNumber.setEnabled(true);
+                          lotNumber.setEnabled(true);
+                          siteType.setEnabled(true);
+                          siteName.setEnabled(true);
+          manufacturer.setValues(filteredResults(vaccineManufacturers, vaccinetype.value[0]));
+          shotNumber.setValues(filteredResults(vaccineShots, vaccinetype.value[0]));
+          siteType.setValues(filteredResults(vaccineSiteTypes, vaccinetype.value[0]));
+ %>"
+        },
+        {
+          "type": "date",
+          "id": "dateAdministered",
+          "label": "Date Administered",
+          "required": "true",
+          "enabled": "false",
+          "valueOutBinding": "vaccine.dateAdministered"
+        },
+        {
+          "type": "dropdown",
+          "id": "manufacturer",
+          "label": "Vaccine Manufacturer",
+          "required": "true",
+          "enabled": "false",
+          "displayKey": "manufacturerName",
+          "values": "<% [] %>",
+          "valueOutBinding": "vaccine.manufacturer.id"
+        },
+        {
+          "type": "dropdown",
+          "id": "shotNumber",
+          "label": "Shot Number",
+          "required": "true",
+          "enabled": "false",
+          "displayKey": "vaccineShotName",
+          "values": "<% [] %>",
+          "valueOutBinding": "vaccine.shotNumber.id"
+        },
+        {
+          "type": "text",
+          "id": "lotNumber",
+          "label": "Shot Lot Number",
+          "required": "true",
+          "enabled": "false",
+          "valueOutBinding": "vaccine.lotNumber"
+        },
+        {
+          "type": "dropdown",
+          "id": "siteType",
+          "label": "Vaccine Site Type",
+          "required": "true",
+          "enabled": "false",
+          "displayKey": "vaccineSiteName",
+          "values": "<% [] %>",
+          "valueOutBinding": "vaccine.siteType.id"
+        },
+        {
+          "type": "text",
+          "id": "siteName",
+          "label": "Site Name (CVS, Kroger, xyz Stadium, etc.)",
+          "required": "true",
+          "enabled": "false",
+          "valueOutBinding": "vaccine.siteName"
+        },
+        {
+          "type": "section",
+          "horizontal": false,
+          "sorted": false,
+          "children": [
+            {
+              "type": "textArea",
+              "enabled": "false",
+              "value": "Please ensure all Personally Identifiable Information (PII) is not displayed on the image such as birth date.  Simply place something over this type of information such as a small piece of paper or a pen when taking the picture or copying so it is unreconizable."
+            },
+            {
+              "type": "hidden",
+              "value": "<% selectedWorker.id %>",
+              "valueOutBinding": "vaccineImage:data:uploadedBy.id"
+            },
+            {
+              "type": "hidden",
+              "value": "<% date:getTodaysDate(null) %>",
+              "valueOutBinding": "vaccineImage:data:uploadedDate"
+            },
+            {
+              "type": "hidden",
+              "value": "cid:image",
+              "valueOutBinding": "vaccineImage:data:file"
+            },
+            {
+              "type": "fileUploader",
+              "label": "Image",
+              "id": "imageFileUploader",
+              "singular": "<% true %>",
+              "compact": "<% true %>",
+              "required": "<% true %>",
+              "fileTypes": "gif,jpg,jpeg,png",
+              "valueOutBinding": "vaccineImage:image:"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "id": "updateSiteType",
+  "endPoints": [
+    {
+      "name": "VaccineSiteType",
+      "baseUrlType": "app",
+      "url": "<% 'vaccineSiteTypes/' + queryParams.siteId %>",
+      "authType": "sso"
+    },
+    {
+      "name": "vaccineTypes",
+      "baseUrlType": "app",
+      "url": "vaccineTypes",
+      "authType": "sso"
+    },
+    {
+      "name": "selectedWorker",
+      "baseUrlType": "workdayCommon",
+      "url": "workers/me",
+      "authType": "sso"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "updateSiteType",
+        "baseUrlType": "app",
+        "url": "<% 'vaccineSiteTypes/' + queryParams.siteId %>",
+        "authType": "sso",
+        "httpMethod": "PUT",
+        "values": [
+          {
+            "outboundPath": "vaccineType",
+            "value": "<% VaccineSiteType.vaccineType %>"
+          },
+          {
+            "outboundPath": "createdBy.id",
+            "value": "<% selectedWorker.id %>"
+          }
+        ]
+      }
+    ]
+  },
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "pageType": "edit",
+    "title": {
+      "type": "title",
+      "label": "Update Site Type",
+      "enabled": false
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "checkBox",
+          "id": "enabled",
+          "label": "Enabled",
+          "value": "<% VaccineSiteType.enabled %>",
+          "valueOutBinding": "updateSiteType.enabled"
+        },
+        {
+          "type": "text",
+          "id": "vaccineSiteTypeID",
+          "label": "Vaccine Site Type ID",
+          "required": "true",
+          "value": "<% VaccineSiteType.vaccineSiteID %>",
+          "valueOutBinding": "updateSiteType.vaccineSiteID"
+        },
+        {
+          "type": "text",
+          "id": "vaccineSiteTypeName",
+          "label": "Vaccine Site Type Name",
+          "required": "true",
+          "value": "<% VaccineSiteType.vaccineSiteName %>",
+          "valueOutBinding": "updateSiteType.vaccineSiteName"
+        }
+      ]
+    }
+  }
+}

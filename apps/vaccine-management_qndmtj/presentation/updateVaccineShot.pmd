@@ -1,0 +1,82 @@
+{
+  "id": "updateVaccineShot",
+  "endPoints": [
+    {
+      "name": "VaccineShot",
+      "baseUrlType": "app",
+      "url": "<% 'vaccineShots/' + queryParams.shotId %>",
+      "authType": "sso"
+    },
+    {
+      "name": "vaccineTypes",
+      "baseUrlType": "app",
+      "url": "vaccineTypes",
+      "authType": "sso"
+    },
+    {
+      "name": "selectedWorker",
+      "baseUrlType": "workdayCommon",
+      "url": "workers/me",
+      "authType": "sso"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "updateShot",
+        "baseUrlType": "app",
+        "url": "<% 'vaccineShots/' + queryParams.shotId %>",
+        "authType": "sso",
+        "httpMethod": "PUT",
+        "values": [
+          {
+            "outboundPath": "vaccineType",
+            "value": "<% VaccineShot.vaccineType %>"
+          },
+          {
+            "outboundPath": "createdBy.id",
+            "value": "<% selectedWorker.id %>"
+          }
+        ]
+      }
+    ]
+  },
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "pageType": "edit",
+    "title": {
+      "type": "title",
+      "label": "Update Vaccine Shot",
+      "enabled": false
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "checkBox",
+          "id": "enabled",
+          "label": "Enabled",
+          "value": "<% VaccineShot.enabled %>",
+          "valueOutBinding": "updateShot.enabled"
+        },
+        {
+          "type": "text",
+          "id": "vaccineShotID",
+          "label": "Vaccine Shot ID",
+          "required": "true",
+          "value": "<% VaccineShot.vaccineShotID %>",
+          "valueOutBinding": "updateShot.vaccineShotID"
+        },
+        {
+          "type": "text",
+          "id": "vaccineShotName",
+          "label": "Vaccine Shot Name",
+          "required": "true",
+          "value": "<% VaccineShot.vaccineShotName %>",
+          "valueOutBinding": "updateShot.vaccineShotName"
+        }
+      ]
+    }
+  }
+}

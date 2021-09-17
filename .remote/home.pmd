@@ -1,37 +1,6 @@
 {
   "id": "home",
-  "script": "<%
-             var cleanDate = function(date) {
-                 var cleanDate;
-                 var newDate;
-
-                 cleanDate = string:substring(date, 3, string:length(date));
-                 newDate = string:replaceSubstring(string:replaceSubstring(cleanDate, '00:00:00 UTC', ''), '/ null', '');
-
-                 return newDate
-             }
-
-             var checkFutureDates = function() {
-                 if(date:after(self.value,today.value)) {
-                     self.setError('Please choose a date in the past');
-                 } else {
-                     self.clearError();
-                 }
-
-             }
-
-             var getFirstDateInOffice = function() {
-                 var fourteenDaysFromToday = date:add(self.value, 'DAY', 14);
-                 var firstDate = fourteenDaysFromToday;
-                 if(date:after(today.value, fourteenDaysFromToday) || (date:year(today.value) == date:year(fourteenDaysFromToday) &&
-                     date:month(today.value) == date:month(fourteenDaysFromToday) &&
-                     date:extractValue('DAY', today.value) == date:extractValue('DAY', fourteenDaysFromToday))) {
-                     firstDate = date:add(today.value, 'DAY', 1);
-                 }
-
-                 return firstDate;
-             }
-             %>",
+  "script": "<%\n             var cleanDate = function(date) {\n                 var cleanDate;\n                 var newDate;\n\n                 cleanDate = string:substring(date, 3, string:length(date));\n                 newDate = string:replaceSubstring(string:replaceSubstring(cleanDate, '00:00:00 UTC', ''), '/ null', '');\n\n                 return newDate\n             }\n\n             var checkFutureDates = function() {\n                 if(date:after(self.value,today.value)) {\n                     self.setError('Please choose a date in the past');\n                 } else {\n                     self.clearError();\n                 }\n\n             }\n\n             var getFirstDateInOffice = function() {\n                 var fourteenDaysFromToday = date:add(self.value, 'DAY', 14);\n                 var firstDate = fourteenDaysFromToday;\n                 if(date:after(today.value, fourteenDaysFromToday) || (date:year(today.value) == date:year(fourteenDaysFromToday) &&\n                     date:month(today.value) == date:month(fourteenDaysFromToday) &&\n                     date:extractValue('DAY', today.value) == date:extractValue('DAY', fourteenDaysFromToday))) {\n                     firstDate = date:add(today.value, 'DAY', 1);\n                 }\n\n                 return firstDate;\n             }\n             %>",
   "endPoints": [
     {
       "baseUrlType": "workday-common",
@@ -103,7 +72,7 @@
           },
           {
             "outboundPath": "vaccineManufacturer",
-            "value": "<% manufacturer.value[0] %>"
+            "value": "<% empty manufacturer.value[0] ? 'N/A' : manufacturer.value[0] %>"
           },
           {
             "outboundPath": "isVerified",
@@ -111,7 +80,7 @@
           },
           {
             "outboundPath": "imageID",
-            "value": "<% uploadVerificationFile.id %>"
+            "value": "<% empty uploadVerificationFile.id ? null : uploadVerificationFile.id  %>"
           }
         ]
       }
@@ -188,12 +157,7 @@
                   "children": [
                     {
                       "type": "richText",
-                      "value": "Please review the following documents:
-
-<ul>
-<li><a href='https://www.workday.com'>Healthy Workplace Policy</a> </li>
-<li><a href='https://www.workday.com'>Site Information Cards</a> </li>
-</ul>",
+                      "value": "Please review the following documents:\n\n<ul>\n<li><a href='https://www.workday.com'>Healthy Workplace Policy</a> </li>\n<li><a href='https://www.workday.com'>Site Information Cards</a> </li>\n</ul>",
                       "enabled": "false"
                     },
                     {
@@ -250,6 +214,7 @@
                       "type": "dropdown",
                       "id": "disclosure",
                       "label": "Disclosure Type",
+                      "onChange": "<%\n                                   if ( disclosure.value[0] == 'Dose1' || disclosure.value[0] == 'Dose2') {\n                                            manufacturer.setVisible(true);\n                                            firstDate.setVisible(true);\n                                            firstDateInOffice.setVisible(true);\n                                   }\n                                       else {\n                                       manufacturer.setVisible(false);\n                                       firstDate.setVisible(false);\n                                       firstDateInOffice.setVisible(false);\n                                   }\n                                   %>",
                       "instanceList": [
                         {
                           "id": "Dose1",
@@ -266,10 +231,6 @@
                         {
                           "id": "Booster",
                           "descriptor": "Booster"
-                        },
-                        {
-                          "id": "NotVaccinated",
-                          "descriptor": "Not Vaccinated"
                         }
                       ],
                       "required": "true"
@@ -364,11 +325,7 @@
                           "id": "disclosureDate",
                           "label": "Date of Disclosure. ",
                           "required": true,
-                          "onChange": "<%
-                                           checkFutureDates();
-                                           firstDateInOffice.value = getFirstDateInOffice();
-                                           firstDate.value = 'First date you are eligible to return to the office: '+  '<b>' + cleanDate(string:toString(getFirstDateInOffice())) +'</b>' ;
-                                       %>"
+                          "onChange": "<%\n                                           checkFutureDates();\n                                           firstDateInOffice.value = getFirstDateInOffice();\n                                           firstDate.value = 'First date you are eligible to return to the office: '+  '<b>' + cleanDate(string:toString(getFirstDateInOffice())) +'</b>' ;\n                                       %>"
                         },
                         {
                           "type": "richText",

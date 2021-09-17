@@ -1,0 +1,17 @@
+var getWorkerCountry = function(workerID) {
+  var query = 'SELECT locationName, country, workdayID FROM locationsUsedAsBusinessSite WHERE workdayID=\'' + workerID + '\'';
+    console.info(query);
+
+  return query;
+};
+
+var getEmployeeType = function(workerID) {
+  var query = 'SELECT employeeType_PrimaryPosition FROM allActiveEmployees WHERE workdayID=\'' + workerID + '\'';
+  console.info(query);
+  return query;
+};
+
+{
+  "workerCountry": getWorkerCountry,
+  "empType":getEmployeeType
+}

@@ -24,7 +24,7 @@
     "headerSize": "VPS_DEFAULT",
     "title": {
       "type": "title",
-      "label": "Workday Extend"
+      "label": "View all Disclosures"
     },
     "body": {
       "type": "section",

@@ -1,0 +1,42 @@
+{
+  "id": "viewVaccineImage",
+  "endPoints": [
+    {
+      "name": "vaccine",
+      "baseUrlType": "app",
+      "url": "<% 'vaccines/' + queryParams.vaccineID %>",
+      "authType": "sso"
+    },
+    {
+      "name": "vaccineImage",
+      "baseUrlType": "app",
+      "url": "<% 'vaccineImages/' + vaccine.image.id %>",
+      "exclude": "<% empty(vaccine.image) %>",
+      "authType": "sso"
+    }
+  ],
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "pageType": "edit",
+    "title": {
+      "type": "title",
+      "label": "View Image"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "image",
+          "sizingHint": "INLINE",
+          "id": "VaccineImage",
+          "endPoint": {
+            "url": "vaccineImages/<% vaccine.image.id %>",
+            "baseUrlType": "app",
+            "authType": "sso"
+          }
+        }
+      ]
+    }
+  }
+}

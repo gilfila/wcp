@@ -1,0 +1,47 @@
+{
+  "id": "home",
+  "endPoints": [
+    {
+      "name": "selectedWorker",
+      "baseUrlType": "workdayCommon",
+      "url": "<% 'workers/' + workerId() %>",
+      "authType": "sso"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+    ]
+  },
+  "script": "<%
+             var workerId = function() {
+             return 'me';
+             } %>",
+  "presentation": {
+    "pageType": "view",
+    "title": {
+      "type": "title",
+      "label": "<% string:formatMessage('Manage Vaccines for {0}', selectedWorker.descriptor) %>"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "button",
+          "action": "PRIMARY",
+          "label": "Manage/Add Vaccines",
+          "taskReference": {
+            "taskId": "manageVaccines"
+          }
+        },
+        {
+          "type": "button",
+          "action": "PRIMARY",
+          "label": "Find a Vaccine Location Near Me",
+          "taskReference": {
+            "taskId": "findVaccine"
+          }
+        }
+      ]
+    }
+  }
+}

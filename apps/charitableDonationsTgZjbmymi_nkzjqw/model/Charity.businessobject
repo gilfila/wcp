@@ -1,0 +1,55 @@
+{
+  "id": 1,
+  "name": "Charity",
+  "label": "Charity",
+  "defaultSecurityDomains": [
+    "ManageCharities"
+  ],
+  "defaultCollection": {
+    "name": "charities",
+    "label": "All Charities"
+  },
+  "fields": [
+    {
+      "id": 1,
+      "name": "name",
+      "type": "TEXT",
+      "label": "Name",
+      "useForDisplay": true
+    },
+    {
+      "id": 2,
+      "name": "description",
+      "type": "TEXT",
+      "label": "Description"
+    },
+    {
+      "id": 3,
+      "name": "matchDonations",
+      "type": "BOOLEAN",
+      "label": "Match Donations"
+    },
+    {
+      "id": 4,
+      "name": "relationshipManager",
+      "type": "SINGLE_INSTANCE",
+      "label": "Relationship Manager",
+      "target": "WORKER"
+    },
+    {
+      "id": 5,
+      "name": "image",
+      "type": "SINGLE_INSTANCE",
+      "label": "Image",
+      "target": "CharityImage"
+    },
+    {
+      "id": 6,
+      "name": "createdBy",
+      "type": "SINGLE_INSTANCE",
+      "label": "Created By",
+      "target": "WORKER",
+      "secureByTarget": true
+    }
+  ]
+}

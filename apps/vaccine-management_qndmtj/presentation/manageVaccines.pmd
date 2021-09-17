@@ -1,0 +1,144 @@
+{
+  "id": "manageVaccines",
+  "endPoints" : [
+    {
+      "name": "selectedWorker",
+      "baseUrlType": "workdayCommon",
+      "url": "<% 'workers/me' %>",
+      "authType": "sso"
+    },
+    {
+      "name": "raas",
+      "authType": "sso",
+      "url": "<% site.appProperties.reportuser + '/Vaccines?report_prompt=' + selectedWorker.id %>",
+      "baseUrlType": "workday-raas"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": []
+  },
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "<% string:formatMessage('Manage Vaccines for {0}', selectedWorker.descriptor) %>"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "id": "vaccinegrid",
+          "columns": [
+            {
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% vaccine.vaccineTypeName ?: '' %>"
+              },
+              "label": "Vaccine Type",
+              "columnId": "vaccineType",
+              "type": "column"
+            },
+            {
+              "cellTemplate": {
+                "type": "date",
+                "value": "<% vaccine.dateAdministered ?: ''%>"
+              },
+              "label": "Date Administered",
+              "columnId": "dateAdministered",
+              "type": "column"
+            },
+            {
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% vaccine.manufacturerName ?: ''%>"
+              },
+              "label": "Manufacturer",
+              "columnId": "manufacturer",
+              "type": "column"
+            },
+            {
+              "cellTemplate": {
+                "type": "number",
+                "value": "<% vaccine.vaccineShotName ?: ''%>"
+              },
+              "label": "Shot Number",
+              "columnId": "shotNumber",
+              "type": "column"
+            },
+            {
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% vaccine.lotNumber ?: ''%>"
+              },
+              "label": "Shot Lot Number",
+              "columnId": "shotLotNumber",
+              "type": "column"
+            },
+            {
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% vaccine.vaccineSiteName ?: ''%>"
+              },
+              "label": "Site Type",
+              "columnId": "siteType",
+              "type": "column"
+            },
+            {
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% vaccine.siteName ?: ''%>"
+              },
+              "label": "Site Name/Description",
+              "columnId": "siteName",
+              "type": "column"
+            },
+            {
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% vaccine.Business_Processes_group[0].BP_Approved_ ?: '' %>"
+              },
+              "label": "Business Process Status",
+              "columnId": "bpStatus",
+              "type": "column"
+            },
+            {
+              "cellTemplate": {
+                "type": "button",
+                "label": "View Image",
+                "action": "AUXILIARY",
+                "taskReference": {
+                  "taskId": "viewVaccineImage",
+                  "parameterBindings": {
+                    "vaccineID": "<% vaccine.workdayID ?: ''%>"
+                  }
+                }
+              },
+              "label": "Image",
+              "columnId": "viewImage",
+              "type": "column"
+            }
+          ],
+          "label": "Vaccines",
+          "type": "grid",
+          "rows": "<% raas.Report_Entry %>",
+          "rowVariableName": "vaccine"
+        },
+        {
+          "type": "button",
+          "action": "PRIMARY",
+          "label": "Add Vaccine",
+          "taskReference": {
+            "taskId": "addVaccine"
+          }
+        },
+        {
+          "type": "button",
+          "action": "PRIMARY",
+          "label": "Go Back to Home Page",
+          "taskReference": {
+            "taskId": "home"
+          }
+        }
+      ]
+    }
+  }
+}

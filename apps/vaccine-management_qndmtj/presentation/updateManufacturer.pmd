@@ -1,0 +1,86 @@
+{
+  "id": "updateManufacturer",
+  "endPoints": [
+    {
+      "name": "VaccineManufacturer",
+      "baseUrlType": "app",
+      "url": "<% 'vaccineManufacturers/' + queryParams.manufacturerId %>",
+      "authType": "sso"
+    },
+    {
+      "name": "vaccineTypes",
+      "baseUrlType": "app",
+      "url": "vaccineTypes",
+      "authType": "sso"
+    },
+    {
+      "name": "selectedWorker",
+      "baseUrlType": "workdayCommon",
+      "url": "workers/me",
+      "authType": "sso"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "updateManufacturer",
+        "baseUrlType": "app",
+        "url": "<% 'vaccineManufacturers/' + queryParams.manufacturerId %>",
+        "authType": "sso",
+        "httpMethod": "PUT",
+        "values": [
+          {
+            "outboundPath": "image",
+            "value": "<% VaccineManufacturer.image ?: null %>"
+          },
+          {
+            "outboundPath": "vaccineType",
+            "value": "<% VaccineManufacturer.vaccineType %>"
+          },
+          {
+            "outboundPath": "createdBy.id",
+            "value": "<% selectedWorker.id %>"
+          }
+        ]
+      }
+    ]
+  },
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "pageType": "edit",
+    "title": {
+      "type": "title",
+      "label": "Update Manufacturer",
+      "enabled": false
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "checkBox",
+          "id": "enabled",
+          "label": "Enabled",
+          "value": "<% VaccineManufacturer.enabled %>",
+          "valueOutBinding": "updateManufacturer.enabled"
+        },
+        {
+          "type": "text",
+          "id": "manufacturerID",
+          "label": "Manufacturer ID",
+          "required": "true",
+          "value": "<% VaccineManufacturer.manufacturerID %>",
+          "valueOutBinding": "updateManufacturer.manufacturerID"
+        },
+        {
+          "type": "text",
+          "id": "manufacturerName",
+          "label": "Manufacturer Name",
+          "required": "true",
+          "value": "<% VaccineManufacturer.manufacturerName %>",
+          "valueOutBinding": "updateManufacturer.manufacturerName"
+        }
+      ]
+    }
+  }
+}
