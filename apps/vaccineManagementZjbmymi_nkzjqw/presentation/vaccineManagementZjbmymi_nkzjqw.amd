@@ -45,6 +45,20 @@
       }
     },
     {
+      "id": "updateVaccineType",
+      "routingPattern": "updateVaccineType",
+      "page": {
+        "id": "updateVaccineType"
+      }
+    },
+    {
+      "id": "manageVaccineType",
+      "routingPattern": "manageVaccineType",
+      "page": {
+        "id": "manageVaccineType"
+      }
+    },
+    {
       "id": "viewAllDisclosures",
       "routingPattern": "viewAllDisclosures",
       "page": {

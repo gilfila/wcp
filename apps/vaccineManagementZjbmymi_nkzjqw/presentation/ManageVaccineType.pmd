@@ -1,9 +1,9 @@
 {
-  "id": "ManageVaccineType",
+  "id": "manageVaccineType",
   "endPoints": [
     {
       "name": "vaccineTypes",
-      "baseUrlType": "app",
+      "baseUrlType": "workday-app",
       "url": "vaccineTypes",
       "authType": "sso"
     }

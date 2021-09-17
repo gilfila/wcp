@@ -3,7 +3,7 @@
   "name": "VaccineType",
   "label": "Vaccine Type",
   "defaultSecurityDomains": [
-    "mySecurityDomain"
+    "ManageVaccines"
   ],
   "defaultCollection": {
     "name": "vaccineTypes",
