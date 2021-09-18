@@ -1,0 +1,17 @@
+{
+  "id": 1,
+  "name": "SubmitCOVIDTestResult",
+  "label": "Submit COVID Test Result",
+  "description": "Business Process Type for Submit COVID Test Result",
+  "targetBusinessObject": "COVIDTestResult",
+  "useForOrchestrate": true,
+  "approvalStep": {
+    "actions": [
+      "APPROVE",
+      "DENY"
+    ]
+  },
+  "details": {
+    "pageRoute": "/viewCOVIDTestResultEvent/{eventId}"
+  }
+}

@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3f495a41-d806-4a79-9bf5-0d6cbc1f015a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/VaccineManagement_nkzjqw.amd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/VaccineManagement_nkzjqw.smd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw/presentation/updateVaccineType.pmd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw/model/VaccineType.businessobject" beforeDir="false" afterPath="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw/model/VaccineType.businessobject" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw/presentation/ManageVaccineType.pmd" beforeDir="false" afterPath="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw/presentation/ManageVaccineType.pmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw/presentation/vaccineManagementZjbmymi_nkzjqw.amd" beforeDir="false" afterPath="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw/presentation/vaccineManagementZjbmymi_nkzjqw.amd" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +16,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="businessObject" />
+        <option value="securityDomain" />
       </list>
     </option>
   </component>
@@ -38,10 +39,11 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw/presentation" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw/model" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw/model" />
       <recent name="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw/presentation" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -58,5 +60,16 @@
       <updated>1631643939487</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

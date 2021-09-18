@@ -1,0 +1,103 @@
+{
+  "appProperties": [ ],
+  "flowDefinitions": [
+    {
+      "id": "vaccineOrTestConfirmationFlow",
+      "flowSteps": [
+        {
+          "id": "SubmitVaccineOrTestStep",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "confirmVaccineOrTestStep",
+              "condition": "true"
+            }
+          ],
+          "taskId": "submitVaccineOrTest"
+        },
+        {
+          "id": "confirmVaccineOrTestStep",
+          "taskId": "confirmation"
+        }
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "submitVaccineOrTest",
+      "routingPattern": "/",
+      "page": {
+        "id": "submitVaccineOrTest"
+      }
+    },
+    {
+      "id": "home",
+      "routingPattern": "home",
+      "page": {
+        "id": "home"
+      }
+    },
+    {
+      "id": "viewCOVIDVaccinationEvent",
+      "routingPattern": "viewCOVIDVaccinationEvent/{eventId}",
+      "page": {
+        "id": "viewCOVIDVaccinationEvent"
+      }
+    },
+    {
+      "id": "viewCOVIDTestResultEvent",
+      "routingPattern": "viewCOVIDTestResultEvent/{eventId}",
+      "page": {
+        "id": "viewCOVIDTestResultEvent"
+      }
+    },
+    {
+      "id": "confirmation",
+      "routingPattern": "confirmation",
+      "page": {
+        "id": "confirmation"
+      }
+    },
+    {
+      "id": "viewAllRecords",
+      "routingPattern": "viewAllRecords",
+      "page": {
+        "id": "viewAllRecords"
+      }
+    },
+    {
+      "id": "maintainVaccineTypes",
+      "routingPattern": "maintainVaccineTypes",
+      "page": {
+        "id": "maintainVaccineTypes"
+      }
+    }
+  ],
+  "applicationId": "VaccineManagement_nkzjqw",
+  "dataProviders": [
+    {
+      "key": "workday-app",
+      "value": "https://api.workday.com/apps/<% site.applicationId %>/v1/"
+    },
+    {
+      "key": "workday-bp",
+      "value": "https://api.workday.com/businessProcess/v1/"
+    },
+    {
+      "key": "workday-common",
+      "value": "https://api.workday.com/common/v1/"
+    },
+    {
+      "key": "workday-staffing",
+      "value": "https://api.workday.com/staffing/v1/"
+    },
+    {
+      "key": "workday-orchestration",
+      "value": "https://api.workday.com/orchestrate/v1/apps/<% site.applicationId %>/orchestrations/"
+    },
+    {
+      "key": "workday-wql",
+      "value": "https://api.workday.com/wql/v1/"
+    }
+  ]
+}

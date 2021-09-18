@@ -1,0 +1,65 @@
+{
+  "id": "maintainVaccineTypes",
+  "endPoints": [
+    {
+      "name": "selectedWorker",
+      "baseUrlType": "workday-common",
+      "url": "workers/me",
+      "authType": "sso"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "vaccineType",
+        "baseUrlType": "workday-app",
+        "url": "vaccineTypes",
+        "httpMethod": "POST",
+        "authType": "sso",
+        "values": [
+          {
+            "outboundPath": "createdBy.id",
+            "value": "<% selectedWorker.id %>"
+          }
+        ]
+      }
+    ]
+  },
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "pageType": "edit",
+    "title": {
+      "type": "title",
+      "label": "Create Vaccine Type",
+      "enabled": false
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "checkBox",
+          "id": "enabled",
+          "label": "Enabled",
+          "required": "true",
+          "value": "<% true %>",
+          "valueOutBinding": "vaccineType.enabled"
+        },
+        {
+          "type": "text",
+          "id": "vaccineTypeID",
+          "label": "Vaccine Type ID",
+          "required": "true",
+          "valueOutBinding": "vaccineType.vaccineTypeID"
+        },
+        {
+          "type": "text",
+          "id": "vaccineTypeName",
+          "label": "Vaccine Type Name",
+          "required": "true",
+          "valueOutBinding": "vaccineType.vaccineTypeName"
+        }
+      ]
+    }
+  }
+}

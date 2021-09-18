@@ -1,0 +1,17 @@
+{
+  "id": 2,
+  "name": "SubmitCOVIDVaccination",
+  "label": "Submit COVID Vaccination",
+  "description": "Business Process Type for Submit COVID Vaccination",
+  "targetBusinessObject": "COVIDVaccination",
+  "useForOrchestrate": true,
+  "approvalStep": {
+    "actions": [
+      "APPROVE",
+      "DENY"
+    ]
+  },
+  "details": {
+    "pageRoute": "/viewCOVIDVaccinationEvent/{eventId}"
+  }
+}
