@@ -6,12 +6,18 @@
       "baseUrlType": "workday-common",
       "url": "workers/me",
       "authType": "sso"
+    },
+    {
+      "baseUrlType": "workday-wql",
+      "name": "vaccineTypes",
+      "authType": "sso",
+      "url": "<% 'data?query=' + string:urlEncode('select enabled, vaccineTypeID, vaccineTypeName, createdBy FROM ') + string:urlEncode(site.applicationId) + string:urlEncode('_vaccineTypes') %>"
     }
   ],
   "outboundData": {
     "outboundEndPoints": [
       {
-        "name": "vaccineType",
+        "name": "vaccineTypesPost",
         "baseUrlType": "workday-app",
         "url": "vaccineTypes",
         "httpMethod": "POST",
@@ -36,29 +42,92 @@
     "body": {
       "type": "section",
       "horizontal": false,
-      "children": [
+      "children": [{
+                     "type": "section",
+                     "horizontal": true,
+                     "children": [
+                       {
+                         "type": "grid",
+                         "gridType": "LIST",
+                         "multiViewStylingEnabled": true,
+                         "id": "VaccineTypes",
+                         "rows": "<% vaccineTypes.data %>",
+                         "rowVariableName": "vaccineType",
+                         "enabled": false,
+                         "doNotAdd": true,
+                         "doNotRemove": true,
+                         "label": "Current Vaccine Types",
+                         "columns": [
+                           {
+                             "type": "column",
+                             "id": "columnVaccineTypeEnabled",
+                             "columnId": "columnVaccineEnabled",
+                             "cellTemplate": {
+                               "type": "text",
+                               "value": "<% vaccineType.enabled %>"
+                             },
+                             "label": "Enabled"
+                           },
+                           {
+                             "type": "column",
+                             "id": "columnVaccineTypeID",
+                             "columnId": "columnVaccineTypeID",
+                             "cellTemplate": {
+                               "type": "text",
+                               "value": "<% vaccineType.vaccineTypeID %>"
+                             },
+                             "label": "Vaccine Type ID"
+                           },
+                           {
+                             "type": "column",
+                             "id": "columnVaccineTypeName",
+                             "columnId": "columnVaccineTypeName",
+                             "cellTemplate": {
+                               "type": "text",
+                               "value": "<% vaccineType.vaccineTypeName %>"
+                             },
+                             "label": "Vaccine Type Name"
+                           },
+                           {
+                             "type": "column",
+                             "id": "columnVaccineTypeDelete",
+                             "columnId": "columnVaccineTypeDelete",
+                             "cellTemplate": {
+                               "type": "pageActionButton",
+                               "id": "delete",
+                               "visible": true,
+                               "label": "DELETE",
+                               "onClick":"<%  %>"
+                             },
+                             "label": "Delete Vaccine Type"
+                           }
+                         ]
+                       }
+                     ]
+                   },
         {
           "type": "checkBox",
           "id": "enabled",
           "label": "Enabled",
           "required": "true",
           "value": "<% true %>",
-          "valueOutBinding": "vaccineType.enabled"
+          "valueOutBinding": "vaccineTypesPost.enabled"
         },
         {
           "type": "text",
           "id": "vaccineTypeID",
           "label": "Vaccine Type ID",
           "required": "true",
-          "valueOutBinding": "vaccineType.vaccineTypeID"
+          "valueOutBinding": "vaccineTypesPost.vaccineTypeID"
         },
         {
           "type": "text",
           "id": "vaccineTypeName",
           "label": "Vaccine Type Name",
           "required": "true",
-          "valueOutBinding": "vaccineType.vaccineTypeName"
+          "valueOutBinding": "vaccineTypesPost.vaccineTypeName"
         }
+
       ]
     }
   }

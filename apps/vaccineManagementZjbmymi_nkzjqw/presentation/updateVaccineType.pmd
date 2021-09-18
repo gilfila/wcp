@@ -4,7 +4,7 @@
     {
       "name": "vaccineTypes",
       "baseUrlType": "workday-app",
-      "url": "<% 'vaccineTypes/' + queryParams.vaccineTypeId %>",
+      "url": "<% 'vaccineTypes' %>",
       "authType": "sso"
     },
     {
@@ -19,13 +19,21 @@
       {
         "name": "updateVaccineType",
         "baseUrlType": "workday-app",
-        "url": "<% 'vaccineTypes/' + queryParams.vaccineTypeId %>",
+        "url": "<% 'vaccineTypes/' + vaccineTypes.vaccineTypeID %>",
         "authType": "sso",
         "httpMethod": "PUT",
         "values": [
           {
             "outboundPath": "createdBy.id",
             "value": "<% selectedWorker.id %>"
+          },
+          {
+            "outboundPath": "vaccineTypeName",
+            "value": "<% vaccineTypes.vaccineTypeName %>"
+          },
+          {
+            "outboundPath": "enabled",
+            "value": "<% vaccineTypes.enabled %>"
           }
         ]
       }

@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3f495a41-d806-4a79-9bf5-0d6cbc1f015a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/VaccineManagement_nkzjqw.amd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/VaccineManagement_nkzjqw.smd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw/presentation/updateVaccineType.pmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw/orchestration/VaccineManagement.orchestration" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/home.pmd" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/home.pmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/maintainVaccineTypes.pmd" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/maintainVaccineTypes.pmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/submitVaccineOrTest.pmd" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/submitVaccineOrTest.pmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw/presentation/updateVaccineType.pmd" beforeDir="false" afterPath="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw/presentation/updateVaccineType.pmd" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

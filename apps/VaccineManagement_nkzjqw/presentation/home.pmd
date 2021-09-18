@@ -249,7 +249,7 @@
                     {
                       "type": "text",
                       "value": "Select whether you have been vaccinated against COVID-19 or will be vaccinated for it, or whether you would prefer regular testing.",
-                      "enabled": "true"
+                      "enabled": "false"
                     },
                     {
                       "type": "richText",
