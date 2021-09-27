@@ -14,6 +14,44 @@
       }
     ]
   },
+  "errorPageConfigurations": [
+    {
+      "statusCode": "401",
+      "page": {
+        "id": "errorPage"
+      }
+    },
+    {
+      "statusCode": "403",
+      "page": {
+        "id": "errorPage"
+      }
+    },
+    {
+      "statusCode": "404",
+      "page": {
+        "id": "errorPage"
+      }
+    },
+    {
+      "statusCode": "408",
+      "page": {
+        "id": "errorPage"
+      }
+    },
+    {
+      "statusCode": "500",
+      "page": {
+        "id": "errorPage"
+      }
+    },
+    {
+      "statusCode": "503",
+      "page": {
+        "id": "errorPage"
+      }
+    }
+  ],
   "siteId": "VaccineManagement_nkzjqw",
   "cdnEnabled": true,
   "siteProperties": [ ],

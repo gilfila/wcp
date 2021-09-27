@@ -357,24 +357,26 @@
                       "id": "disclosure",
                       "label": "Vaccine / Testing Election",
                       "onChange": "<%
-                                   if ( disclosure.value[0] == 'Dose1' || disclosure.value[0] == 'Dose2' || disclosure.value[0] == 'Booster') {
-                                       manufacturer.setVisible(true);
-                                           firstDate.setVisible(true);
-                                           firstDateInOffice.setVisible(true);
-                                           verification.setVisible(true);
-                                           testResult.setVisible(false);
-                                           textVaccinated.setVisible(true);
-                                           textTested.setVisible(false);
+                                   if ( !empty disclosure.value[0]){
+                                     if ( disclosure.value[0] == 'Dose1' || disclosure.value[0] == 'Dose2' || disclosure.value[0] == 'Booster') {
+                                         manufacturer.setVisible(true);
+                                             firstDate.setVisible(true);
+                                             firstDateInOffice.setVisible(true);
+                                             verification.setVisible(true);
+                                             testResult.setVisible(false);
+                                             textVaccinated.setVisible(true);
+                                             textTested.setVisible(false);
 
-                                   }
-                                       else if ( disclosure.value[0] == 'Test') {
-                                       manufacturer.setVisible(false);
-                                           firstDate.setVisible(false);
-                                           firstDateInOffice.setVisible(false);
-                                           verification.setVisible(false);
-                                           testResult.setVisible(true);
-                                           textVaccinated.setVisible(false);
-                                           textTested.setVisible(true);
+                                     }
+                                         else if ( disclosure.value[0] == 'Test') {
+                                         manufacturer.setVisible(false);
+                                             firstDate.setVisible(false);
+                                             firstDateInOffice.setVisible(false);
+                                             verification.setVisible(false);
+                                             testResult.setVisible(true);
+                                             textVaccinated.setVisible(false);
+                                             textTested.setVisible(true);
+                                     }
                                    }
                                    %>",
                       "instanceList": [

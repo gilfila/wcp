@@ -2,73 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3f495a41-d806-4a79-9bf5-0d6cbc1f015a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/model/ManageBackToOfficeDisclosure.securitydomain" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/presentation/VaccineManagement2_nkzjqw.amd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/presentation/VaccineManagement2_nkzjqw.smd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/BackToOfficeDisclosure.businessobject" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/ManageBackToOfficeDisclosure.securitydomain" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/SubmitBackToOfficeDisclosure.businessprocess" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/errorPage.pmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/viewCOVIDVaccinationEvent.pmd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.remote/confirmation.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.remote/home.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.remote/vaccineManagementZjbmymi_nkzjqw.amd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.remote/vaccineManagementZjbmymi_nkzjqw.smd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.remote/viewAllDisclosures.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.remote/viewDisclosureEvent.pmd" beforeDir="false" afterPath="$PROJECT_DIR$/.remote/viewDisclosureEvent.pmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/COVIDTestResult.businessobject" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/COVIDTestResult.businessobject" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/COVIDVaccination.businessobject" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/COVIDVaccination.businessobject" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/ManageVaccineOrTestResults.securitydomain" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/ManageVaccineOrTestResults.securitydomain" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/ManageVaccines.securitydomain" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/ManageVaccines.securitydomain" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/SubmitCOVIDTestResult.businessprocess" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/SubmitCOVIDTestResult.businessprocess" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/SubmitCOVIDVaccination.businessprocess" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/SubmitCOVIDVaccination.businessprocess" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/TestResultVerificationFile.attachment" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/TestResultVerificationFile.attachment" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/VaccinationVerificationFile.attachment" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/VaccinationVerificationFile.attachment" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/VaccineType.businessobject" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/VaccineType.businessobject" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model/ViewVaccineOrTestResult.securitydomain" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/VaccineManagement_nkzjqw.amd" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/VaccineManagement_nkzjqw.amd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/confirmationVaccineOrTest.pmd" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/confirmationVaccineOrTest.pmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/home.pmd" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/backToOfficeDisclosure.pmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/maintainVaccineTypes.pmd" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/maintainVaccineTypes.pmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw.zip" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/VaccineManagement_nkzjqw.smd" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/VaccineManagement_nkzjqw.smd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/submitVaccineOrTest.pmd" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/submitVaccineOrTest.pmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/appManifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/model/AddVaccine.businessprocess" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/model/ManageVaccines.securitydomain" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/model/Vaccine.businessobject" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/model/VaccineImage.attachment" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/model/VaccineManufacturer.businessobject" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/model/VaccineShot.businessobject" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/model/VaccineSiteType.businessobject" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/model/VaccineType.businessobject" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/CreateSiteType.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/CreateVaccineShot.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/CreateVaccineType.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/MaintainVaccines.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/ManageVaccineType.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/addVaccine.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/createManufacturer.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/debug.pmd" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/viewCOVIDTestResultEvent.pmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/findVaccine.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/findVaccineOnMap.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/home.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/manageManufacturers.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/manageShot.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/manageSiteType.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/manageVaccines.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/manageVaccinesAdmin.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/reviseVaccine.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/updateManufacturer.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/updateSiteType.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/updateVaccine.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/updateVaccineShot.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/updateVaccineType.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/vaccine-management_qndmtj.amd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/vaccine-management_qndmtj.smd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/viewVaccineEvent.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/viewVaccineImage.pmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccine-management_qndmtj/presentation/wcpCli" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw/presentation/home.pmd" beforeDir="false" afterPath="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw/presentation/home.pmd" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
