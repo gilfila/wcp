@@ -1,5 +1,5 @@
 {
-  "id": 4,
+  "id": 2,
   "name": "COVIDTestResult",
   "label": "COVID Test Result",
   "defaultSecurityDomains": [
@@ -11,20 +11,20 @@
   },
   "fields": [
     {
-      "id": 1,
+      "id": 2,
       "name": "testResult",
       "label": "Test Result",
       "type": "TEXT"
     },
     {
-      "id": 2,
+      "id": 3,
       "name": "testDate",
       "label": "Test Date",
       "type": "DATE",
       "precision": "DAY"
     },
     {
-      "id": 3,
+      "id": 4,
       "name": "submittedBy",
       "type": "SINGLE_INSTANCE",
       "label": "Submitted By",
@@ -32,7 +32,7 @@
       "secureByTarget": true
     },
     {
-      "id": 4,
+      "id": 5,
       "name": "image",
       "type": "SINGLE_INSTANCE",
       "label": "Image",

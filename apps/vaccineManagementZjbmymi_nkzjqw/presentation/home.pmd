@@ -111,7 +111,7 @@
             "value": "<% false %>"
           },
           {
-            "outboundPath": "imageID",
+            "outboundPath": "image",
             "value": "<% empty uploadVerificationFile.id ? null : uploadVerificationFile.id  %>"
           }
         ]

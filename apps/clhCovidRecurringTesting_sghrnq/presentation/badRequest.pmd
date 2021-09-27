@@ -1,0 +1,34 @@
+{
+  "id": "badRequest",
+  "endPoints": [ ],
+  "presentation": {
+    "headerSize": "STANDARD",
+    "pageType": "confirm",
+    "title": {
+      "type": "title",
+      "label": "Request Error"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "text",
+          "id": "hello",
+          "label": "Error",
+          "value": "You have had a bad request! Contact Workday Support Team for a fix"
+        },
+        {
+          "type": "text",
+          "label": "The whole response is:",
+          "value": "<% flowVariables.resultData %>"
+        },
+        {
+          "type": "text",
+          "label": "The status of the Rest Call is:",
+          "value": "<% flowVariables.respStatus %>"
+        }
+      ]
+    }
+  }
+}

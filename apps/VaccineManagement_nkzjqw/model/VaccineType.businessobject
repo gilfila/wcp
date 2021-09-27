@@ -1,5 +1,5 @@
 {
-  "id": 3,
+  "id": 4,
   "name": "VaccineType",
   "label": "Vaccine Type",
   "defaultSecurityDomains": [
@@ -11,16 +11,10 @@
   },
   "fields": [
     {
-      "id": 1,
+      "id": 2,
       "name": "enabled",
       "label": "Enabled",
       "type": "BOOLEAN"
-    },
-    {
-      "id": 2,
-      "name": "vaccineTypeID",
-      "label": "Vaccine Type ID",
-      "type": "TEXT"
     },
     {
       "id": 3,
@@ -34,7 +28,7 @@
       "type": "SINGLE_INSTANCE",
       "label": "Created By",
       "target": "WORKER",
-      "secureByTarget": true
+      "secureByTarget": false
     }
   ]
 }

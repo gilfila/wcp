@@ -17,7 +17,47 @@
         },
         {
           "id": "confirmVaccineOrTestStep",
-          "taskId": "confirmation"
+          "taskId": "confirmationVaccineOrTest"
+        }
+      ]
+    },
+    {
+      "id": "disclosureConfirmationFlow",
+      "flowSteps": [
+        {
+          "id": "submitBackToOfficeStep",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "disclosureConfirmation",
+              "condition": "true"
+            }
+          ],
+          "taskId": "backToOfficeDisclosure"
+        },
+        {
+          "id": "disclosureConfirmation",
+          "taskId": "disclosureConfirmation"
+        }
+      ]
+    },
+    {
+      "id": "maintainVaccineTypesFlow",
+      "flowSteps": [
+        {
+          "id": "maintainVaccineTypesStep",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "maintainVaccineTypesStep",
+              "condition": "true"
+            }
+          ],
+          "taskId": "maintainVaccineTypes"
+        },
+        {
+          "id": "maintainVaccineTypes",
+          "taskId": "maintainVaccineTypes"
         }
       ]
     }
@@ -31,31 +71,31 @@
       }
     },
     {
-      "id": "home",
-      "routingPattern": "home",
+      "id": "backToOfficeDisclosure",
+      "routingPattern": "backToOfficeDisclosure",
       "page": {
-        "id": "home"
+        "id": "backToOfficeDisclosure"
       }
     },
     {
-      "id": "viewCOVIDVaccinationEvent",
-      "routingPattern": "viewCOVIDVaccinationEvent/{eventId}",
+      "id": "disclosureConfirmation",
+      "routingPattern": "disclosureConfirmation",
       "page": {
-        "id": "viewCOVIDVaccinationEvent"
+        "id": "disclosureConfirmation"
       }
     },
     {
-      "id": "viewCOVIDTestResultEvent",
-      "routingPattern": "viewCOVIDTestResultEvent/{eventId}",
+      "id": "viewDisclosureEvent",
+      "routingPattern": "viewDisclosureEvent/{eventId}",
       "page": {
-        "id": "viewCOVIDTestResultEvent"
+        "id": "viewDisclosureEvent"
       }
     },
     {
-      "id": "confirmation",
-      "routingPattern": "confirmation",
+      "id": "confirmationVaccineOrTest",
+      "routingPattern": "confirmationVaccineOrTest",
       "page": {
-        "id": "confirmation"
+        "id": "confirmationVaccineOrTest"
       }
     },
     {
@@ -70,6 +110,27 @@
       "routingPattern": "maintainVaccineTypes",
       "page": {
         "id": "maintainVaccineTypes"
+      }
+    },
+    {
+      "id": "errorPage",
+      "routingPattern": "errorPage",
+      "page": {
+        "id": "errorPage"
+      }
+    },
+    {
+      "id": "viewCOVIDTestResultEvent",
+      "routingPattern": "viewCOVIDTestResultEvent/{eventId}",
+      "page": {
+        "id": "viewCOVIDTestResultEvent"
+      }
+    },
+    {
+      "id": "viewCOVIDVaccinationEvent",
+      "routingPattern": "viewCOVIDVaccinationEvent/{eventId}",
+      "page": {
+        "id": "viewCOVIDVaccinationEvent"
       }
     }
   ],

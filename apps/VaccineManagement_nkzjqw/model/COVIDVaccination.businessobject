@@ -1,5 +1,5 @@
 {
-  "id": 1,
+  "id": 3,
   "name": "COVIDVaccination",
   "label": "COVID Vaccination",
   "defaultSecurityDomains": [
@@ -11,27 +11,26 @@
   },
   "fields": [
     {
-      "id": 1,
+      "id": 2,
       "name": "shotNumber",
       "label": "Shot Number",
       "type": "TEXT"
     },
     {
-      "id": 2,
+      "id": 3,
       "name": "vaccineManufacturer",
       "label": "Vaccine Manufacturer",
-      "type": "SINGLE_INSTANCE",
-      "target": "VaccineType"
+      "type": "TEXT"
     },
     {
-      "id": 3,
+      "id": 4,
       "name": "vaccinationDate",
       "label": "Vaccination Date",
       "type": "DATE",
       "precision": "DAY"
     },
     {
-      "id": 4,
+      "id": 5,
       "name": "submittedBy",
       "type": "SINGLE_INSTANCE",
       "label": "Submitted By",
@@ -39,11 +38,18 @@
       "secureByTarget": true
     },
     {
-      "id": 5,
+      "id": 6,
       "name": "image",
       "type": "SINGLE_INSTANCE",
       "label": "Image",
       "target": "VaccinationVerificationFile"
+    },
+    {
+      "id": 7,
+      "name": "firstDateBackToOffice",
+      "type": "DATE",
+      "label": "First Date Back To Office",
+      "precision": "DAY"
     }
   ]
 }

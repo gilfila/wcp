@@ -1,0 +1,27 @@
+{
+  "id": 2,
+  "name": "SubmitBackToOfficeDisclosure",
+  "label": "Submit Back To Office Disclosure",
+  "description": "Business Process Type for Submit Back To Office Disclosure",
+  "targetBusinessObject": "BackToOfficeDisclosure",
+  "approvalStep": {
+    "actions": [
+      "APPROVE",
+      "DENY",
+      "SEND_BACK"
+    ]
+  },
+  "revisePageRoute": "/revise/{eventStepId}",
+  "actionSteps": [
+    {
+      "id": 1,
+      "name": "ReviewSubmitBackToOfficeDisclosure",
+      "label": "Review My Business Process",
+      "description": "Step to review my business process",
+      "pageRoute": "/review/{eventStepId}"
+    }
+  ],
+  "details": {
+    "pageRoute": "/viewDisclosureEvent/{eventId}"
+  }
+}

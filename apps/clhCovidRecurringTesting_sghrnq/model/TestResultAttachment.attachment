@@ -1,0 +1,36 @@
+{
+  "id": 1,
+  "name": "TestResultAttachment",
+  "label": "COVID 19 Test Result Attachment",
+  "defaultSecurityDomains": [
+    "ManageTestResults"
+  ],
+  "defaultCollection": {
+    "name": "testResultAttachments",
+    "label": "Covid 19 Test Result Attachments"
+  },
+  "fields": [
+    {
+      "id": 1,
+      "name": "uploadedBy",
+      "label": "Uploaded By",
+      "type": "SINGLE_INSTANCE",
+      "target": "WORKER",
+      "secureByTarget": true
+    },
+    {
+      "id": 2,
+      "name": "uploadedDate",
+      "type": "DATE",
+      "label": "Uploaded Date",
+      "precision": "DAY"
+    },
+    {
+      "id": 3,
+      "name": "testResult",
+      "label": "COVID Test Result",
+      "type": "SINGLE_INSTANCE",
+      "target": "TestResult"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": 1,
+  "name": "VaccinationVerificationFile",
+  "label": "Vaccination Verification File",
+  "defaultSecurityDomains": [
+    "ManageVaccineOrTestResults"
+  ],
+  "defaultCollection": {
+    "name": "vaccinationVerificationFile",
+    "label": "Vaccination Verification File"
+  },
+  "fields": [
+    {
+      "id": 1,
+      "name": "uploadedBy",
+      "type": "SINGLE_INSTANCE",
+      "label": "Uploaded By",
+      "target": "WORKER"
+    },
+    {
+      "id": 2,
+      "name": "uploadedDate",
+      "type": "DATE",
+      "label": "Uploaded Date",
+      "precision": "DAY"
+    },
+    {
+      "id": 3,
+      "name": "fileType",
+      "label": "File Type",
+      "type": "TEXT"
+    }
+  ]
+}

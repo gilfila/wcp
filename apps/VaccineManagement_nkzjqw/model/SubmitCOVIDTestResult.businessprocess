@@ -1,17 +1,27 @@
 {
-  "id": 2,
-  "name": "SubmitCOVIDVaccination",
-  "label": "Submit COVID Vaccination",
-  "description": "Business Process Type for Submit COVID Vaccination",
-  "targetBusinessObject": "COVIDVaccination",
-  "useForOrchestrate": true,
+  "id": 1,
+  "name": "SubmitCOVIDTestResult",
+  "label": "Submit COVID Test Result",
+  "description": "Business Process Type for Submit COVID Test Result",
+  "targetBusinessObject": "COVIDTestResult",
   "approvalStep": {
     "actions": [
       "APPROVE",
-      "DENY"
+      "DENY",
+      "SEND_BACK"
     ]
   },
+  "revisePageRoute": "/revise/{eventStepId}",
+  "actionSteps": [
+    {
+      "id": 1,
+      "name": "ReviewCOVIDTestResult",
+      "label": "Review My Business Process",
+      "description": "Step to review my business process",
+      "pageRoute": "/review/{eventStepId}"
+    }
+  ],
   "details": {
-    "pageRoute": "/viewCOVIDVaccinationEvent/{eventId}"
+    "pageRoute": "/viewCOVIDTestResultEvent/{eventId}"
   }
 }

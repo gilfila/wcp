@@ -1,0 +1,47 @@
+{
+  "defaultCollection": {
+    "name": "backToOfficeDisclosures",
+    "label": "Back To Office Disclosures"
+  },
+  "defaultSecurityDomains": [
+    "ManageBackToOfficeDisclosure"
+  ],
+  "fields": [
+    {
+      "id": 2,
+      "name": "disclosureDate",
+      "label": "Disclosure Date",
+      "type": "DATE",
+      "precision": "DAY"
+    },
+    {
+      "id": 3,
+      "name": "submittedBy",
+      "type": "SINGLE_INSTANCE",
+      "label": "Submitted By",
+      "target": "WORKER",
+      "secureByTarget": true
+    },
+    {
+      "id": 4,
+      "name": "optIn",
+      "label": "Return to Office Preference",
+      "type": "TEXT"
+    },
+    {
+      "id": 5,
+      "name": "exemptionType",
+      "label": "Exemption Type",
+      "type": "TEXT"
+    },
+    {
+      "id": 6,
+      "name": "vaccinated",
+      "label": "Vaccination Disclosure",
+      "type": "TEXT"
+    }
+  ],
+  "id": 1,
+  "label": "Back To Office Disclosure",
+  "name": "BackToOfficeDisclosure"
+}

@@ -1,0 +1,14 @@
+{
+  "podId": "navigate",
+  "seed": {
+    "template": {
+      "type": "button",
+      "label": "⤺ Back",
+      "taskReference": {
+        "type": "taskReference",
+        "taskId": "home"
+      },
+      "action": "LINK"
+    }
+  }
+}

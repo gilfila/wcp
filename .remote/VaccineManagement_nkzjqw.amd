@@ -1,0 +1,164 @@
+{
+  "appProperties": [ ],
+  "flowDefinitions": [
+    {
+      "id": "vaccineOrTestConfirmationFlow",
+      "flowSteps": [
+        {
+          "id": "SubmitVaccineOrTestStep",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "confirmVaccineOrTestStep",
+              "condition": "true"
+            }
+          ],
+          "taskId": "submitVaccineOrTest"
+        },
+        {
+          "id": "confirmVaccineOrTestStep",
+          "taskId": "confirmationVaccineOrTest"
+        }
+      ]
+    },
+    {
+      "id": "disclosureConfirmationFlow",
+      "flowSteps": [
+        {
+          "id": "submitBackToOfficeStep",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "disclosureConfirmation",
+              "condition": "true"
+            }
+          ],
+          "taskId": "backToOfficeDisclosure"
+        },
+        {
+          "id": "disclosureConfirmation",
+          "taskId": "disclosureConfirmation"
+        }
+      ]
+    },
+    {
+      "id": "maintainVaccineTypesFlow",
+      "flowSteps": [
+        {
+          "id": "maintainVaccineTypesStep",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "maintainVaccineTypesStep",
+              "condition": "true"
+            }
+          ],
+          "taskId": "maintainVaccineTypes"
+        },
+        {
+          "id": "maintainVaccineTypes",
+          "taskId": "maintainVaccineTypes"
+        }
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "submitVaccineOrTest",
+      "routingPattern": "/",
+      "page": {
+        "id": "submitVaccineOrTest"
+      }
+    },
+    {
+      "id": "backToOfficeDisclosure",
+      "routingPattern": "backToOfficeDisclosure",
+      "page": {
+        "id": "backToOfficeDisclosure"
+      }
+    },
+    {
+      "id": "disclosureConfirmation",
+      "routingPattern": "disclosureConfirmation",
+      "page": {
+        "id": "disclosureConfirmation"
+      }
+    },
+    {
+      "id": "viewDisclosureEvent",
+      "routingPattern": "viewDisclosureEvent/{eventId}",
+      "page": {
+        "id": "viewDisclosureEvent"
+      }
+    },
+    {
+      "id": "confirmationVaccineOrTest",
+      "routingPattern": "confirmationVaccineOrTest",
+      "page": {
+        "id": "confirmationVaccineOrTest"
+      }
+    },
+    {
+      "id": "viewAllRecords",
+      "routingPattern": "viewAllRecords",
+      "page": {
+        "id": "viewAllRecords"
+      }
+    },
+    {
+      "id": "maintainVaccineTypes",
+      "routingPattern": "maintainVaccineTypes",
+      "page": {
+        "id": "maintainVaccineTypes"
+      }
+    },
+    {
+      "id": "errorPage",
+      "routingPattern": "errorPage",
+      "page": {
+        "id": "errorPage"
+      }
+    },
+    {
+      "id": "viewCOVIDTestResultEvent",
+      "routingPattern": "viewCOVIDTestResultEvent/{eventId}",
+      "page": {
+        "id": "viewCOVIDTestResultEvent"
+      }
+    },
+    {
+      "id": "viewCOVIDVaccinationEvent",
+      "routingPattern": "viewCOVIDVaccinationEvent",
+      "page": {
+        "id": "viewCOVIDVaccinationEvent"
+      }
+    }
+  ],
+  "applicationId": "VaccineManagement_nkzjqw",
+  "dataProviders": [
+    {
+      "key": "workday-app",
+      "value": "https://api.workday.com/apps/<% site.applicationId %>/v1/"
+    },
+    {
+      "key": "workday-bp",
+      "value": "https://api.workday.com/businessProcess/v1/"
+    },
+    {
+      "key": "workday-common",
+      "value": "https://api.workday.com/common/v1/"
+    },
+    {
+      "key": "workday-staffing",
+      "value": "https://api.workday.com/staffing/v1/"
+    },
+    {
+      "key": "workday-orchestration",
+      "value": "https://api.workday.com/orchestrate/v1/apps/<% site.applicationId %>/orchestrations/"
+    },
+    {
+      "key": "workday-wql",
+      "value": "https://api.workday.com/wql/v1/"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "id": "disclosureConfirmation",
+  "endPoints": [ ],
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "title": {
+      "type": "title",
+      "label": "Confirmation"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "button",
+          "label": "⤺ Back to Office Disclosure Form",
+          "taskReference": {
+            "type": "taskReference",
+            "taskId": "backToOfficeDisclosure"
+          },
+          "action": "LINK"
+        },
+        {
+          "type": "richText",
+          "id": "confirmation",
+          "label": "Thank you",
+          "value": "Your Back to Office Disclosure has been submitted."
+        },
+        {
+          "type": "button",
+          "label": "Submit either Proof of Vaccination or Proof of COVID Test",
+          "taskReference": {
+            "type": "taskReference",
+            "taskId": "submitVaccineOrTest"
+          },
+          "action": "LINK"
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": "false",
+          "value": "Powered By Workday Extend"
+        }
+      ]
+    }
+  }
+}

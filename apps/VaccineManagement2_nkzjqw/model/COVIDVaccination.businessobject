@@ -1,0 +1,56 @@
+{
+  "id": 1,
+  "name": "COVIDVaccination",
+  "label": "COVID Vaccination",
+  "defaultSecurityDomains": [
+    "ManageVaccineOrTestResults"
+  ],
+  "defaultCollection": {
+    "name": "cOVIDVaccinations",
+    "label": "COVID Vaccinations"
+  },
+  "fields": [
+    {
+      "id": 1,
+      "name": "vaccineId",
+      "type": "TEXT",
+      "label": "ID",
+      "isReferenceId": true
+    },
+    {
+      "id": 2,
+      "name": "shotNumber",
+      "label": "Shot Number",
+      "type": "TEXT"
+    },
+    {
+      "id": 3,
+      "name": "vaccineManufacturer",
+      "label": "Vaccine Manufacturer",
+      "type": "SINGLE_INSTANCE",
+      "target": "VaccineType"
+    },
+    {
+      "id": 4,
+      "name": "vaccinationDate",
+      "label": "Vaccination Date",
+      "type": "DATE",
+      "precision": "DAY"
+    },
+    {
+      "id": 5,
+      "name": "submittedBy",
+      "type": "SINGLE_INSTANCE",
+      "label": "Submitted By",
+      "target": "WORKER",
+      "secureByTarget": true
+    },
+    {
+      "id": 6,
+      "name": "image",
+      "type": "SINGLE_INSTANCE",
+      "label": "Image",
+      "target": "VaccinationVerificationFile"
+    }
+  ]
+}

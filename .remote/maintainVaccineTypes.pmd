@@ -1,0 +1,148 @@
+{
+  "id": "maintainVaccineTypes",
+  "securityDomains": [
+    "ManageVaccines"
+  ],
+  "endPoints": [
+    {
+      "name": "selectedWorker",
+      "baseUrlType": "workday-common",
+      "url": "workers/me",
+      "authType": "sso"
+    },
+    {
+      "baseUrlType": "workday-app",
+      "name": "vaccineTypes",
+      "authType": "sso",
+      "url": "vaccineTypes"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "vaccineTypesPut",
+        "url": "<% 'vaccineTypes/' + vaccineTypeId.value %>",
+        "httpMethod": "PUT",
+        "baseUrlType": "workday-app",
+        "onSend": "<%
+                  //Uncomment the below lines only for debugging purposes
+                  console.info(json:asJSON(self.data));
+                  return self.data;
+                  %>",
+        "exclude": "<% empty vaccineTypeId.value %>"
+      },
+      {
+        "name": "vaccineTypesPost",
+        "baseUrlType": "workday-app",
+        "url": "vaccineTypes",
+        "httpMethod": "POST",
+        "exclude": "<% ! empty vaccineTypeId.value %>",
+        "authType": "sso",
+        "onSend": "<%
+                  //Uncomment the below lines only for debugging purposes
+                  console.info(json:asJSON(self.data));
+                  return self.data;
+                  %>",
+        "values": [
+          {
+            "outboundPath": "createdBy.id",
+            "value": "<% selectedWorker.id %>"
+          }
+        ]
+      },
+      {
+        "name": "vaccineTypesDelete",
+        "baseUrlType": "workday-app",
+        "url": "vaccineTypes/<%vaccineTypeId.value%>",
+        "httpMethod": "DELETE",
+        "authType": "SSO"
+      }
+    ]
+  },
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "pageType": "edit",
+    "title": {
+      "type": "title",
+      "label": "Manage Vaccine Types",
+      "enabled": false
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "section",
+          "horizontal": true,
+          "children": [
+            {
+              "type": "grid",
+              "gridType": "LIST",
+              "multiViewStylingEnabled": true,
+              "id": "VaccineTypes",
+              "rows": "<% vaccineTypes.data %>",
+              "rowVariableName": "vaccineType",
+              "deleteEndPoint": "vaccineTypesDelete",
+              "enabled": true,
+              "label": "Current Vaccine Types",
+              "columns": [
+                {
+                  "type": "column",
+                  "id": "columnVaccineTypeEnabled",
+                  "columnId": "columnVaccineEnabled",
+                  "cellTemplate": {
+                    "type": "checkBox",
+                    "value": "<% vaccineType.enabled %>",
+                    "valuesOut": [
+                      {
+                        "value": "<% self.value %>",
+                        "valueOutBinding": "vaccineTypesPut.enabled"
+                      },
+                      {
+                        "value": "<% self.value %>",
+                        "valueOutBinding": "vaccineTypesPost.enabled"
+                      }
+                    ]
+                  },
+                  "label": "Enabled"
+                },
+                {
+                  "type": "column",
+                  "id": "columnvaccineTypeId",
+                  "columnId": "columnvaccineTypeId",
+                  "cellTemplate": {
+                    "type": "text",
+                    "value": "<% vaccineType.id %>",
+                    "id": "vaccineTypeId",
+                    "enabled": false
+                  },
+                  "label": "Vaccine Type ID"
+                },
+                {
+                  "type": "column",
+                  "id": "columnVaccineTypeName",
+                  "columnId": "columnVaccineTypeName",
+                  "cellTemplate": {
+                    "type": "text",
+                    "value": "<% vaccineType.vaccineTypeName %>",
+                    "valuesOut": [
+                      {
+                        "value": "<% self.value %>",
+                        "valueOutBinding": "vaccineTypesPut.vaccineTypeName"
+                      },
+                      {
+                        "value": "<% self.value %>",
+                        "valueOutBinding": "vaccineTypesPost.vaccineTypeName"
+                      }
+                    ]
+                  },
+                  "label": "Vaccine Type Name"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

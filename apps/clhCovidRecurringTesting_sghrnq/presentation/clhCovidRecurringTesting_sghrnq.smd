@@ -1,0 +1,21 @@
+{
+  "id": "clhCovidRecurringTesting_sghrnq",
+  "languages": [
+    {
+      "code": "en-US",
+      "description": "English"
+    }
+  ],
+  "siteAuth": {
+    "authTypes": [
+      {
+        "scheme": "SSO",
+        "id": "sso"
+      }
+    ]
+  },
+  "siteId": "clhCovidRecurringTesting_sghrnq",
+  "cdnEnabled": true,
+  "siteProperties": [ ],
+  "applicationId": "clhCovidRecurringTesting_sghrnq"
+}

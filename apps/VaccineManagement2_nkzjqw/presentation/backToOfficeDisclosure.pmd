@@ -1,0 +1,260 @@
+{
+  "id": "backToOfficeDisclosure",
+  "script": "<%
+             var cleanDate = function(date) {
+                 var cleanDate;
+                 var newDate;
+
+                 cleanDate = string:substring(date, 3, string:length(date));
+                 newDate = string:replaceSubstring(string:replaceSubstring(cleanDate, '00:00:00 UTC', ''), '/ null', '');
+
+                 return newDate
+             }
+
+             var checkFutureDates = function() {
+                 if(date:after(self.value,today.value)) {
+                     self.setError('Please choose a date in the past');
+                 } else {
+                     self.clearError();
+                 }
+
+             }
+
+             var getFirstDateInOffice = function() {
+                 var fourteenDaysFromToday = date:add(self.value, 'DAY', 14);
+                 var firstDate = fourteenDaysFromToday;
+                 if(date:after(today.value, fourteenDaysFromToday) || (date:year(today.value) == date:year(fourteenDaysFromToday) &&
+                     date:month(today.value) == date:month(fourteenDaysFromToday) &&
+                     date:extractValue('DAY', today.value) == date:extractValue('DAY', fourteenDaysFromToday))) {
+                     firstDate = date:add(today.value, 'DAY', 1);
+                 }
+
+                 return firstDate;
+             }
+             %>",
+  "endPoints": [
+    {
+      "baseUrlType": "workday-common",
+      "name": "me",
+      "authType": "sso",
+      "url": "workers/me?view=workerProfile"
+    },
+    {
+      "baseUrlType": "workday-common",
+      "name": "userInfo",
+      "authType": "sso",
+      "url": "userInfo"
+    },
+    {
+      "name": "workerPhotoUrl",
+      "baseUrlType": "workday-common",
+      "url": "workers/me?view=workerPhotoWIDView",
+      "authType": "sso"
+    },
+    {
+      "baseUrlType": "workday-wql",
+      "name": "disclosureHistory",
+      "authType": "sso",
+      "url": "<% 'data?query=' + string:urlEncode('select isVerified, disclosureType, vaccineManufacturer, disclosureDate, isBooster, boosterDate, exemptionType, createdMoment FROM ') + string:urlEncode(site.applicationId) + string:urlEncode('_backToOfficeDisclosures where submittedBy=') + me.id + string:urlEncode(' ORDER BY createdMoment DESC') %>"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "uploadVerificationFile",
+        "baseUrlType": "workday-app",
+        "url": "disclosureVerificationFile",
+        "authType": "sso",
+        "exclude": "<% empty verificationFile.children %>",
+        "httpMethod": "POST",
+        "allowEmptyValue": true,
+        "multiPartFileLast": true
+      },
+      {
+        "name": "createDisclosure",
+        "baseUrlType": "workday-common",
+        "url": "/BackToOfficeDisclosure",
+        "httpMethod": "POST",
+        "authType": "sso",
+        "values": [
+          {
+            "outboundPath": "submittedBy",
+            "value": "<% me.id %>"
+          },
+          {
+            "outboundPath": "disclosureDate",
+            "value": "<% disclosureDate.value %>"
+          },
+          {
+            "outboundPath": "optIn",
+            "value": "<% optIn.value[0] %>"
+          }
+        ]
+      }
+    ],
+    "responseErrorDetail": {
+      "errorSummary": "<% error %>",
+      "errors": "<% errors.map(item => { item.error }); %>"
+    }
+  },
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "Vaccine Management/Back to Office Management"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "section",
+          "columnWidthRatios": [
+            0.4,
+            0.6
+          ],
+          "horizontal": true,
+          "children": [
+            {
+              "type": "section",
+              "horizontal": true,
+              "children": [
+                {
+                  "type": "image",
+                  "id": "workerPhoto",
+                  "sizingHint": "THUMBNAIL",
+                  "defaultPhoto": false,
+                  "userPhoto": true,
+                  "endPoint": {
+                    "baseUrlType": "workday-common",
+                    "url": "<% 'workerRawPhotoData/' + workerPhotoUrl.workerPhotos.id %>",
+                    "authType": "sso"
+                  },
+                  "render": "<% empty workerPhotoUrl.workerPhotos.id ? false : true %>"
+                },
+                {
+                  "type": "section",
+                  "title": "<% me.descriptor %>",
+                  "horizontal": true,
+                  "children": [
+                    {
+                      "label": "Business Title",
+                      "type": "readOnlyText",
+                      "value": "<% me.businessTitle %>"
+                    },
+                    {
+                      "label": "Organization",
+                      "type": "readOnlyText",
+                      "value": "<% me.primarySupervisoryOrganization.descriptor %>"
+                    },
+                    {
+                      "label": "Work Location",
+                      "type": "readOnlyText",
+                      "value": "<% me.location.descriptor %>"
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
+                      "enabled": "false"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "title": "Back To Office Policy & Site Cards",
+                  "horizontal": true,
+                  "children": [
+                    {
+                      "type": "richText",
+                      "value": "Please review the following documents:
+
+<ul>
+<li><a href='https://www.workday.com'>Healthy Workplace Policy</a> </li>
+<li><a href='https://www.workday.com'>Site Information Cards</a> </li>
+</ul>",
+                      "enabled": "false"
+                    },
+                    {
+                      "id": "checkBoxAcceptConditions",
+                      "label": "I have read and acknowledged the information provided.",
+                      "type": "checkBox",
+                      "required": true
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
+                      "enabled": "false"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "title": "Back To Office Status",
+                  "horizontal": true,
+                  "children": [
+                    {
+                      "type": "dropdown",
+                      "id": "optIn",
+                      "label": "Back To Office Options",
+                      "instanceList": [
+                        {
+                          "id": "Office",
+                          "descriptor": "I prefer to return to the office"
+                        },
+                        {
+                          "id": "Hybrid",
+                          "descriptor": "I prefer a few days a week in the office"
+                        },
+                        {
+                          "id": "Home",
+                          "descriptor": "I prefer to continue working from home"
+                        }
+                      ],
+                      "required": "true"
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
+                      "enabled": "false"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "title": "Exemption Type",
+                  "horizontal": true,
+                  "render": false,
+                  "children": [
+                    {
+                      "type": "dropdown",
+                      "id": "exemption",
+                      "label": "Exemption Type",
+                      "instanceList": [
+                        {
+                          "id": "Medical",
+                          "descriptor": "Medical"
+                        },
+                        {
+                          "id": "Religious",
+                          "descriptor": "Religious"
+                        },
+                        {
+                          "id": "Personal",
+                          "descriptor": "Personal"
+                        }
+                      ],
+                      "required": "false"
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
+                      "enabled": "false"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

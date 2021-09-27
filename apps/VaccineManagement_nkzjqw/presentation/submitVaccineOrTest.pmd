@@ -1,33 +1,691 @@
 {
   "id": "submitVaccineOrTest",
+  "securityDomains": [
+        "ManageVaccineOrTestResults"
+  ],
+  "script": "<%
+             var cleanDate = function(date) {
+                 var cleanDate;
+                 var newDate;
+
+                 cleanDate = string:substring(date, 3, string:length(date));
+                 newDate = string:replaceSubstring(string:replaceSubstring(cleanDate, '00:00:00 UTC', ''), '/ null', '');
+
+                 return newDate
+             }
+
+             var checkFutureDates = function() {
+                 if(date:after(self.value,today.value)) {
+                     self.setError('Please choose a date in the past');
+                 } else {
+                     self.clearError();
+                 }
+
+             }
+
+             var getFirstDateInOffice = function() {
+                 var fourteenDaysFromToday = date:add(self.value, 'DAY', 14);
+                 var firstDate = fourteenDaysFromToday;
+                 if(date:after(today.value, fourteenDaysFromToday) || (date:year(today.value) == date:year(fourteenDaysFromToday) &&
+                     date:month(today.value) == date:month(fourteenDaysFromToday) &&
+                     date:extractValue('DAY', today.value) == date:extractValue('DAY', fourteenDaysFromToday))) {
+                     firstDate = date:add(today.value, 'DAY', 1);
+                 }
+
+                 return firstDate;
+             }
+             %>",
   "endPoints": [
     {
-      "baseUrlType": "workday-staffing",
-      "name": "worker",
+      "baseUrlType": "workday-common",
+      "name": "me",
       "authType": "sso",
-      "url": "workers/me"
+      "url": "workers/me?view=workerProfile"
+    },
+    {
+      "baseUrlType": "workday-common",
+      "name": "userInfo",
+      "authType": "sso",
+      "url": "userInfo"
+    },
+    {
+      "name": "workerPhotoUrl",
+      "baseUrlType": "workday-common",
+      "url": "workers/me?view=workerPhotoWIDView",
+      "authType": "sso"
+    },
+    {
+      "baseUrlType": "workday-wql",
+      "name": "vaccineHistory",
+      "authType": "sso",
+      "onSend": "<%
+                 //Uncomment the below lines only for debugging purposes
+                 console.info(json:asJSON(self.data));
+                 return self.data;
+                 %>",
+      "url": "<% 'data?query=' + string:urlEncode('select shotNumber, vaccineManufacturer, vaccinationDate, createdMoment, businessProcesses{status,workdayID as id, businessProcessStepAwaitingAction} FROM ') + string:urlEncode(site.applicationId) + string:urlEncode('_cOVIDVaccinations where submittedBy=') + me.id + string:urlEncode(' ORDER BY createdMoment DESC') %>"
+    },
+    {
+      "baseUrlType": "workday-wql",
+      "name": "testHistory",
+      "authType": "sso",
+      "onSend": "<%
+                 //Uncomment the below lines only for debugging purposes
+                 console.info(json:asJSON(self.data));
+                 return self.data;
+                 %>",
+      "url": "<% 'data?query=' + string:urlEncode('select testResult, testDate, submittedBy, createdMoment FROM ') + string:urlEncode(site.applicationId) + string:urlEncode('_cOVIDTestResults where submittedBy=') + me.id + string:urlEncode(' ORDER BY createdMoment DESC') %>"
+    },
+    {
+      "baseUrlType": "workday-app",
+      "name": "testHistoryData",
+      "authType": "sso",
+      "onSend": "<%
+                 //Uncomment the below lines only for debugging purposes
+                 console.info(json:asJSON(self.data));
+                 return self.data;
+                 %>",
+      "url": "cOVIDTestResults"
+    },
+    {
+      "baseUrlType": "workday-app",
+      "name": "vaccineTypes",
+      "authType": "sso",
+      "onSend": "<%
+                 //Uncomment the below lines only for debugging purposes
+                 console.info(json:asJSON(self.data));
+                 return self.data;
+                 %>",
+      "url": "vaccineTypes"
     }
   ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "uploadVaccineVerificationFile",
+        "baseUrlType": "workday-app",
+        "url": "vaccinationVerificationFile",
+        "authType": "sso",
+        "exclude": "<% empty verificationFile.children && list:contains(['Dose1', 'Dose2', 'Booster'], disclosure.value[0]) %>",
+        "httpMethod": "POST",
+        "multiPartFileLast": true
+      },
+      {
+        "name": "uploadTestResultVerificationFile",
+        "baseUrlType": "workday-app",
+        "url": "testResultVerificationFile",
+        "authType": "sso",
+        "exclude": "<% empty verificationFile.children && disclosure.value[0] == 'Test' %>",
+        "httpMethod": "POST",
+        "multiPartFileLast": true
+      },
+      {
+        "name": "createVaccineDisclosure",
+        "baseUrlType": "workday-app",
+        "url": "cOVIDVaccinations",
+        "httpMethod": "POST",
+        "exclude": "<% console.info('createVaccineDisclosure exclude is: '+ disclosure.value[0] == 'Test'); return disclosure.value[0] == 'Test' %>",
+        "authType": "sso",
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   console.info(json:asJSON(self.data));
+                   return self.data;
+                   %>",
+        "values": [
+          {
+            "outboundPath": "submittedBy.id",
+            "value": "<% me.id %>"
+          },
+          {
+            "outboundPath": "vaccinationDate",
+            "value": "<% disclosureDate.value %>"
+          },
+          {
+            "outboundPath": "firstDateBackToOffice",
+            "value": "<% firstDateInOffice.value %>"
+          },
+          {
+            "outboundPath": "vaccineManufacturer",
+            "value": "<% empty manufacturer.value[0] ? 'N/A' : manufacturer.value[0] %>"
+          },
+          {
+            "outboundPath": "image.id",
+            "value": "<% empty uploadVaccineVerificationFile.id ? null : uploadVaccineVerificationFile.id  %>"
+          },
+          {
+            "outboundPath": "shotNumber",
+            "value": "<% disclosure.value[0] %>"
+          }
+        ]
+      },
+      {
+        "_comment": "Kicks off BP. Pass in ID of the vaccination object and when it is successfully created will trigger BP. Name element is the name of the BP in lower camel case + 'Events' from the .businessprocess file",
+        "name": "SubmitCOVIDVaccinationEvents",
+        "baseUrlType": "workday-app",
+        "url": "submitCOVIDVaccinationEvents",
+        "httpMethod": "POST",
+        "authType": "sso",
+        "exclude": "<% console.info('SubmitCOVIDVaccinationEvents exclude is: '+ empty createVaccineDisclosure.id); return empty createVaccineDisclosure.id %>",
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   console.info(json:asJSON(self.data));
+                   return self.data;
+                   %>",
+        "values": [
+          {
+            "outboundPath": "businessProcessTarget.id",
+            "value": "<% createVaccineDisclosure.id %>",
+            "_comment": "value above must match ID of the outbound endpoint that submits the BO"
+          }
+        ]
+      },
+      {
+        "name": "putTestResult",
+        "url": "<% 'cOVIDTestResults/' + testHistoryData.data[0].id %>",
+        "httpMethod": "PUT",
+        "baseUrlType": "workday-app",
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   console.info(json:asJSON(self.data));
+                   return self.data;
+                   %>",
+        "exclude": "<% var myBool = disclosure.value[0] != 'Test'  || (disclosure.value[0] == 'Test' && empty testHistoryData.data);
+                    //console.info('is Test equalt to Test?: ' + (disclosure.value[0] == 'Test') );
+                    //console.info('testHistoryData is empty: ' + (empty testHistoryData.data) );
+                    //console.info('Put them together: ' + (disclosure.value[0] == 'Test' && empty testHistoryData.data)) ;
+                    //console.info('putTestResult exclude is: ' + myBool );
+                    return  myBool;
+                    %>",
+        "values": [
+          {
+            "outboundPath": "submittedBy.id",
+            "value": "<% me.id %>"
+          },
+          {
+            "outboundPath": "testDate",
+            "value": "<% disclosureDate.value %>"
+          },
+          {
+            "outboundPath": "testResult",
+            "value": "<% testResult.value[0] %>"
+          },
+          {
+            "outboundPath": "image.id",
+            "value": "<% empty uploadTestResultVerificationFile.id ? null : uploadTestResultVerificationFile.id  %>"
+          }
+        ]
+      },
+      {
+        "name": "createTestResultDisclosure",
+        "baseUrlType": "workday-app",
+        "url": "cOVIDTestResults",
+        "httpMethod": "POST",
+        "exclude": "<%  console.info('createTestResultDisclosure exclude is: '+  (disclosure.value[0] != 'Test'  || (disclosure.value[0] == 'Test' && !empty testHistoryData.data)) ); return (disclosure.value[0] != 'Test'  || (disclosure.value[0] == 'Test' && !empty testHistoryData.data)) %>",
+        "authType": "sso",
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   //console.info(json:asJSON(self.data));
+                   //console.info(disclosure.value[0] != 'Test'  &&  !empty testHistoryData.data);
+                   //console.info(disclosure.value[0]);
+                   //console.info(disclosure.value[0] != 'Test');
+                   //console.info(!empty testHistoryData.data);
+                   return self.data;
+                   %>",
+        "values": [
+          {
+            "outboundPath": "submittedBy.id",
+            "value": "<% me.id %>"
+          },
+          {
+            "outboundPath": "testDate",
+            "value": "<% disclosureDate.value %>"
+          },
+          {
+            "outboundPath": "testResult",
+            "value": "<% testResult.value[0] %>"
+          },
+          {
+            "outboundPath": "image.id",
+            "value": "<% empty uploadTestResultVerificationFile.id ? null : uploadTestResultVerificationFile.id  %>"
+          }
+        ]
+      },
+      {
+        "_comment": "Kicks off BP. Pass in ID of the test result object and when it is successfully created will trigger BP. Name element is the name of the BP in lower camel case + 'Events' from the .businessprocess file",
+        "name": "SubmitCOVIDTestResultEvents",
+        "baseUrlType": "workday-app",
+        "url": "submitCOVIDTestResultEvents",
+        "httpMethod": "POST",
+        "authType": "sso",
+        "exclude": "<% console.info('SubmitCOVIDTestResultEvents exclude is: '+ (empty (createTestResultDisclosure.id) && empty (putTestResult.id))); return (empty (createTestResultDisclosure.id) && empty (putTestResult.id)) %>",
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   console.info(json:asJSON(self.data));
+                   return self.data;
+                   %>",
+        "values": [
+          {
+            "outboundPath": "businessProcessTarget.id",
+            "value": "<% createTestResultDisclosure.id ?: putTestResult.id %>",
+            "_comment": "value above must match ID of the outbound endpoint that submits the BO"
+          }
+        ]
+      }
+    ],
+    "responseErrorDetail": {
+      "errorSummary": "<% error %>",
+      "errors": "<% errors.map(item => { item.error }); %>"
+    }
+  },
   "presentation": {
     "title": {
       "type": "title",
-      "label": "<% site.appProperties.appName %>"
+      "label": "Submit COVID Vaccination or Test Result"
     },
-    "headerSize": "STANDARD",
     "body": {
       "type": "section",
-      "horizontal": false,
-      "sorted": false,
       "children": [
         {
           "type": "section",
+          "columnWidthRatios": [
+            0.3,
+            0.7
+          ],
           "horizontal": true,
           "children": [
             {
               "type": "section",
+              "horizontal": true,
+              "children": [
+                {
+                  "type": "image",
+                  "id": "workerPhoto",
+                  "sizingHint": "THUMBNAIL",
+                  "defaultPhoto": false,
+                  "userPhoto": true,
+                  "endPoint": {
+                    "baseUrlType": "workday-common",
+                    "url": "<% 'workerRawPhotoData/' + workerPhotoUrl.workerPhotos.id %>",
+                    "authType": "sso"
+                  },
+                  "render": "<% empty workerPhotoUrl.workerPhotos.id ? false : true %>"
+                },
+                {
+                  "type": "section",
+                  "title": "<% me.descriptor %>",
+                  "horizontal": true,
+                  "children": [
+                    {
+                      "label": "Business Title",
+                      "type": "readOnlyText",
+                      "value": "<% me.businessTitle %>"
+                    },
+                    {
+                      "label": "Organization",
+                      "type": "readOnlyText",
+                      "value": "<% me.primarySupervisoryOrganization.descriptor %>"
+                    },
+                    {
+                      "label": "Work Location",
+                      "type": "readOnlyText",
+                      "value": "<% me.location.descriptor %>"
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
+                      "enabled": "false"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "title": "Vaccine / Testing Disclosure",
+                  "horizontal": true,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "Select whether you have been vaccinated against COVID-19 or will be vaccinated for it, or whether you would prefer regular testing.",
+                      "enabled": "false"
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
+                      "enabled": "false"
+                    },
+                    {
+                      "type": "dropdown",
+                      "id": "disclosure",
+                      "label": "Vaccine / Testing Election",
+                      "onChange": "<%
+                                   if ( disclosure.value[0] == 'Dose1' || disclosure.value[0] == 'Dose2' || disclosure.value[0] == 'Booster') {
+                                       manufacturer.setVisible(true);
+                                           firstDate.setVisible(true);
+                                           firstDateInOffice.setVisible(true);
+                                           verification.setVisible(true);
+                                           testResult.setVisible(false);
+                                           textVaccinated.setVisible(true);
+                                           textTested.setVisible(false);
+
+                                   }
+                                       else if ( disclosure.value[0] == 'Test') {
+                                       manufacturer.setVisible(false);
+                                           firstDate.setVisible(false);
+                                           firstDateInOffice.setVisible(false);
+                                           verification.setVisible(false);
+                                           testResult.setVisible(true);
+                                           textVaccinated.setVisible(false);
+                                           textTested.setVisible(true);
+                                   }
+                                   %>",
+                      "instanceList": [
+                        {
+                          "id": "Dose1",
+                          "descriptor": "Vaccine Dose 1"
+                        },
+                        {
+                          "id": "Dose2",
+                          "descriptor": "Vaccine Dose 2"
+                        },
+                        {
+                          "id": "Test",
+                          "descriptor": "Test"
+                        },
+                        {
+                          "id": "Booster",
+                          "descriptor": "Booster"
+                        }
+                      ],
+                      "required": "true"
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
+                      "enabled": "false"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "title": "Proof of Vaccination or Test Results",
+                  "children": [
+                    {
+                      "type": "section",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "textVaccinated",
+                          "enabled": false,
+                          "visible": false,
+                          "value": "For workers opting to be vaccinated: this section allows you to share proof of COVID-19 vaccination."
+                        },
+                        {
+                          "type": "text",
+                          "id": "textTested",
+                          "enabled": false,
+                          "visible": false,
+                          "value": "For workers opting to be tested: this section allows you to upload your most recent COVID-19 test results."
+                        },
+                        {
+                          "label": "I verify I am fully vaccinated for COVID-19. (At least two weeks after your second shot for Pfizer, AstraZeneca, or Moderna, or at least two weeks after a single shot of Johnson & Johnson).",
+                          "id": "verification",
+                          "type": "checkBox",
+                          "required": false
+                        },
+                        {
+                          "type": "dropdown",
+                          "id": "testResult",
+                          "label": "Test Result",
+                          "instanceList": [
+                            {
+                              "id": "Positive",
+                              "descriptor": "Positive"
+                            },
+                            {
+                              "id": "Negative",
+                              "descriptor": "Negative"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "dropdown",
+                          "id": "manufacturer",
+                          "label": "Vaccine Manufacturer",
+                          "instanceListLoopTag": {
+                            "id": "workerList",
+                            "type": "instanceLoop",
+                            "templateInstance": {
+                              "id": "<% instance.vaccineTypeName %>",
+                              "descriptor": "<% instance.vaccineTypeName %>"
+                            },
+                            "on": "<% vaccineTypes.data %>",
+                            "as": "instance"
+                          },
+                          "required": false
+                        },
+                        {
+                          "type": "date",
+                          "id": "disclosureDate",
+                          "label": "Date of Disclosure. ",
+                          "required": true,
+                          "onChange": "<%
+                                       checkFutureDates();
+                                       firstDateInOffice.value = getFirstDateInOffice();
+                                       firstDate.value = 'First date you are eligible to return to the office: '+  '<b>' + cleanDate(string:toString(getFirstDateInOffice())) +'</b>' ;
+                                       %>"
+                        },
+                        {
+                          "type": "richText",
+                          "id": "firstDate",
+                          "value": "First date you are eligible to return to the office: ",
+                          "enabled": "false"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "date",
+                      "label": "Today",
+                      "id": "today",
+                      "value": "<% date:formatDateWithTimeZones(string:toString(date:getTodaysDate(date:getDateTimeZone(clientTimeZone))), 'Europe/London', 'yyyy-MM-dd HH:mm:ss.SSS', userInfo.data[0].timezone, 'yyyy-MM-dd') %>",
+                      "visible": false
+                    },
+                    {
+                      "type": "date",
+                      "label": "First Date in Office",
+                      "id": "firstDateInOffice",
+                      "visible": false
+                    },
+                    {
+                      "type": "fieldSet",
+                      "horizontal": false,
+                      "sorted": false,
+                      "children": [
+                        {
+                          "type": "hidden",
+                          "value": "<% me.id %>",
+                          "valuesOut": [
+                            {
+                              "value": "<% self.value %>",
+                              "valueOutBinding": "uploadTestResultVerificationFile:data:uploadedBy.id"
+                            },
+                            {
+                              "value": "<% self.value %>",
+                              "valueOutBinding": "uploadVaccineVerificationFile:data:uploadedBy.id"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "hidden",
+                          "value": "<% date:formatDateWithTimeZones(string:toString(date:getTodaysDate(date:getDateTimeZone(clientTimeZone))), 'Europe/London', 'yyyy-MM-dd HH:mm:ss.SSS', userInfo.data[0].timezone, 'yyyy-MM-dd') %>",
+                          "valuesOut": [
+                            {
+                              "value": "<% self.value %>",
+                              "valueOutBinding": "uploadTestResultVerificationFile:data:uploadedDate"
+                            },
+                            {
+                              "value": "<% self.value %>",
+                              "valueOutBinding": "uploadVaccineVerificationFile:data:uploadedDate"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "hidden",
+                          "id": "image",
+                          "value": "cid:image",
+                          "valuesOut": [
+                            {
+                              "value": "<% self.value %>",
+                              "valueOutBinding": "uploadTestResultVerificationFile:data:file"
+                            },
+                            {
+                              "value": "<% self.value %>",
+                              "valueOutBinding": "uploadVaccineVerificationFile:data:file"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "richText",
+                          "id": "attachText",
+                          "value": "Please attach a copy of your COVID-19 vaccination card or Testing Results. If submitting a Vaccination Card, ensure your name, vaccine manufacturer and date of vaccination(s) are clearly visible in the image. Allowed file types include <b style='color:red;'>gif, jpg, jpeg and png</b>.",
+                          "enabled": false
+                        },
+                        {
+                          "type": "fileUploader",
+                          "required": true,
+                          "id": "verificationFile",
+                          "label": "Attachment",
+                          "singular": "<% true %>",
+                          "compact": "<% false %>",
+                          "fileTypes": "gif,jpg,jpeg,png",
+                          "valuesOut": [
+                            {
+                              "value": "<% self.value %>",
+                              "valueOutBinding": "uploadTestResultVerificationFile:image"
+                            },
+                            {
+                              "value": "<% self.value %>",
+                              "valueOutBinding": "uploadVaccineVerificationFile:image"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "section",
               "horizontal": false,
-              "sorted": false,
-              "children": [ ]
+              "children": [
+                {
+                  "type": "grid",
+                  "gridType": "LIST",
+                  "multiViewStylingEnabled": true,
+                  "id": "Histories",
+                  "rows": "<% vaccineHistory.data %>",
+                  "rowVariableName": "history",
+                  "enabled": false,
+                  "doNotAdd": true,
+                  "doNotRemove": true,
+                  "label": "My Vaccine History",
+                  "columns": [
+                    {
+                      "type": "column",
+                      "id": "columnVaccineManufacturer",
+                      "columnId": "columnVaccineManufacturer",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% history.vaccineManufacturer %>"
+                      },
+                      "label": "Vaccine Manufacturer"
+                    },
+                    {
+                      "type": "column",
+                      "id": "columnShotNumber",
+                      "columnId": "columnShotNumber",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% history.shotNumber %>"
+                      },
+                      "label": "Shot Number"
+                    },
+                    {
+                      "type": "column",
+                      "id": "columnVaccinationDate",
+                      "columnId": "columnVaccinationDate",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% history.vaccinationDate %>"
+                      },
+                      "label": "Vaccination Date"
+                    },
+                    {
+                      "type": "column",
+                      "id": "columnCreatedMoment",
+                      "columnId": "columnCreatedMoment",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% date:formatDateWithTimeZones(string:replaceSubstring(history.createdMoment, 'T', ' ') , 'Europe/London', 'yyyy-MM-dd HH:mm:ss.SSS', userInfo.data[0].timezone, 'yyyy-MM-dd') %>"
+                      },
+                      "label": "Submission Date"
+                    },
+                    {
+                      "type": "column",
+                      "id": "columnBPStatus",
+                      "columnId": "columnBPVaccineStatus",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% history.businessProcesses[0].status ?: 'Not Submitted' %>"
+                      },
+                      "label": "Status"
+                    }
+                  ]
+                },
+                {
+                  "type": "grid",
+                  "gridType": "LIST",
+                  "multiViewStylingEnabled": true,
+                  "id": "HistoriesTestData",
+                  "rows": "<% testHistory.data %>",
+                  "rowVariableName": "testResultHistory",
+                  "enabled": false,
+                  "doNotAdd": true,
+                  "doNotRemove": true,
+                  "label": "My Latest Test Result",
+                  "columns": [
+                    {
+                      "type": "column",
+                      "id": "columnTestResults",
+                      "columnId": "columnTestResults",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% testResultHistory.testResult %>"
+                      },
+                      "label": "Test Results"
+                    },
+                    {
+                      "type": "column",
+                      "id": "columnTestDate",
+                      "columnId": "columnTestDate",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% testResultHistory.testDate %>"
+                      },
+                      "label": "Test Date"
+                    },
+                    {
+                      "type": "column",
+                      "id": "columnCreatedMomentTestResult",
+                      "columnId": "columnCreatedMomentTestResult",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% date:formatDateWithTimeZones(string:replaceSubstring(testResultHistory.createdMoment, 'T', ' ') , 'Europe/London', 'yyyy-MM-dd HH:mm:ss.SSS', userInfo.data[0].timezone, 'yyyy-MM-dd') %>"
+                      },
+                      "label": "Submission Date"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
