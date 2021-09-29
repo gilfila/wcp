@@ -3,9 +3,28 @@
   <component name="ChangeListManager">
     <list default="true" id="3f495a41-d806-4a79-9bf5-0d6cbc1f015a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw.zip" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/VaccineManagement_nkzjqw.smd" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/VaccineManagement_nkzjqw.smd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/submitVaccineOrTest.pmd" beforeDir="false" afterPath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation/submitVaccineOrTest.pmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/appManifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/model/BackToOfficeDisclosure.businessobject" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/model/COVIDTestResult.businessobject" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/model/COVIDVaccination.businessobject" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/model/ManageBackToOfficeDisclosure.securitydomain" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/model/ManageVaccineOrTestResults.securitydomain" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/model/ManageVaccines.securitydomain" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/model/SubmitCOVIDTestResult.businessprocess" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/model/SubmitCOVIDVaccination.businessprocess" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/model/TestResultVerificationFile.attachment" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/model/VaccinationVerificationFile.attachment" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/model/VaccineType.businessobject" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/model/ViewVaccineOrTestResult.securitydomain" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/presentation/VaccineManagement2_nkzjqw.amd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/presentation/VaccineManagement2_nkzjqw.smd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/presentation/backToOfficeDisclosure.pmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/presentation/confirmationVaccineOrTest.pmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/presentation/maintainVaccineTypes.pmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/presentation/submitVaccineOrTest.pmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkz.textClipping" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw.zip" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,16 +59,16 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/apps" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps" />
       <recent name="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/model" />
       <recent name="$PROJECT_DIR$/apps/VaccineManagement2_nkzjqw/model" />
       <recent name="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation" />
       <recent name="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw/model" />
-      <recent name="$PROJECT_DIR$/apps/vaccineManagementZjbmymi_nkzjqw/presentation" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/apps/VaccineManagement_nkzjqw/presentation" />

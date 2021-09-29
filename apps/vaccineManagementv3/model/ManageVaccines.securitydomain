@@ -1,0 +1,6 @@
+{
+  "id": 3,
+  "name": "ManageVaccines",
+  "label": "Manage: Vaccines",
+  "enabledForPageSecurity": true
+}

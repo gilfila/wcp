@@ -13,7 +13,7 @@
       "children": [
         {
           "type": "button",
-          "label": "⤺ Back to Office Disclosure Form",
+          "label": "⤺ Back to Submit Vaccination or Test page",
           "taskReference": {
             "type": "taskReference",
             "taskId": "submitVaccineOrTest"
@@ -24,7 +24,7 @@
           "type": "richText",
           "id": "confirmation",
           "label": "Thank you",
-          "value": "Your Back to Office Disclosure has been submitted."
+          "value": "Your Vaccination or Test has been submitted."
         }
       ]
     },

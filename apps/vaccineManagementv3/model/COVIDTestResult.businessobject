@@ -1,5 +1,5 @@
 {
-  "id": 4,
+  "id": 2,
   "name": "COVIDTestResult",
   "label": "COVID Test Result",
   "defaultSecurityDomains": [
@@ -10,13 +10,6 @@
     "label": "COVID Test Results"
   },
   "fields": [
-    {
-      "id": 1,
-      "name": "testId",
-      "type": "TEXT",
-      "label": "ID",
-      "isReferenceId": true
-    },
     {
       "id": 2,
       "name": "testResult",

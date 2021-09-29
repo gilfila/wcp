@@ -1,37 +1,9 @@
 {
   "id": "backToOfficeDisclosure",
-  "script": "<%
-             var cleanDate = function(date) {
-                 var cleanDate;
-                 var newDate;
-
-                 cleanDate = string:substring(date, 3, string:length(date));
-                 newDate = string:replaceSubstring(string:replaceSubstring(cleanDate, '00:00:00 UTC', ''), '/ null', '');
-
-                 return newDate
-             }
-
-             var checkFutureDates = function() {
-                 if(date:after(self.value,today.value)) {
-                     self.setError('Please choose a date in the past');
-                 } else {
-                     self.clearError();
-                 }
-
-             }
-
-             var getFirstDateInOffice = function() {
-                 var fourteenDaysFromToday = date:add(self.value, 'DAY', 14);
-                 var firstDate = fourteenDaysFromToday;
-                 if(date:after(today.value, fourteenDaysFromToday) || (date:year(today.value) == date:year(fourteenDaysFromToday) &&
-                     date:month(today.value) == date:month(fourteenDaysFromToday) &&
-                     date:extractValue('DAY', today.value) == date:extractValue('DAY', fourteenDaysFromToday))) {
-                     firstDate = date:add(today.value, 'DAY', 1);
-                 }
-
-                 return firstDate;
-             }
-             %>",
+  "securityDomains": [
+    "ManageBackToOfficeDisclosure"
+  ],
+  "script": "<%%>",
   "endPoints": [
     {
       "baseUrlType": "workday-common",
@@ -55,7 +27,10 @@
       "baseUrlType": "workday-wql",
       "name": "disclosureHistory",
       "authType": "sso",
-      "url": "<% 'data?query=' + string:urlEncode('select isVerified, disclosureType, vaccineManufacturer, disclosureDate, isBooster, boosterDate, exemptionType, createdMoment FROM ') + string:urlEncode(site.applicationId) + string:urlEncode('_backToOfficeDisclosures where submittedBy=') + me.id + string:urlEncode(' ORDER BY createdMoment DESC') %>"
+      "url": "<%var query = 'select vaccinated, disclosureDate, exemptionType, submittedBy, optIn, businessProcesses{status,workdayID as id, businessProcessStepAwaitingAction} FROM ' + site.applicationId + '_backToOfficeDisclosures WHERE submittedBy=' + me.id + ' ORDER BY createdMoment DESC';
+              console.info(query);
+              return '/data?query=' + query.urlEncode()
+              %>"
     }
   ],
   "outboundData": {
@@ -71,23 +46,55 @@
         "multiPartFileLast": true
       },
       {
-        "name": "createDisclosure",
-        "baseUrlType": "workday-common",
-        "url": "/BackToOfficeDisclosure",
+        "name": "backToOfficeDisclosure",
+        "baseUrlType": "workday-app",
+        "url": "/backToOfficeDisclosures",
         "httpMethod": "POST",
         "authType": "sso",
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   console.info(json:asJSON(self.data));
+                   return self.data;
+                   %>",
         "values": [
           {
-            "outboundPath": "submittedBy",
+            "outboundPath": "submittedBy.id",
             "value": "<% me.id %>"
           },
           {
             "outboundPath": "disclosureDate",
-            "value": "<% disclosureDate.value %>"
+            "value": "<% date:formatDateWithTimeZones(string:toString(date:getTodaysDate(date:getDateTimeZone(clientTimeZone))), 'Europe/London', 'yyyy-MM-dd HH:mm:ss.SSS', userInfo.data[0].timezone, 'yyyy-MM-dd') %>"
           },
           {
             "outboundPath": "optIn",
             "value": "<% optIn.value[0] %>"
+          },
+          {
+            "outboundPath": "vaccinated",
+            "value": "<% vaccinated.value[0] %>"
+          },
+          {
+            "outboundPath": "exemptionType",
+            "value": "<% empty exemption.value[0] ? null : exemption.value[0]  %>"
+          }
+        ]
+      },
+      {
+        "_comment": "Kicks off BP. Pass in ID of the disclosure object and when it is successfully created will trigger BP. Name element is the name of the BP in lower camel case + 'Events' from the .businessprocess file",
+        "name": "SubmitBackToOfficeDisclosureEvents",
+        "baseUrlType": "workday-app",
+        "url": "submitBackToOfficeDisclosureEvents",
+        "httpMethod": "POST",
+        "authType": "sso",
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   console.info(json:asJSON(self.data));
+                   return self.data;
+                   %>",
+        "values": [
+          {
+            "outboundPath": "businessProcessTarget.id",
+            "value": "<% backToOfficeDisclosure.id %>"
           }
         ]
       }
@@ -100,7 +107,7 @@
   "presentation": {
     "title": {
       "type": "title",
-      "label": "Vaccine Management/Back to Office Management"
+      "label": "Submit Back to Office Disclosure"
     },
     "body": {
       "type": "section",
@@ -221,12 +228,39 @@
                   "type": "section",
                   "title": "Exemption Type",
                   "horizontal": true,
-                  "render": false,
                   "children": [
+                    {
+                      "type": "radioGroup",
+                      "id": "vaccinated",
+                      "label": "Please select one of the following options:",
+                      "required": true,
+                      "hideDisplayOption": true,
+                      "selectedValues": "<% ['yes']  %>",
+                      "onChange": "<% if ( vaccinated.value[0] == 'I confirm I am fully vaccinated' || vaccinated.value[0] == 'I am not fully vaccinated but I intend to be' || vaccinated.value[0] == 'Booster') {
+                          exemption.setVisible(false)
+                      } else {
+                          exemption.setVisible(true);
+                      }%>",
+                      "instanceList": [
+                        {
+                          "id": "I confirm I am fully vaccinated",
+                          "descriptor": "I confirm I am fully vaccinated."
+                        },
+                        {
+                          "id": "I am not fully vaccinated but I intend to be",
+                          "descriptor": "I am not fully vaccinated but I intend to be."
+                        },
+                        {
+                          "id": "I do not intend to be vaccinated and will be tested instead",
+                          "descriptor": "I do not intend to be vaccinated and will be tested instead."
+                        }
+                      ]
+                    },
                     {
                       "type": "dropdown",
                       "id": "exemption",
-                      "label": "Exemption Type",
+                      "label": "Optionally select a Vaccination Exemption Type",
+                      "visible": false,
                       "instanceList": [
                         {
                           "id": "Medical",
@@ -247,6 +281,78 @@
                       "type": "richText",
                       "value": "<br>",
                       "enabled": "false"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "section",
+              "horizontal": true,
+              "render": "<% !empty disclosureHistory.data %>",
+              "children": [
+                {
+                  "type": "grid",
+                  "gridType": "LIST",
+                  "multiViewStylingEnabled": true,
+                  "id": "Histories",
+                  "rows": "<% disclosureHistory.data %>",
+                  "rowVariableName": "history",
+                  "enabled": false,
+                  "doNotAdd": true,
+                  "doNotRemove": true,
+                  "label": "My Back To Office Disclosure History",
+                  "columns": [
+                    {
+                      "type": "column",
+                      "id": "columnCreatedMoment",
+                      "columnId": "columnCreatedMoment",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% history.disclosureDate %>"
+                      },
+                      "label": "Submission Date"
+                    },
+                    {
+                      "type": "column",
+                      "id": "columnOptIn",
+                      "columnId": "columnOptIn",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% history.optIn %>"
+                      },
+                      "label": "Back to Office Preference"
+                    },
+                    {
+                      "type": "column",
+                      "id": "columnVaccinated",
+                      "columnId": "columnVaccinated",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% history.vaccinated %>"
+                      },
+                      "label": "Vaccination Preference"
+                    },
+                    {
+                      "type": "column",
+                      "id": "columnExemptionType",
+                      "columnId": "columnExemptionType",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% history.exemptionType %>"
+                      },
+                      "label": "Declared Vaccination Exemption Type"
+                    },
+                    {
+                      "type": "column",
+                      "id": "columnBPStatus",
+                      "columnId": "columnBPStatus",
+                      "cellTemplate": {
+                        "type": "text",
+                        "render": "<% !empty(history.businessProcesses)%>",
+                        "value": "<% history.businessProcesses[0].status ?: 'Not Submitted' %>"
+                      },
+                      "label": "Status"
                     }
                   ]
                 }

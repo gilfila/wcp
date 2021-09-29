@@ -15,6 +15,7 @@
       "name": "uploadedBy",
       "type": "SINGLE_INSTANCE",
       "label": "Uploaded By",
+      "secureByTarget": true,
       "target": "WORKER"
     },
     {

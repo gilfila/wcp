@@ -8,13 +8,6 @@
   ],
   "fields": [
     {
-      "id": 1,
-      "name": "disclosureId",
-      "type": "TEXT",
-      "label": "ID",
-      "isReferenceId": true
-    },
-    {
       "id": 2,
       "name": "disclosureDate",
       "label": "Disclosure Date",
@@ -34,9 +27,21 @@
       "name": "optIn",
       "label": "Return to Office Preference",
       "type": "TEXT"
+    },
+    {
+      "id": 5,
+      "name": "exemptionType",
+      "label": "Exemption Type",
+      "type": "TEXT"
+    },
+    {
+      "id": 6,
+      "name": "vaccinated",
+      "label": "Vaccination Disclosure",
+      "type": "TEXT"
     }
   ],
-  "id": 2,
+  "id": 1,
   "label": "Back To Office Disclosure",
   "name": "BackToOfficeDisclosure"
 }
