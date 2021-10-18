@@ -1,0 +1,34 @@
+{
+  "id": 2,
+  "name": "BackToOfficeOption",
+  "label": "Back To Office Option",
+  "defaultSecurityDomains": [
+    "ManageConfiguration"
+  ],
+  "defaultCollection": {
+    "name": "backToOfficeOptions",
+    "label": "Back To Office Options"
+  },
+  "fields": [
+    {
+      "id": 2,
+      "name": "enabled",
+      "label": "Enabled",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 3,
+      "name": "backToOfficeOptionName",
+      "label": "Back To Office Option Name",
+      "type": "TEXT"
+    },
+    {
+      "id": 4,
+      "name": "createdBy",
+      "type": "SINGLE_INSTANCE",
+      "label": "Created By",
+      "target": "WORKER",
+      "secureByTarget": false
+    }
+  ]
+}

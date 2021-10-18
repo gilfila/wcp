@@ -1,0 +1,61 @@
+{
+  "id": 4,
+  "name": "COVIDVaccination",
+  "label": "COVID Vaccination",
+  "defaultSecurityDomains": [
+    "ManageVaccineOrTestResults"
+  ],
+  "defaultCollection": {
+    "name": "cOVIDVaccinations",
+    "label": "COVID Vaccinations"
+  },
+  "fields": [
+    {
+      "id": 2,
+      "name": "shotNumber",
+      "label": "Shot Number",
+      "type": "TEXT"
+    },
+    {
+      "id": 3,
+      "name": "vaccineManufacturer",
+      "label": "Vaccine Manufacturer",
+      "type": "TEXT"
+    },
+    {
+      "id": 4,
+      "name": "vaccinationDate",
+      "label": "Vaccination Date",
+      "type": "DATE",
+      "precision": "DAY"
+    },
+    {
+      "id": 5,
+      "name": "submittedBy",
+      "type": "SINGLE_INSTANCE",
+      "label": "Submitted By",
+      "target": "WORKER",
+      "secureByTarget": true
+    },
+    {
+      "id": 6,
+      "name": "image",
+      "type": "SINGLE_INSTANCE",
+      "label": "Image",
+      "target": "VaccinationVerificationFile"
+    },
+    {
+      "id": 7,
+      "name": "firstDateBackToOffice",
+      "type": "DATE",
+      "label": "First Date Back To Office",
+      "precision": "DAY"
+    },
+    {
+      "id": 8,
+      "name": "isFullyVaccinated",
+      "label": "Is Fully Vaccinated",
+      "type": "BOOLEAN"
+    }
+  ]
+}

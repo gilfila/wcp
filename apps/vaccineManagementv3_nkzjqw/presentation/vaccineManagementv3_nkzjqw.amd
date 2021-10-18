@@ -1,0 +1,388 @@
+{
+  "appProperties": [],
+  "flowDefinitions": [
+    {
+      "id": "vaccineConfirmationFlow",
+      "flowSteps": [
+        {
+          "id": "SubmitVaccineStep",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "confirmVaccineStep",
+              "condition": "true"
+            }
+          ],
+          "taskId": "submitVaccine"
+        },
+        {
+          "id": "confirmVaccineStep",
+          "taskId": "confirmationVaccine"
+        }
+      ]
+    },
+    {
+      "id": "testConfirmationFlow",
+      "flowSteps": [
+        {
+          "id": "SubmitTestStep",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "confirmTestStep",
+              "condition": "true"
+            }
+          ],
+          "taskId": "submitTest"
+        },
+        {
+          "id": "confirmTestStep",
+          "taskId": "confirmationTest"
+        }
+      ]
+    },
+    {
+      "id": "vaccineConfirmationOnBehalfOfFlow",
+      "flowSteps": [
+        {
+          "id": "SubmitVaccineOnBehalfOfStep",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "confirmVaccineOnBehalfOfStep",
+              "condition": "true"
+            }
+          ],
+          "taskId": "submitVaccineOnBehalfOf"
+        },
+        {
+          "id": "confirmVaccineOnBehalfOfStep",
+          "taskId": "confirmationVaccineOnBehalfOf"
+        }
+      ]
+    },
+    {
+      "id": "testConfirmationOnBehalfOfFlow",
+      "flowSteps": [
+        {
+          "id": "SubmitTestOnBehalfOfStep",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "confirmTestOnBehalfOfStep",
+              "condition": "true"
+            }
+          ],
+          "taskId": "submitTestOnBehalfOf"
+        },
+        {
+          "id": "confirmTestOnBehalfOfStep",
+          "taskId": "confirmationTestOnBehalfOf"
+        }
+      ]
+    },
+    {
+      "id": "disclosureConfirmationFlow",
+      "flowSteps": [
+        {
+          "id": "submitBackToOfficeStep",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "confirmationBackToOffice",
+              "condition": "true"
+            }
+          ],
+          "taskId": "backToOfficeDisclosure"
+        },
+        {
+          "id": "confirmationBackToOffice",
+          "taskId": "confirmationBackToOffice"
+        }
+      ]
+    },
+    {
+      "id": "maintainVaccineTypesFlow",
+      "flowSteps": [
+        {
+          "id": "maintainVaccineTypesStep",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "maintainVaccineTypesStep",
+              "condition": "true"
+            }
+          ],
+          "taskId": "maintainVaccineTypes"
+        },
+        {
+          "id": "maintainVaccineTypes",
+          "taskId": "maintainVaccineTypes"
+        }
+      ]
+    },
+    {
+      "id": "maintainVaccineManufacturersFlow",
+      "flowSteps": [
+        {
+          "id": "maintainVaccineManufacturersStep",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "maintainVaccineManufacturersStep",
+              "condition": "true"
+            }
+          ],
+          "taskId": "maintainVaccineManufacturers"
+        },
+        {
+          "id": "maintainVaccineManufacturers",
+          "taskId": "maintainVaccineManufacturers"
+        }
+      ]
+    },
+    {
+      "id": "maintainExemptionTypesFlow",
+      "flowSteps": [
+        {
+          "id": "maintainExemptionTypesStep",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "maintainExemptionTypesStep",
+              "condition": "true"
+            }
+          ],
+          "taskId": "maintainExemptionTypes"
+        },
+        {
+          "id": "maintainExemptionTypes",
+          "taskId": "maintainExemptionTypes"
+        }
+      ]
+    },
+    {
+      "id": "maintainBackToOfficeOptionsFlow",
+      "flowSteps": [
+        {
+          "id": "maintainBackToOfficeOptionsStep",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "maintainBackToOfficeOptionsStep",
+              "condition": "true"
+            }
+          ],
+          "taskId": "maintainBackToOfficeOptions"
+        },
+        {
+          "id": "maintainBackToOfficeOptions",
+          "taskId": "maintainBackToOfficeOptions"
+        }
+      ]
+    },
+    {
+      "id": "maintainVaccineManagementConfigFlow",
+      "flowSteps": [
+        {
+          "id": "maintainVaccineManagementConfigStep1",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "maintainVaccineManagementConfigEnd",
+              "condition": "true"
+            }
+          ],
+          "taskId": "maintainVaccineManagementConfig"
+        },
+        {
+          "id": "maintainVaccineManagementConfigEnd",
+          "taskId": "savedSuccess"
+        }
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "home",
+      "routingPattern": "/",
+      "page": {
+        "id": "backToOfficeDisclosure"
+      }
+    },
+    {
+      "id": "backToOfficeDisclosure",
+      "routingPattern": "backToOfficeDisclosure",
+      "page": {
+        "id": "backToOfficeDisclosure"
+      }
+    },
+    {
+      "id": "confirmationBackToOffice",
+      "routingPattern": "confirmationBackToOffice",
+      "page": {
+        "id": "confirmationBackToOffice"
+      }
+    },
+    {
+      "id": "viewDisclosureEvent",
+      "routingPattern": "viewDisclosureEvent/{eventId}",
+      "page": {
+        "id": "viewDisclosureEvent"
+      }
+    },
+    {
+      "id": "submitTestOnBehalfOf",
+      "routingPattern": "submitTestOnBehalfOf",
+      "page": {
+        "id": "submitTestOnBehalfOf"
+      }
+    },
+    {
+      "id": "submitVaccineOnBehalfOf",
+      "routingPattern": "submitVaccineOnBehalfOf",
+      "page": {
+        "id": "submitVaccineOnBehalfOf"
+      }
+    },
+    {
+      "id": "confirmationVaccine",
+      "routingPattern": "confirmationVaccine",
+      "page": {
+        "id": "confirmationVaccine"
+      }
+    },
+    {
+      "id": "confirmationTest",
+      "routingPattern": "confirmationTest",
+      "page": {
+        "id": "confirmationTest"
+      }
+    },
+    {
+      "id": "confirmationVaccineOnBehalfOf",
+      "routingPattern": "confirmationVaccineOnBehalfOf",
+      "page": {
+        "id": "confirmationVaccineOnBehalfOf"
+      }
+    },
+    {
+      "id": "confirmationTestOnBehalfOf",
+      "routingPattern": "confirmationTestOnBehalfOf",
+      "page": {
+        "id": "confirmationTestOnBehalfOf"
+      }
+    },
+    {
+      "id": "submitVaccine",
+      "routingPattern": "submitVaccine",
+      "page": {
+        "id": "submitVaccine"
+      }
+    },
+    {
+      "id": "submitTest",
+      "routingPattern": "submitTest",
+      "page": {
+        "id": "submitTest"
+      }
+    },
+    {
+      "id": "viewAllRecords",
+      "routingPattern": "viewAllRecords",
+      "page": {
+        "id": "viewAllRecords"
+      }
+    },
+    {
+      "id": "maintainVaccineManagementConfig",
+      "routingPattern": "maintainVaccineManagementConfig",
+      "page": {
+        "id": "maintainVaccineManagementConfig"
+      }
+    },
+    {
+      "id": "maintainVaccineTypes",
+      "routingPattern": "maintainVaccineTypes",
+      "page": {
+        "id": "maintainVaccineTypes"
+      }
+    },
+    {
+      "id": "maintainExemptionTypes",
+      "routingPattern": "maintainExemptionTypes",
+      "page": {
+        "id": "maintainExemptionTypes"
+      }
+    },
+    {
+      "id": "maintainVaccineManufacturers",
+      "routingPattern": "maintainVaccineManufacturers",
+      "page": {
+        "id": "maintainVaccineManufacturers"
+      }
+    },
+    {
+      "id": "maintainBackToOfficeOptions",
+      "routingPattern": "maintainBackToOfficeOptions",
+      "page": {
+        "id": "maintainBackToOfficeOptions"
+      }
+    },
+    {
+      "id": "errorPage",
+      "routingPattern": "errorPage",
+      "page": {
+        "id": "errorPage"
+      }
+    },
+    {
+      "id": "viewCOVIDTestResultEvent",
+      "routingPattern": "viewCOVIDTestResultEvent/{eventId}",
+      "page": {
+        "id": "viewCOVIDTestResultEvent"
+      }
+    },
+    {
+      "id": "viewCOVIDVaccinationEvent",
+      "routingPattern": "viewCOVIDVaccinationEvent/{eventId}",
+      "page": {
+        "id": "viewCOVIDVaccinationEvent"
+      }
+    },
+    {
+      "id": "savedSuccess",
+      "routingPattern": "savedSuccess",
+      "page": {
+        "id": "savedSuccess"
+      }
+    }
+  ],
+  "applicationId": "vaccineManagementv3_nkzjqw",
+  "dataProviders": [
+    {
+      "key": "workday-app",
+      "value": "https://api.workday.com/apps/<% site.applicationId %>/v1/"
+    },
+    {
+      "key": "workday-bp",
+      "value": "https://api.workday.com/businessProcess/v1/"
+    },
+    {
+      "key": "workday-common",
+      "value": "https://api.workday.com/common/v1/"
+    },
+    {
+      "key": "workday-staffing",
+      "value": "https://api.workday.com/staffing/v1/"
+    },
+    {
+      "key": "workday-orchestration",
+      "value": "https://api.workday.com/orchestrate/v1/apps/<% site.applicationId %>/orchestrations/"
+    },
+    {
+      "key": "workday-wql",
+      "value": "https://api.workday.com/wql/v1/"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id" : "savedSuccess",
+  "endPoints" : [ ],
+  "presentation" : {
+    "pageType": "view",
+    "headerSize" : "STANDARD",
+    "body" : {
+      "type" : "section",
+      "horizontal" : false,
+      "children" : [ {
+                       "type" : "text",
+                       "id" : "hello",
+                       "label" : "Confirmation message:",
+                       "value" : "Your configuration has been saved."
+                     },
+        {
+          "type" : "button",
+          "label" : "Back to Configuration",
+          "action": "PRIMARY",
+          "taskReference": {
+            "taskId": "maintainVaccineManagementConfig"
+          }
+        }]
+    }
+  }
+}

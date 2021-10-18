@@ -1,0 +1,401 @@
+{
+  "id": "backToOfficeDisclosure",
+  "securityDomains": [
+    "ManageBackToOfficeDisclosure"
+  ],
+  "endPoints": [
+    {
+      "baseUrlType": "workday-app",
+      "name": "vaccineManagementConfig",
+      "authType": "sso",
+      "onSend": "<%
+                 //Uncomment the below lines only for debugging purposes
+                 console.info(json:asJSON(self.data));
+                 return self.data;
+                 %>",
+      "url": "vaccineManagementConfig"
+    },
+    {
+      "baseUrlType": "workday-common",
+      "name": "me",
+      "authType": "sso",
+      "url": "workers/me?view=workerProfile"
+    },
+    {
+      "baseUrlType": "workday-common",
+      "name": "userInfo",
+      "authType": "sso",
+      "url": "userInfo"
+    },
+    {
+      "name": "workerPhotoUrl",
+      "baseUrlType": "workday-common",
+      "url": "workers/me?view=workerPhotoWIDView",
+      "authType": "sso"
+    },
+    {
+      "baseUrlType": "workday-wql",
+      "name": "disclosureHistory",
+      "authType": "sso",
+      "url": "<%var query = 'select vaccinated, disclosureDate, exemptionType, submittedBy, optIn, businessProcesses{status,workdayID as id, businessProcessStepAwaitingAction} FROM ' + site.applicationId + '_backToOfficeDisclosures WHERE submittedBy=' + me.id + ' ORDER BY createdMoment DESC';
+              console.info(query);
+              return '/data?query=' + query.urlEncode()
+              %>"
+    },
+    {
+      "baseUrlType": "workday-app",
+      "name": "backToOfficeOptions",
+      "authType": "sso",
+      "url": "backToOfficeOptions"
+    },
+    {
+      "baseUrlType": "workday-app",
+      "name": "exemptionTypes",
+      "authType": "sso",
+      "url": "exemptionTypes"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "uploadVerificationFile",
+        "baseUrlType": "workday-app",
+        "url": "disclosureVerificationFile",
+        "authType": "sso",
+        "exclude": "<% empty verificationFile.children %>",
+        "httpMethod": "POST",
+        "allowEmptyValue": true,
+        "multiPartFileLast": true
+      },
+      {
+        "name": "backToOfficeDisclosure",
+        "baseUrlType": "workday-app",
+        "url": "/backToOfficeDisclosures",
+        "httpMethod": "POST",
+        "authType": "sso",
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   console.info(json:asJSON(self.data));
+                   return self.data;
+                   %>",
+        "values": [
+          {
+            "outboundPath": "submittedBy.id",
+            "value": "<% me.id %>"
+          },
+          {
+            "outboundPath": "disclosureDate",
+            "value": "<% date:formatDateWithTimeZones(string:toString(date:getTodaysDate(date:getDateTimeZone(clientTimeZone))), 'Europe/London', 'yyyy-MM-dd HH:mm:ss.SSS', userInfo.data[0].timezone, 'yyyy-MM-dd') %>"
+          },
+          {
+            "outboundPath": "optIn",
+            "value": "<% backToOfficeOptionDropDown.value[0] %>"
+          },
+          {
+            "outboundPath": "vaccinated",
+            "value": "<% vaccinated.value[0] %>"
+          },
+          {
+            "outboundPath": "exemptionType",
+            "value": "<% empty exemptionTypesDropDown.value[0] ? null : exemptionTypesDropDown.value[0]  %>"
+          }
+        ]
+      },
+      {
+        "_comment": "Kicks off BP. Pass in ID of the disclosure object and when it is successfully created will trigger BP. Name element is the name of the BP in lower camel case + 'Events' from the .businessprocess file",
+        "name": "SubmitBackToOfficeDisclosureEvents",
+        "baseUrlType": "workday-app",
+        "url": "submitBackToOfficeDisclosureEvents",
+        "httpMethod": "POST",
+        "authType": "sso",
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   console.info(json:asJSON(self.data));
+                   return self.data;
+                   %>",
+        "values": [
+          {
+            "outboundPath": "businessProcessTarget.id",
+            "value": "<% backToOfficeDisclosure.id %>"
+          }
+        ]
+      }
+    ],
+    "responseErrorDetail": {
+      "errorSummary": "<% error %>",
+      "errors": "<% errors.map(item => { item.error }); %>"
+    }
+  },
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "Submit Back to Office Disclosure"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "section",
+          "columnWidthRatios": [
+            0.4,
+            0.6
+          ],
+          "horizontal": true,
+          "children": [
+            {
+              "type": "section",
+              "horizontal": true,
+              "children": [
+                {
+                  "type": "image",
+                  "id": "workerPhoto",
+                  "sizingHint": "THUMBNAIL",
+                  "defaultPhoto": false,
+                  "userPhoto": true,
+                  "endPoint": {
+                    "baseUrlType": "workday-common",
+                    "url": "<% 'workerRawPhotoData/' + workerPhotoUrl.workerPhotos.id %>",
+                    "authType": "sso"
+                  },
+                  "render": "<% empty workerPhotoUrl.workerPhotos.id ? false : true %>"
+                },
+                {
+                  "type": "section",
+                  "title": "<% me.descriptor %>",
+                  "horizontal": true,
+                  "children": [
+                    {
+                      "label": "Business Title",
+                      "type": "readOnlyText",
+                      "value": "<% me.businessTitle %>"
+                    },
+                    {
+                      "label": "Organization",
+                      "type": "readOnlyText",
+                      "value": "<% me.primarySupervisoryOrganization.descriptor %>"
+                    },
+                    {
+                      "label": "Work Location",
+                      "type": "readOnlyText",
+                      "value": "<% me.location.descriptor %>"
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
+                      "enabled": "false"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "title": "Back To Office Policy & Site Cards",
+                  "horizontal": true,
+                  "children": [
+                    {
+                      "type": "richText",
+                      "value": "Please Review the following Documents:<br>",
+                      "enabled": "false",
+                      "visible": "<%  !empty vaccineManagementConfig.data[0].workPlacePolicyEnabled || !empty vaccineManagementConfig.data[0].siteInformationEnabled  %>"
+
+                    },
+                    {
+                      "id": "workPlacePolicyLink",
+                      "descriptor": "<%vaccineManagementConfig.data[0].workPlacePolicyLabel %>",
+                      "type": "externalLink",
+                      "url": "<% vaccineManagementConfig.data[0].workPlacePolicyURL %>",
+                      "render": "<%vaccineManagementConfig.data[0].workPlacePolicyEnabled %>"
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
+                      "enabled": "false"
+                    },
+                    {
+                      "id": "siteCardsLink",
+                      "descriptor": "<%vaccineManagementConfig.data[0].siteInformationLabel %>",
+                      "type": "externalLink",
+                      "url": "<% vaccineManagementConfig.data[0].siteInformationURL %>",
+                      "render": "<% vaccineManagementConfig.data[0].siteInformationEnabled %>"
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
+                      "enabled": "false"
+                    },
+                    {
+                      "id": "checkBoxAcceptConditions",
+                      "label": "I have read and acknowledged the information provided.",
+                      "type": "checkBox",
+                      "required": true
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
+                      "enabled": "false"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "title": "Back To Office Status",
+                  "horizontal": true,
+                  "children": [
+                    {
+                      "type": "dropdown",
+                      "id": "backToOfficeOptionDropDown",
+                      "label": "Back To Office Options",
+                      "instanceListLoopTag": {
+                        "id": "backToOfficeOptionsList",
+                        "type": "instanceLoop",
+                        "templateInstance": {
+                          "id": "<% option.backToOfficeOptionName %>",
+                          "descriptor": "<% option.backToOfficeOptionName %>"
+                        },
+                        "on": "<% backToOfficeOptions.data %>",
+                        "as": "option"
+                      },
+                      "required": false
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
+                      "enabled": "false"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "title": "Vaccination Status",
+                  "horizontal": true,
+                  "children": [
+                    {
+                      "type": "radioGroup",
+                      "id": "vaccinated",
+                      "label": "Please select one of the following options:",
+                      "required": true,
+                      "hideDisplayOption": true,
+                      "selectedValues": "<% ['yes']  %>",
+                      "onChange": "<% if ( vaccinated.value[0] == 'I confirm I am fully vaccinated' || vaccinated.value[0] == 'I am not fully vaccinated but I intend to be' || vaccinated.value[0] == 'Booster') {
+                          exemptionTypesDropDown.setVisible(false)
+                      } else {
+                          exemptionTypesDropDown.setVisible(true);
+                      }%>",
+                      "instanceList": [
+                        {
+                          "id": "I confirm I am fully vaccinated",
+                          "descriptor": "I confirm I am fully vaccinated."
+                        },
+                        {
+                          "id": "I am not fully vaccinated but I intend to be",
+                          "descriptor": "I am not fully vaccinated but I intend to be."
+                        },
+                        {
+                          "id": "I do not intend to be vaccinated and will be tested instead",
+                          "descriptor": "I do not intend to be vaccinated and will be tested instead."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "dropdown",
+                      "id": "exemptionTypesDropDown",
+                      "label": "Exemption Types",
+                      "instanceListLoopTag": {
+                        "id": "exemptionTypesList",
+                        "type": "instanceLoop",
+                        "templateInstance": {
+                          "id": "<% exemptionType.exemptionTypeName %>",
+                          "descriptor": "<% exemptionType.exemptionTypeName %>"
+                        },
+                        "on": "<% exemptionTypes.data %>",
+                        "as": "exemptionType"
+                      },
+                      "required": false,
+                      "visible": false
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
+                      "enabled": "false"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "section",
+              "horizontal": true,
+              "render": "<% !empty disclosureHistory.data %>",
+              "children": [
+                {
+                  "type": "grid",
+                  "gridType": "LIST",
+                  "multiViewStylingEnabled": true,
+                  "id": "Histories",
+                  "rows": "<% disclosureHistory.data %>",
+                  "rowVariableName": "history",
+                  "enabled": false,
+                  "doNotAdd": true,
+                  "doNotRemove": true,
+                  "label": "My Back To Office Disclosure History",
+                  "columns": [
+                    {
+                      "type": "column",
+                      "id": "columnCreatedMoment",
+                      "columnId": "columnCreatedMoment",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% history.disclosureDate %>"
+                      },
+                      "label": "Submission Date"
+                    },
+                    {
+                      "type": "column",
+                      "id": "columnOptIn",
+                      "columnId": "columnOptIn",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% history.optIn %>"
+                      },
+                      "label": "Back to Office Preference"
+                    },
+                    {
+                      "type": "column",
+                      "id": "columnVaccinated",
+                      "columnId": "columnVaccinated",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% history.vaccinated %>"
+                      },
+                      "label": "Vaccination Preference"
+                    },
+                    {
+                      "type": "column",
+                      "id": "columnExemptionType",
+                      "columnId": "columnExemptionType",
+                      "cellTemplate": {
+                        "type": "text",
+                        "value": "<% history.exemptionType %>"
+                      },
+                      "label": "Declared Vaccination Exemption Type"
+                    },
+                    {
+                      "type": "column",
+                      "id": "columnBPStatus",
+                      "columnId": "columnBPStatus",
+                      "cellTemplate": {
+                        "type": "text",
+                        "render": "<% !empty(history.businessProcesses)%>",
+                        "value": "<% history.businessProcesses[0].status ?: 'Not Submitted' %>"
+                      },
+                      "label": "Status"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

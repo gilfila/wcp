@@ -1,0 +1,33 @@
+var getWorkerCountry = function(workerID) {
+  var query = 'SELECT locationName, country, workdayID FROM locationsUsedAsBusinessSite WHERE workdayID=\'' + workerID + '\'';
+    console.info(query);
+
+  return query;
+};
+
+var getEmployeeType = function(workerID) {
+  var query = 'SELECT employeeType_PrimaryPosition FROM allActiveEmployees WHERE workdayID=\'' + workerID + '\'';
+  console.info(query);
+  return query;
+};
+
+var getMyRequests = function(workerID) {
+  var query = 'SELECT workdayID as requestId, businessProcesses{status,workdayID as id, businessProcessStepAwaitingAction} , programType, requestAmount, requestAmountCurrency, school, creationDate FROM TuitionReimbursement_sghrnq_tuitionReimbursementRequests WHERE worker =' + workerID + ' ORDER BY creationDate DESC';
+  console.info(query);
+  return query;
+};
+
+var getRequestInfoByEventID = function(eventID) {
+  //TODO Cleanup this routine.
+  //var query1 = 'SELECT workdayID as requestId, cf_XTNDCFLRVTuitionReimbursementBPEventID as eventId, programType, requestAmount, requestAmountCurrency, school, creationDate, cf_XTNDLRVAwaitingPersons as awaitingPersons, cf_XTNDLRVBPEventStatus as status FROM TuitionReimbursement_sghrnq_tuitionReimbursementRequests WHERE worker =' + workerID + ' ORDER BY creationDate DESC';
+  var query = 'SELECT businessProcessTarget{school,requestAmount,programType,worker} as request, awaitingPersons, workdayID, status FROM TuitionReimbursement_sghrnq_tuitionReimbursementApprovalEvents WHERE workdayID =' + eventID + ' ORDER BY creationDate DESC';
+  console.info(query);
+  return query;
+};
+
+{
+  "workerCountry": getWorkerCountry,
+  "empType":getEmployeeType,
+  "myRequests":getMyRequests,
+  "requestByEventID":getRequestInfoByEventID
+}
