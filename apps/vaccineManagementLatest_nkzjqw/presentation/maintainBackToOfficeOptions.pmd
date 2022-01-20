@@ -1,0 +1,137 @@
+{
+  "id": "maintainBackToOfficeOptions",
+  "securityDomains": [
+    "ManageConfiguration"
+  ],
+  "endPoints": [
+    {
+      "name": "selectedWorker",
+      "baseUrlType": "workday-common",
+      "url": "workers/me",
+      "authType": "sso"
+    },
+    {
+      "baseUrlType": "workday-app",
+      "name": "backToOfficeOptions",
+      "authType": "sso",
+      "url": "backToOfficeOptions"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "backToOfficeOptionsPut",
+        "url": "<% 'backToOfficeOptions/' + backToOfficeOptionId.value %>",
+        "httpMethod": "PUT",
+        "baseUrlType": "workday-app",
+        "onSend": "<%
+                  //Uncomment the below lines only for debugging purposes
+                  //console.info(json:asJSON(self.data));
+                  return self.data;
+                  %>",
+        "exclude": "<% empty backToOfficeOptionId.value %>"
+      },
+      {
+        "name": "backToOfficeOptionsPost",
+        "baseUrlType": "workday-app",
+        "url": "backToOfficeOptions",
+        "httpMethod": "POST",
+        "exclude": "<% ! empty backToOfficeOptionId.value %>",
+        "authType": "sso",
+        "onSend": "<%
+                  //Uncomment the below lines only for debugging purposes
+                  //console.info(json:asJSON(self.data));
+                  return self.data;
+                  %>",
+        "values": [
+          {
+            "outboundPath": "createdBy.id",
+            "value": "<% selectedWorker.id %>"
+          }
+        ]
+      },
+      {
+        "name": "backToOfficeOptionsDelete",
+        "baseUrlType": "workday-app",
+        "url": "backToOfficeOptions/<%backToOfficeOptionId.value%>",
+        "httpMethod": "DELETE",
+        "authType": "SSO"
+      }
+    ]
+  },
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "pageType": "edit",
+    "title": {
+      "type": "title",
+      "label": "Back To Office Options",
+      "enabled": false
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "section",
+          "horizontal": true,
+          "children": [
+            {
+              "type": "grid",
+              "gridType": "LIST",
+              "multiViewStylingEnabled": true,
+              "id": "BackToOfficeOptions",
+              "rows": "<% backToOfficeOptions.data %>",
+              "rowVariableName": "backToOfficeOption",
+              "deleteEndPoint": "backToOfficeOptionsDelete",
+              "enabled": true,
+              "label": "Current Back To Office Options",
+              "columns": [
+                {
+                  "type": "column",
+                  "id": "columnVaccineTypeName",
+                  "columnId": "columnbackToOfficeOptionName",
+                  "cellTemplate": {
+                    "type": "text",
+                    "value": "<% backToOfficeOption.backToOfficeOptionName %>",
+                    "valuesOut": [
+                      {
+                        "value": "<% self.value %>",
+                        "valueOutBinding": "backToOfficeOptionsPut.backToOfficeOptionName"
+                      },
+                      {
+                        "value": "<% self.value %>",
+                        "valueOutBinding": "backToOfficeOptionsPost.backToOfficeOptionName"
+                      }
+                    ]
+                  },
+                  "label": "Back To Office Option Name"
+                },
+                {
+                  "type": "column",
+                  "id": "columnBackToOfficeOptionsId",
+                  "columnId": "columnBackToOfficeOptionsId",
+                  "cellTemplate": {
+                    "type": "text",
+                    "value": "<% backToOfficeOption.id %>",
+                    "id": "backToOfficeOptionId",
+                    "enabled": false
+                  },
+                  "label": "Back To Office Type ID"
+                }
+              ]
+            },
+            {
+              "type": "button",
+              "label": "Return to Main Configuration",
+              "taskReference": {
+                "type": "taskReference",
+                "taskId": "maintainVaccineManagementConfig"
+              },
+              "action": "AUXILIARY"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

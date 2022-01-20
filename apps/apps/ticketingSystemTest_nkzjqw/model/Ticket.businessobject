@@ -1,0 +1,65 @@
+{
+  "id": 1,
+  "name": "Ticket",
+  "label": "Ticket",
+  "defaultSecurityDomains": [
+    "ManageTickets"
+  ],
+  "defaultCollection": {
+    "name": "tickets",
+    "label": "Tickets"
+  },
+  "fields": [
+    {
+      "id": 1,
+      "name": "project",
+      "label": "Project",
+      "type": "TEXT"
+    },
+    {
+      "id": 2,
+      "name": "issueType",
+      "label": "Issue Type",
+      "type": "TEXT"
+    },
+    {
+      "id": 3,
+      "name": "summary",
+      "label": "Summary",
+      "type": "TEXT"
+    },
+    {
+      "id": 4,
+      "name": "priority",
+      "label": "Priority",
+      "type": "TEXT"
+    },
+    {
+      "id": 5,
+      "name": "reporter",
+      "label": "Reporter",
+      "type": "SINGLE_INSTANCE",
+      "target": "WORKER",
+      "secureByTarget": true
+    },
+    {
+      "id": 6,
+      "name": "assignee",
+      "label": "Assignee",
+      "type": "SINGLE_INSTANCE",
+      "target": "WORKER"
+    },
+    {
+      "id": 7,
+      "name": "description",
+      "label": "Description",
+      "type": "TEXT"
+    },
+    {
+      "id": 8,
+      "name": "status",
+      "label": "Status",
+      "type": "TEXT"
+    }
+  ]
+}

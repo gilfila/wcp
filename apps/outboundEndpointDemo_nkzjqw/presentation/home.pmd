@@ -1,0 +1,157 @@
+{
+  "id": "home",
+  "endPoints": [
+    {
+      "baseUrlType": "app",
+      "name": "testObjectInbound",
+      "authType": "sso",
+      "url": "testObjects"
+    }
+  ],
+  "presentation": {
+    "pageType":"view",
+    "title": {
+      "type": "title",
+      "label": "Workday Extend"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "fieldSet",
+          "title": "Outbound End Points",
+          "children": [
+            {
+              "type": "button",
+              "action": "LINK",
+              "label": "Value Out Binding",
+              "taskReference": {
+                "taskId": "postValueOutBinding"
+              }
+            },
+            {
+              "type": "button",
+              "action": "LINK",
+              "label": "Values Tag",
+              "taskReference": {
+                "taskId": "postValues"
+              }
+            },
+            {
+              "type": "button",
+              "action": "LINK",
+              "label": "On Send",
+              "taskReference": {
+                "taskId": "postOnSend"
+              }
+            }
+          ]
+        },
+        {
+          "type": "fieldSet",
+          "title": "Confirm Windows",
+          "children": [
+            {
+              "type": "button",
+              "action": "LINK",
+              "label": "Micro Confirm",
+              "taskReference": {
+                "taskId": "micro"
+              }
+            },
+            {
+              "type": "button",
+              "action": "LINK",
+              "label": "Micro Conclusion",
+              "taskReference": {
+                "taskId": "microConclusion"
+              }
+            },
+            {
+              "type": "button",
+              "action": "LINK",
+              "label": "Confirmation",
+              "taskReference": {
+                "taskId": "confirmation"
+              }
+            }
+          ]
+        },
+        {
+          "type": "fieldSet",
+          "title": "Errors",
+          "children": [
+            {
+              "type": "button",
+              "action": "LINK",
+              "label": "Micro Confirm",
+              "taskReference": {
+                "taskId": "micro"
+              }
+            },
+            {
+              "type": "button",
+              "action": "LINK",
+              "label": "Micro Conclusion",
+              "taskReference": {
+                "taskId": "microConclusion"
+              }
+            },
+            {
+              "type": "button",
+              "action": "LINK",
+              "label": "Confirmation",
+              "taskReference": {
+                "taskId": "confirmation"
+              }
+            }
+          ]
+        },
+        {
+          "type": "grid",
+          "gridType": "LIST",
+          "id": "viewFields",
+          "rows": "<% testObjectInbound.data ?: [''] %>",
+          "rowVariableName": "data",
+          "label": "Test Objects",
+          "columns": [
+            {
+              "type": "column",
+              "id": "idColumn",
+              "columnId": "idColumn",
+              "cellTemplate": {
+                "type": "text",
+                "id":"idCell",
+                "value": "<% data.id %>",
+                "enabled":false
+              },
+              "label": "WID"
+            },
+            {
+              "type": "column",
+              "id": "field1Column",
+              "columnId": "field1Column",
+              "cellTemplate": {
+                "type": "text",
+                "id":"field1Cell",
+                "value": "<% data.myField1 %>"
+              },
+              "label": "Field 1"
+            },
+            {
+              "type": "column",
+              "id": "field2Column",
+              "columnId": "field2Column",
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% data.myField2 %>",
+                "id":"field2Cell"
+              },
+              "label": "Field 2"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

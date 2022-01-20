@@ -1,0 +1,26 @@
+{
+  "id": 1,
+  "name": "TestObject",
+  "label": "Test Object",
+  "defaultSecurityDomains": [
+    "MySecurityDomain"
+  ],
+  "defaultCollection": {
+    "name": "testObjects",
+    "label": "Test Objects"
+  },
+  "fields": [
+    {
+      "id": 1,
+      "name": "myField1",
+      "label": "My Field 1",
+      "type": "TEXT"
+    },
+    {
+      "id": 2,
+      "name": "myField2",
+      "label": "My Field 2",
+      "type": "TEXT"
+    }
+  ]
+}

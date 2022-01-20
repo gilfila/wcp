@@ -1,0 +1,68 @@
+{
+  "id": "stackedAreaChart2",
+  "include": [
+        "chartData.script"
+  ],
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "stackedAreaChart2"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "section",
+          "horizontal": true,
+          "children": [
+            {
+              "type": "pod",
+              "podId": "header"
+            },
+            {
+              "type": "text",
+              "label": "stackedAreaChart2",
+              "value": "Please see the below example of a stacked area Chart. The metrics are just for demo purposes. Feel free to edit the PMD, to see the affect on the graph if certain tags are added / removed "
+            },
+            {
+              "type": "stackedAreaChart2",
+              "id": "stackedArea",
+              "data": "<% chartData.getChartData() %>",
+              "dataVariableName": "data",
+              "measurementDataSets": [
+                {
+                  "name": "Finance",
+                  "value": "<% data.recruits.finance %>"
+                },
+                {
+                  "name": "Sales",
+                  "value": "<% data.recruits.sales %>"
+                },
+                {
+                  "name": "Support",
+                  "value": "<% data.recruits.support %>"
+                }
+              ],
+              "categoryDataSet": {
+                "name": "Recruiter",
+                "value": "<% data.recruiter %>"
+              },
+              "measurementAxisOptions": {
+                "axisTitle": "Recruits"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "footer"
+        }
+      ]
+    }
+  }
+}

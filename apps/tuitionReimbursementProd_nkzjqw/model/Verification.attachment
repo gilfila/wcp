@@ -31,6 +31,6 @@
       "label": "Tuition Reimbursement Request",
       "type": "SINGLE_INSTANCE",
       "target": "TuitionReimbursementRequest"
-    },
+    }
   ]
 }

@@ -1,0 +1,9 @@
+{
+  "id": 2,
+  "name": "CreateTicket",
+  "label": "Create Ticket",
+  "routePath": "/createTicket",
+  "securityDomains": [
+    "ManageTickets"
+  ]
+}

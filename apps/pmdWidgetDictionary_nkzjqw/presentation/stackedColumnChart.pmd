@@ -1,0 +1,88 @@
+{
+  "id": "stackedColumnChart",
+  "endPoints": [
+    {
+      "name": "countries",
+      "baseUrlType": "wdayRef",
+      "url": "/country/vers/latest/items?pageLimit=15",
+      "authType": "sso",
+      "bestEffort": true
+    }
+  ],
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "stackedColumnChart"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "section",
+          "horizontal": true,
+          "children": [
+            {
+              "type": "pod",
+              "podId": "header"
+            },
+            {
+              "type": "text",
+              "label": "stackedColumnChart",
+              "value": "Please see the below example of a stacked Column Chart. The metrics are just for demo purposes. Feel free to edit the PMD, to see the affect on the graph if certain tags are added / removed "
+            },
+            {
+              "type": "stackedColumnChart",
+              "rowVariableName": "row",
+              "rows": "<% countries.items %>",
+              "horizontalAxisLabels": {
+                "type": "chartDimension",
+                "label": "Country",
+                "binding": "<% row.name %>"
+              },
+              "metrics": [
+                {
+                  "type": "chartMetric",
+                  "label": "ISO_3166_1_Numeric_3_Code",
+                  "binding": "<% row['ISO_3166_1_Numeric_3_Code'] %>"
+                },
+                {
+                  "type": "chartMetric",
+                  "label": "ISO_3166_1_Numeric_3_Code * 2",
+                  "binding": "<% row['ISO_3166_1_Numeric_3_Code'] * 2 %>"
+                }
+              ],
+              "verticalAxisTitle": "ISO Code",
+              "_comment": "The verticalAxisMaximumValue is optional.   If removed, Workday will scale the chart dynamically",
+              "comparisonLinePosition": 1000,
+              "comparisonLineLabel": "Grand Total",
+              "verticalAxisIncrementValue": {
+                "type": "chartAxisProperty",
+                "useAxisValue": true,
+                "axisValue": 200
+              },
+              "verticalAxisMinimumValue": {
+                "type": "chartAxisProperty",
+                "useAxisValue": true,
+                "axisValue": 0
+              },
+              "verticalAxisMaximumValue": {
+                "type": "chartAxisProperty",
+                "useAxisValue": true,
+                "axisValue": 3000
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "footer"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "id": "action",
+  "endPoints": [
+    {
+      "name": "eventStep",
+      "baseUrlType": "WORKDAY-BP",
+      "url": "<% '/eventSteps/' + queryParams.eventStepId %>",
+      "authType": "sso"
+    },
+    {
+      "name": "event",
+      "baseUrlType": "WORKDAY-BP",
+      "url": "<% '/events/' + eventStep.event.id %>",
+      "authType": "sso",
+      "exclude": "<% empty(eventStep.event.id) %>"
+    },
+    {
+      "baseUrlType": "app",
+      "name": "ticketData",
+      "authType": "sso",
+      "url": "tickets/<% event.for.id %>"
+    },
+    {
+      "name": "workerSearch",
+      "baseUrlType": "workday-staffing",
+      "url": "<% 'workers?search=' + instanceListQuery %>",
+      "exclude": "<% empty(instanceListQuery) %>",
+      "authType": "sso",
+      "deferred": "true"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "ticketOutboundEndpoint",
+        "baseUrlType": "app",
+        "url": "tickets/<% ticketData.id %>",
+        "httpMethod": "PATCH",
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   console.info(json:asJSON(self.data));
+                   return self.data;
+                   %>",
+        "authType": "sso"
+      },
+      {
+        "values": [
+          {
+            "outboundPath": "comment",
+            "value": "Completed ticket triage"
+          }
+        ],
+        "name": "reviewEventStep",
+        "baseUrlType": "WORKDAY-BP",
+        "url": "<% '/eventSteps/' + queryParams.eventStepId + '/submit' %>",
+        "httpMethod": "POST",
+        "authType": "sso"
+      }
+    ]
+  },
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "title": {
+      "type": "title",
+      "label": "Workday Extend"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "text",
+          "id": "hello",
+          "label": "Debugging (Ticket Data)",
+          "value": "<% json:asJSON(ticketData) %>"
+        },
+        {
+          "type": "instanceList",
+          "searchEndPoint": "<% endpoints.workerSearch %>",
+          "multiSelect": "false",
+          "id": "instanceListWorkerSearch",
+          "label": "Assignee",
+          "searchResultValues": "<% workerSearch.data %>",
+          "required": "<% true %>",
+          "values": "<%
+                     var myList = [];
+                     if(!empty ticketData.assignee){
+                         myList = [ticketData.assignee];
+                     }
+                     return myList;
+                     %>",
+          "selectedValues": "<%
+                            var myList = [];
+                            if(!empty ticketData.assignee){
+                                myList = [ticketData.assignee];
+                            }
+                            return myList;
+                            %>",
+          "valueOutBinding": "ticketOutboundEndpoint.assignee.id",
+          "_comment": "Name of valueOutBinding is based on name of outboundEndpoint for BO. Set default value at page load to the current worker. They can search for a different worker by typing in the instanceList and hitting Enter."
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": "false",
+          "value": "Powered By Workday Extend"
+        }
+      ]
+    }
+  }
+}

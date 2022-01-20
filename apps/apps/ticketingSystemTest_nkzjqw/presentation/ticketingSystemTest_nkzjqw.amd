@@ -1,0 +1,110 @@
+{
+  "appProperties": [ ],
+  "flowDefinitions": [
+    {
+      "id": "confirmationFlow",
+      "flowSteps": [
+        {
+          "id": "confirmationStep",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "confirmation",
+              "condition": "true"
+            }
+          ],
+          "taskId": "createTicket"
+        },
+        {
+          "id": "confirmation",
+          "taskId": "ticketConfirmation"
+        }
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "root",
+      "routingPattern": "/",
+      "page": {
+        "id": "viewTickets"
+      }
+    },
+    {
+      "id": "ticketConfirmation",
+      "routingPattern": "ticketConfirmation",
+      "page": {
+        "id": "ticketConfirmation"
+      }
+    },
+    {
+      "id": "viewTickets",
+      "routingPattern": "viewTickets",
+      "page": {
+        "id": "viewTickets"
+      }
+    },
+    {
+      "id": "createTicket",
+      "routingPattern": "createTicket",
+      "page": {
+        "id": "createTicket"
+      }
+    },
+    {
+      "id": "manageTickets",
+      "routingPattern": "manageTickets",
+      "page": {
+        "id": "manageTickets"
+      }
+    },
+    {
+      "id": "action",
+      "routingPattern": "action/{eventStepId}",
+      "page": {
+        "id": "action"
+      }
+    },
+    {
+      "id": "errorPage",
+      "routingPattern": "errorPage",
+      "page": {
+        "id": "errorPage"
+      }
+    },
+    {
+      "id": "eventDetails",
+      "routingPattern": "details/{eventId}",
+      "page": {
+        "id": "eventDetails"
+      }
+    }
+  ],
+  "applicationId": "ticketingSystemTest_nkzjqw",
+  "dataProviders": [
+    {
+      "key": "WORKDAY-COMMON",
+      "value": "https://api.workday.com/common/v1"
+    },
+    {
+      "key": "app",
+      "value": "https://api.workday.com/apps/<%site.applicationId%>/v1/"
+    },
+    {
+      "key": "WORKDAY-WQL",
+      "value": "https://api.workday.com/wql/v1"
+    },
+    {
+      "key": "WORKDAY-REFERENCE-DATA",
+      "value": "https://api.workday.com/referenceData"
+    },
+    {
+      "key": "workday-staffing",
+      "value": "https://api.workday.com/staffing/v1/"
+    },
+    {
+      "key": "WORKDAY-BP",
+      "value": "https://api.workday.com/businessProcess/v1"
+    }
+  ]
+}

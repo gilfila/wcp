@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "name": "ManageTickets",
+  "label": "Manage Tickets",
+  "routePath": "/manageTickets",
+  "businessObject": "Ticket",
+  "secured": true,
+  "securityDomains": [
+    "ManageTickets"
+  ]
+}

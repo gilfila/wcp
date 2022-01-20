@@ -1,0 +1,137 @@
+{
+  "id": "maintainVaccineManufacturers",
+  "securityDomains": [
+    "ManageConfiguration"
+  ],
+  "endPoints": [
+    {
+      "name": "selectedWorker",
+      "baseUrlType": "workday-common",
+      "url": "workers/me",
+      "authType": "sso"
+    },
+    {
+      "baseUrlType": "workday-app",
+      "name": "vaccineManufacturers",
+      "authType": "sso",
+      "url": "vaccineManufacturers"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "vaccineManufacturerPut",
+        "url": "<% 'vaccineManufacturers/' + vaccineManufacturerId.value %>",
+        "httpMethod": "PUT",
+        "baseUrlType": "workday-app",
+        "onSend": "<%
+                  //Uncomment the below lines only for debugging purposes
+                  //console.info(json:asJSON(self.data));
+                  return self.data;
+                  %>",
+        "exclude": "<% empty vaccineManufacturerId.value %>"
+      },
+      {
+        "name": "vaccineManufacturerPost",
+        "baseUrlType": "workday-app",
+        "url": "vaccineManufacturers",
+        "httpMethod": "POST",
+        "exclude": "<% ! empty vaccineManufacturerId.value %>",
+        "authType": "sso",
+        "onSend": "<%
+                  //Uncomment the below lines only for debugging purposes
+                  //console.info(json:asJSON(self.data));
+                  return self.data;
+                  %>",
+        "values": [
+          {
+            "outboundPath": "createdBy.id",
+            "value": "<% selectedWorker.id %>"
+          }
+        ]
+      },
+      {
+        "name": "vaccineManufacturerDelete",
+        "baseUrlType": "workday-app",
+        "url": "vaccineManufacturers/<%vaccineManufacturerId.value%>",
+        "httpMethod": "DELETE",
+        "authType": "SSO"
+      }
+    ]
+  },
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "pageType": "edit",
+    "title": {
+      "type": "title",
+      "label": "Manage Vaccine Manufacturer",
+      "enabled": false
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "section",
+          "horizontal": true,
+          "children": [
+            {
+              "type": "grid",
+              "gridType": "LIST",
+              "multiViewStylingEnabled": true,
+              "id": "VaccineManufacturers",
+              "rows": "<% vaccineManufacturers.data %>",
+              "rowVariableName": "vaccineManufacturer",
+              "deleteEndPoint": "vaccineManufacturerDelete",
+              "enabled": true,
+              "label": "Current Vaccine Manufacturers",
+              "columns": [
+                {
+                  "type": "column",
+                  "id": "columnVaccineManufacturerName",
+                  "columnId": "columnVaccineManufacturerName",
+                  "cellTemplate": {
+                    "type": "text",
+                    "value": "<% vaccineManufacturer.vaccineManufacturerName %>",
+                    "valuesOut": [
+                      {
+                        "value": "<% self.value %>",
+                        "valueOutBinding": "vaccineManufacturerPut.vaccineManufacturerName"
+                      },
+                      {
+                        "value": "<% self.value %>",
+                        "valueOutBinding": "vaccineManufacturerPost.vaccineManufacturerName"
+                      }
+                    ]
+                  },
+                  "label": "Vaccine Manufacturer Name"
+                },
+                {
+                  "type": "column",
+                  "id": "columnvaccineManufacturerId",
+                  "columnId": "columnvaccineManufacturerId",
+                  "cellTemplate": {
+                    "type": "text",
+                    "value": "<% vaccineManufacturer.id %>",
+                    "id": "vaccineManufacturerId",
+                    "enabled": false
+                  },
+                  "label": "Vaccine Manufacturer ID"
+                }
+              ]
+            },
+            {
+              "type": "button",
+              "label": "Return to Main Configuration",
+              "taskReference": {
+                "type": "taskReference",
+                "taskId": "maintainVaccineManagementConfig"
+              },
+              "action": "AUXILIARY"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

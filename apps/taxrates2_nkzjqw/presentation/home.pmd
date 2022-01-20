@@ -1,0 +1,91 @@
+{
+  "id": "home",
+  "endPoints": [
+    {
+      "name": "companySearch",
+      "baseUrlType": "payroll",
+      "url": "/values/taxRatesGroup/companyInstances/",
+      "authType": "sso"
+    },
+    {
+      "name": "stateSearch",
+      "baseUrlType": "payroll",
+      "url": "/values/taxRatesGroup/stateInstances/",
+      "authType": "sso"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "type": "outboundVariable",
+        "name": "selectedCompany",
+        "variableScope": "flow",
+        "onSend": "<% { self.data; }%>"
+      },
+      {
+        "type": "outboundVariable",
+        "name": "selectedState",
+        "variableScope": "flow",
+        "onSend": "<% { self.data; }%>"
+      },
+      {
+        "type": "outboundVariable",
+        "name": "effectiveDate",
+        "variableScope": "flow",
+        "onSend": "<% { self.data; }%>"
+      }
+    ]
+  },
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "Company State US Tax Reporting"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "instanceList",
+          "searchEndPoint": "<% endpoints.companySearch %>",
+          "multiSelect": "true",
+          "id": "instanceListCompanySearch",
+          "label": "Company",
+          "searchResultValues": "<% companySearch.data %>",
+          "values": "<% companySearch.data %>",
+          "selectedValues": "<% companySearch.id %>",
+          "valueOutBinding": "selectedCompany.company"
+        },
+        {
+          "type": "instanceList",
+          "searchEndPoint": "<% endpoints.stateSearch %>",
+          "multiSelect": "true",
+          "id": "instanceListStateSearch",
+          "label": "State",
+          "searchResultValues": "<% stateSearch.data %>",
+          "values": "<% stateSearch.data %>",
+          "selectedValues": "<% stateSearch.id %>",
+          "valueOutBinding": "selectedState.payrollStateAuthorityTaxCode"
+        },
+        {
+          "type": "date",
+          "label": "Effective Date (Optional)",
+          "id": "suiEffectiveDate",
+          "datePrecision": "DAY",
+          "displayTimeZone": "<% date:getDateTimeZone('America/Los_Angeles') %>",
+          "value": "<% [] %>",
+          "valueOutBinding": "effectiveDate.effectiveDate"
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": "false",
+          "value": "Powered By Workday Extend"
+        }
+      ]
+    }
+  }
+}

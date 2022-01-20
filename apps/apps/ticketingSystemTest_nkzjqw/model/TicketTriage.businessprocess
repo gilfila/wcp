@@ -1,0 +1,19 @@
+{
+  "id": 1,
+  "name": "TicketTriage",
+  "label": "Ticket Triage",
+  "description": "Business Process Type for Ticket Triage",
+  "targetBusinessObject": "Ticket",
+  "details": {
+    "pageRoute": "/details/{eventId}"
+  },
+  "actionSteps": [
+    {
+      "id": 1,
+      "name": "ReviewTicketTriage",
+      "label": "Triage Ticket",
+      "description": "Step to triage ticket",
+      "pageRoute": "/action/{eventStepId}"
+    }
+  ]
+}

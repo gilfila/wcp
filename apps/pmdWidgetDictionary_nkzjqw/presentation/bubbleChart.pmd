@@ -1,0 +1,98 @@
+{
+  "id": "bubbleChart",
+  "endPoints": [
+    {
+      "name": "countries",
+      "baseUrlType": "wdayRef",
+      "url": "/country/vers/latest/items?pageLimit=15",
+      "authType": "sso",
+      "bestEffort": "true"
+    }
+  ],
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "bubbleChart"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "section",
+          "horizontal": true,
+          "children": [
+            {
+              "type": "pod",
+              "podId": "header"
+            },
+            {
+              "type": "text",
+              "label": "bubbleChart",
+              "value": "Please see the below example of a bubble chart. The metrics are just for demo purposes. Feel free to edit the PMD, to see the affect on the graph if certain tags are added / removed "
+            },
+            {
+              "type": "bubbleChart",
+              "rows": "<% countries.items %>",
+              "rowVariableName": "row",
+              "horizontalAxisTitle": "row.ISO_3166_1_Numeric_3_Code",
+              "verticalAxisTitle": "row.ISO_3166_1_Numeric_3_Code * 2",
+              "legendItemLabels": {
+                "type": "chartDimension",
+                "label": "Country",
+                "binding": "<% row.name %>"
+              },
+              "verticalAxisPositions": {
+                "type": "chartMetric",
+                "label": "row.ISO_3166_1_Numeric_3_Code",
+                "binding": "<% row['ISO_3166_1_Numeric_3_Code'] %>"
+              },
+              "horizontalAxisPositions": {
+                "type": "chartMetric",
+                "label": "row.ISO_3166_1_Numeric_3_Code * 2",
+                "binding": "<% row['ISO_3166_1_Numeric_3_Code'] * 2 %>"
+              },
+              "bubbleSizes": {
+                "type": "chartMetric",
+                "label": "Average",
+                "binding": "<% (row['ISO_3166_1_Numeric_3_Code']) / (row['ISO_3166_1_Numeric_3_Code']) %>",
+                "format": "$#,###,###.00"
+              },
+              "horizontalAxisMinimumValue": {
+                "type": "chartAxisProperty",
+                "useAxisValue": true,
+                "axisValue": 0
+              },
+              "horizontalAxisIncrementValue": {
+                "type": "chartAxisProperty",
+                "useAxisValue": true,
+                "axisValue": 200
+              },
+              "verticalAxisMinimumValue": {
+                "type": "chartAxisProperty",
+                "useAxisValue": true,
+                "axisValue": 0
+              },
+              "verticalAxisIncrementValue": {
+                "type": "chartAxisProperty",
+                "useAxisValue": true,
+                "axisValue": 200
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "footer",
+          "parameters": {
+            "special": "false"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,579 @@
+{
+  "flowVersion": "1.18.0",
+  "name": "Untitled",
+  "type": ".Mixed.BusinessProcessTrigger",
+  "start": {
+    "notes": {
+      "value": [
+        {
+          "key": {
+            "value": "label",
+            "_meta": {
+              "type": "String"
+            }
+          },
+          "value": {
+            "value": "Flow Triggered",
+            "_meta": {
+              "type": "String"
+            }
+          },
+          "_meta": {
+            "type": "Note"
+          }
+        }
+      ],
+      "_meta": {
+        "type": [
+          "List",
+          "Note"
+        ]
+      }
+    },
+    "_meta": {
+      "type": "BusinessProcessTriggerStart"
+    }
+  },
+  "end": {
+    "notes": {
+      "value": [
+        {
+          "key": {
+            "value": "label",
+            "_meta": {
+              "type": "String"
+            }
+          },
+          "value": {
+            "value": "Flow Finished",
+            "_meta": {
+              "type": "String"
+            }
+          },
+          "_meta": {
+            "type": "Note"
+          }
+        }
+      ],
+      "_meta": {
+        "type": [
+          "List",
+          "Note"
+        ]
+      }
+    },
+    "_meta": {
+      "type": "BusinessProcessTriggerEnd"
+    }
+  },
+  "notes": {
+    "value": [
+      {
+        "key": {
+          "value": "label",
+          "_meta": {
+            "type": "String"
+          }
+        },
+        "value": {
+          "value": "Create an Orchestration that's triggered by an existing Workday business process",
+          "_meta": {
+            "type": "String"
+          }
+        },
+        "_meta": {
+          "type": "Note"
+        }
+      },
+      {
+        "key": {
+          "value": "description",
+          "_meta": {
+            "type": "String"
+          }
+        },
+        "value": {
+          "value": "",
+          "_meta": {
+            "type": "String"
+          }
+        },
+        "_meta": {
+          "type": "Note"
+        }
+      }
+    ],
+    "_meta": {
+      "type": [
+        "List",
+        "Note"
+      ]
+    }
+  },
+  "startNotes": {
+    "value": [
+      {
+        "key": {
+          "value": "label",
+          "_meta": {
+            "type": "String"
+          }
+        },
+        "value": {
+          "value": "Flow Triggered",
+          "_meta": {
+            "type": "String"
+          }
+        },
+        "_meta": {
+          "type": "Note"
+        }
+      }
+    ],
+    "_meta": {
+      "type": [
+        "List",
+        "Note"
+      ]
+    }
+  },
+  "endNotes": {
+    "value": [
+      {
+        "key": {
+          "value": "label",
+          "_meta": {
+            "type": "String"
+          }
+        },
+        "value": {
+          "value": "Flow Finished",
+          "_meta": {
+            "type": "String"
+          }
+        },
+        "_meta": {
+          "type": "Note"
+        }
+      }
+    ],
+    "_meta": {
+      "type": [
+        "List",
+        "Note"
+      ]
+    }
+  },
+  "nodes": {
+    "value": [
+      {
+        "name": "CreateJSON",
+        "structure": "bf23d568-c536-4197-b9f0-32272ad1aac8",
+        "values": {
+          "value": [ ],
+          "_meta": {
+            "type": [
+              "List",
+              "Mapping"
+            ]
+          }
+        },
+        "notes": {
+          "value": [
+            {
+              "key": {
+                "value": "label",
+                "_meta": {
+                  "type": "String"
+                }
+              },
+              "value": {
+                "value": "CreateJSON",
+                "_meta": {
+                  "type": "String"
+                }
+              },
+              "_meta": {
+                "type": "Note"
+              }
+            }
+          ],
+          "_meta": {
+            "type": [
+              "List",
+              "Note"
+            ]
+          }
+        },
+        "_meta": {
+          "type": "CreateJson"
+        }
+      },
+      {
+        "name": "SendHTTPRequest",
+        "body": {
+          "_meta": {
+            "type": "CreateTextDataBody"
+          },
+          "message": {
+            "expr": "data(\"CreateJSON\", \"data\").toString()",
+            "_meta": {
+              "type": [
+                "Expr",
+                "String"
+              ]
+            }
+          },
+          "contentType": "application/json"
+        },
+        "url": {
+          "expr": "\"https://slack.com/api/users.profile.set\"",
+          "_meta": {
+            "type": [
+              "Expr",
+              "Url"
+            ]
+          }
+        },
+        "queryParams": {
+          "value": [ ],
+          "_meta": {
+            "type": [
+              "List",
+              "QueryParam"
+            ]
+          }
+        },
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": {
+              "expr": "\"Bearer xoxp-651560928962-2653361690709-2641744427015-6163468673fd90a36de92df618f5ea13\"",
+              "_meta": {
+                "type": [
+                  "Expr",
+                  "String"
+                ]
+              }
+            },
+            "id": "TpEN3a8Y"
+          }
+        ],
+        "connectTimeoutMs": {
+          "value": 10000,
+          "_meta": {
+            "type": "Long"
+          }
+        },
+        "responseTimeoutMs": {
+          "value": 20000,
+          "_meta": {
+            "type": "Long"
+          }
+        },
+        "overallTimeoutMs": {
+          "value": 300000,
+          "_meta": {
+            "type": "Long"
+          }
+        },
+        "maxRetries": {
+          "value": 0,
+          "_meta": {
+            "type": "Int"
+          }
+        },
+        "retryDelayMs": {
+          "value": 1000,
+          "_meta": {
+            "type": "Long"
+          }
+        },
+        "responseType": {
+          "value": "Any",
+          "_meta": {
+            "type": "HttpResponseType"
+          }
+        },
+        "notes": {
+          "value": [
+            {
+              "key": {
+                "value": "label",
+                "_meta": {
+                  "type": "String"
+                }
+              },
+              "value": {
+                "value": "SendHTTPRequest",
+                "_meta": {
+                  "type": "String"
+                }
+              },
+              "_meta": {
+                "type": "Note"
+              }
+            }
+          ],
+          "_meta": {
+            "type": [
+              "List",
+              "Note"
+            ]
+          }
+        },
+        "_meta": {
+          "type": "Http"
+        }
+      },
+      {
+        "name": "Log",
+        "message": {
+          "expr": "data(\"SendHTTPRequest\", \"response\").toString()",
+          "_meta": {
+            "type": [
+              "Expr",
+              "String"
+            ]
+          }
+        },
+        "notes": {
+          "value": [
+            {
+              "key": {
+                "value": "label",
+                "_meta": {
+                  "type": "String"
+                }
+              },
+              "value": {
+                "value": "Log",
+                "_meta": {
+                  "type": "String"
+                }
+              },
+              "_meta": {
+                "type": "Note"
+              }
+            }
+          ],
+          "_meta": {
+            "type": [
+              "List",
+              "Note"
+            ]
+          }
+        },
+        "_meta": {
+          "type": "Log"
+        }
+      }
+    ],
+    "_meta": {
+      "type": [
+        "List",
+        "Node"
+      ]
+    }
+  },
+  "resources": {
+    "fileLikeResources": {
+      "bf23d568-c536-4197-b9f0-32272ad1aac8": {
+        "name": {
+          "value": "bf23d568-c536-4197-b9f0-32272ad1aac8",
+          "_meta": {
+            "type": "String"
+          }
+        },
+        "content": {
+          "value": "{\"profile\":{\"status_text\":\"PTO\",\"status_emoji\":\":face_vomiting:\"}}",
+          "_meta": {
+            "type": "String"
+          }
+        },
+        "notes": {
+          "value": [
+            {
+              "key": {
+                "value": "content-type",
+                "_meta": {
+                  "type": "String"
+                }
+              },
+              "value": {
+                "value": "application/json",
+                "_meta": {
+                  "type": "String"
+                }
+              },
+              "_meta": {
+                "type": "Note"
+              }
+            },
+            {
+              "key": {
+                "value": "resource-type",
+                "_meta": {
+                  "type": "String"
+                }
+              },
+              "value": {
+                "value": "SCHEMA",
+                "_meta": {
+                  "type": "String"
+                }
+              },
+              "_meta": {
+                "type": "Note"
+              }
+            },
+            {
+              "key": {
+                "value": "resource-display-name",
+                "_meta": {
+                  "type": "String"
+                }
+              },
+              "value": {
+                "value": "bf23d568-c536-4197-b9f0-32272ad1aac8",
+                "_meta": {
+                  "type": "String"
+                }
+              },
+              "_meta": {
+                "type": "Note"
+              }
+            }
+          ],
+          "_meta": {
+            "type": [
+              "List",
+              "Note"
+            ]
+          }
+        },
+        "_meta": {
+          "type": "InlineResource"
+        }
+      },
+      "_meta": {
+        "type": [
+          "Map",
+          "Resource"
+        ]
+      }
+    },
+    "credentials": {
+      "_meta": {
+        "type": [
+          "Map",
+          [
+            "WithNotes",
+            "ExternalAuth"
+          ]
+        ]
+      }
+    },
+    "workdayCredentials": {
+      "gcHuAz4j": {
+        "value": {
+          "username": {
+            "expr": "\"dummyISU\"",
+            "_meta": {
+              "type": [
+                "Expr",
+                "String"
+              ]
+            }
+          },
+          "checkEnvironment": {
+            "value": false,
+            "_meta": {
+              "type": "Boolean"
+            }
+          },
+          "_meta": {
+            "type": "IntegrationSystemUser"
+          }
+        },
+        "notes": {
+          "value": [
+            {
+              "key": {
+                "value": "resource-type",
+                "_meta": {
+                  "type": "String"
+                }
+              },
+              "value": {
+                "value": "AUTH",
+                "_meta": {
+                  "type": "String"
+                }
+              },
+              "_meta": {
+                "type": "Note"
+              }
+            },
+            {
+              "key": {
+                "value": "resource-display-name",
+                "_meta": {
+                  "type": "String"
+                }
+              },
+              "value": {
+                "value": "dummyISU",
+                "_meta": {
+                  "type": "String"
+                }
+              },
+              "_meta": {
+                "type": "Note"
+              }
+            }
+          ],
+          "_meta": {
+            "type": [
+              "List",
+              "Note"
+            ]
+          }
+        },
+        "_meta": {
+          "type": [
+            "WithNotes",
+            "WorkdayCredential"
+          ]
+        }
+      },
+      "_meta": {
+        "type": [
+          "Map",
+          [
+            "WithNotes",
+            "WorkdayCredential"
+          ]
+        ]
+      }
+    },
+    "_meta": {
+      "type": "ResourceProvider"
+    }
+  },
+  "defaultWorkdayCredentialRef": {
+    "resourceName": {
+      "value": "gcHuAz4j",
+      "_meta": {
+        "type": "String"
+      }
+    },
+    "_meta": {
+      "type": "WorkdayCredentialRef"
+    }
+  },
+  "_meta": {
+    "type": "Flow"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "micro",
+  "endPoints": [
+  ],
+  "presentation": {
+    "micro": true,
+    "title": {
+      "type": "title",
+      "label": "Micro Conclusion"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "text",
+          "id": "conclusion",
+          "label": "This is a Micro Conclusion",
+          "value": "You have successfully concluded"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "id": "postValueOutBinding",
+  "endPoints": [
+    {
+      "baseUrlType": "app",
+      "name": "testObjectInbound",
+      "authType": "sso",
+      "url": "testObjects"
+    }
+  ],
+  "outboundData": {
+  "outboundEndPoints": [
+    {
+      "baseUrlType": "app",
+      "name": "testObjectPostValueOutBinding",
+      "authType": "sso",
+      "httpMethod":"POST",
+      "exclude": "<% ! empty idCell.value %>",
+      "url": "testObjects"
+    },
+    {
+      "baseUrlType": "app",
+      "name": "testObjectDelete",
+      "authType": "sso",
+      "httpMethod":"DELETE",
+      "url": "<% 'testObjects/' + idCell.value %>"
+    }
+  ]
+  },
+  "presentation": {
+    "pageType":"edit",
+    "title": {
+      "type": "title",
+      "label": "Workday Extend"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "text",
+          "label": "testObjectPostValueOutBinding",
+            "enabled":false
+        },
+        {
+          "type": "grid",
+          "gridType": "LIST",
+          "deleteEndPoint": "testObjectDelete",
+          "id": "viewFields",
+          "rows": "<% testObjectInbound.data ?: [''] %>",
+          "rowVariableName": "data",
+          "label": "Test Objects",
+          "columns": [
+            {
+              "type": "column",
+              "id": "idColumn",
+              "columnId": "idColumn",
+              "cellTemplate": {
+                "type": "text",
+                "id":"idCell",
+                "value": "<% data.id %>",
+                "enabled":false
+              },
+              "label": "WID"
+            },
+            {
+              "type": "column",
+              "id": "field1Column",
+              "columnId": "field1Column",
+              "cellTemplate": {
+                "type": "text",
+                "id":"field1Cell",
+                "value": "<% data.myField1 %>",
+                "valuesOut": [
+                  {
+                    "value": "<% self.value %>",
+                    "valueOutBinding": "testObjectPostValueOutBinding.myField1"
+                  }
+                ]
+              },
+              "label": "Field 1"
+            },
+            {
+              "type": "column",
+              "id": "field2Column",
+              "columnId": "field2Column",
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% data.myField2 %>",
+                "id":"field2Cell",
+                "valuesOut": [
+                  {
+                    "value": "<% self.value %>",
+                    "valueOutBinding": "testObjectPostValueOutBinding.myField2"
+                  }
+                ]
+              },
+              "label": "Field 2"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

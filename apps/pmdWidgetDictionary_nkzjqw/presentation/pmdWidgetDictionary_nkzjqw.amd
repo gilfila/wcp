@@ -1,0 +1,324 @@
+{
+  "appProperties": [],
+  "flowDefinitions": [
+    {
+      "id": "dropdownFlow",
+      "flowSteps": [
+        {
+          "id": "dropdown",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "dropdownHome",
+              "condition": "true"
+            }
+          ],
+          "taskId": "dropdown"
+        },
+        {
+          "id": "dropdownHome",
+          "taskId": "home"
+        }
+      ]
+    },
+    {
+      "id": "simpleTypesFlow",
+      "flowSteps": [
+        {
+          "id": "simpleTypes",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "simpleTypesHome",
+              "condition": "true"
+            }
+          ],
+          "taskId": "simpleTypes"
+        },
+        {
+          "id": "simpleTypesHome",
+          "taskId": "home"
+        }
+      ]
+    },
+    {
+      "id": "instanceListFlow",
+      "flowSteps": [
+        {
+          "id": "instanceList",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "instanceListHome",
+              "condition": "true"
+            }
+          ],
+          "taskId": "instanceList"
+        },
+        {
+          "id": "instanceListHome",
+          "taskId": "home"
+        }
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "home",
+      "routingPattern": "/",
+      "page": {
+        "id": "home"
+      }
+    },
+    {
+      "id": "simpleTypes",
+      "routingPattern": "simpleTypes",
+      "page": {
+        "id": "simpleTypes"
+      }
+    },
+    {
+      "id": "buttons",
+      "routingPattern": "buttons",
+      "page": {
+        "id": "buttons"
+      }
+    },
+    {
+      "id": "dropdown",
+      "routingPattern": "dropdown",
+      "page": {
+        "id": "dropdown"
+      }
+    },
+    {
+      "id": "instanceList",
+      "routingPattern": "instanceList",
+      "page": {
+        "id": "instanceList"
+      }
+    },
+    {
+      "id": "images",
+      "routingPattern": "images",
+      "page": {
+        "id": "images"
+      }
+    },
+    {
+      "id": "labeledImage",
+      "routingPattern": "labeledImage",
+      "page": {
+        "id": "labeledImage"
+      }
+    },
+    {
+      "id": "grids",
+      "routingPattern": "grids",
+      "page": {
+        "id": "grids"
+      }
+    },
+    {
+      "id": "sections",
+      "routingPattern": "sections",
+      "page": {
+        "id": "sections"
+      }
+    },
+    {
+      "id": "tabs",
+      "routingPattern": "tabs",
+      "page": {
+        "id": "tabs"
+      }
+    },
+    {
+      "id": "clusteredBarChart",
+      "routingPattern": "clusteredBarChart",
+      "page": {
+        "id": "clusteredBarChart"
+      }
+    },
+    {
+      "id": "clusteredColumnChart",
+      "routingPattern": "clusteredColumnChart",
+      "page": {
+        "id": "clusteredColumnChart"
+      }
+    },
+    {
+      "id": "stackedBarChart",
+      "routingPattern": "stackedBarChart",
+      "page": {
+        "id": "stackedBarChart"
+      }
+    },
+    {
+      "id": "stackedColumnChart",
+      "routingPattern": "stackedColumnChart",
+      "page": {
+        "id": "stackedColumnChart"
+      }
+    },
+    {
+      "id": "pieChart",
+      "routingPattern": "pieChart",
+      "page": {
+        "id": "pieChart"
+      }
+    },
+    {
+      "id": "lineChart",
+      "routingPattern": "lineChart",
+      "page": {
+        "id": "lineChart"
+      }
+    },
+    {
+      "id": "bubbleChart",
+      "routingPattern": "bubbleChart",
+      "page": {
+        "id": "bubbleChart"
+      }
+    },
+    {
+      "id": "redirectQuery",
+      "routingPattern": "/redirectQuery",
+      "page": {
+        "id": "redirectQuery",
+        "descriptor": "Redirect with Query Parameter"
+      }
+    },
+    {
+      "id": "micro",
+      "routingPattern": "micro",
+      "page": {
+        "id": "micro"
+      }
+    },
+    {
+      "id": "functionsBooleanDate",
+      "routingPattern": "functionsBooleanDate",
+      "page": {
+        "id": "functionsBooleanDate"
+      }
+    },
+    {
+      "id": "functionsListAndMap",
+      "routingPattern": "functionsListAndMap",
+      "page": {
+        "id": "functionsListAndMap"
+      }
+    },
+    {
+      "id": "functionsString",
+      "routingPattern": "functionsString",
+      "page": {
+        "id": "functionsString"
+      }
+    },
+    {
+      "id": "relatedAction",
+      "routingPattern": "relatedAction",
+      "page": {
+        "id": "relatedAction"
+      }
+    },
+    {
+      "id": "bubbleChart2",
+      "routingPattern": "bubbleChart2",
+      "page": {
+        "id": "bubbleChart2"
+      }
+    },
+    {
+      "id": "clusteredBarChart2",
+      "routingPattern": "clusteredBarChart2",
+      "page": {
+        "id": "clusteredBarChart2"
+      }
+    },
+    {
+      "id": "comboChart2",
+      "routingPattern": "comboChart2",
+      "page": {
+        "id": "comboChart2"
+      }
+    },
+    {
+      "id": "donutChart2",
+      "routingPattern": "donutChart2",
+      "page": {
+        "id": "donutChart2"
+      }
+    },
+    {
+      "id": "dualAxisChart2",
+      "routingPattern": "dualAxisChart2",
+      "page": {
+        "id": "dualAxisChart2"
+      }
+    },
+    {
+      "id": "lineChart2",
+      "routingPattern": "lineChart2",
+      "page": {
+        "id": "lineChart2"
+      }
+    },
+    {
+      "id": "overlaidAreaChart2",
+      "routingPattern": "overlaidAreaChart2",
+      "page": {
+        "id": "overlaidAreaChart2"
+      }
+    },
+    {
+      "id": "percentAreaChart2",
+      "routingPattern": "percentAreaChart2",
+      "page": {
+        "id": "percentAreaChart2"
+      }
+    },
+    {
+      "id": "percentBarChart2",
+      "routingPattern": "percentBarChart2",
+      "page": {
+        "id": "percentBarChart2"
+      }
+    },
+    {
+      "id": "scatterChart2",
+      "routingPattern": "scatterChart2",
+      "page": {
+        "id": "scatterChart2"
+      }
+    },
+    {
+      "id": "stackedAreaChart2",
+      "routingPattern": "stackedAreaChart2",
+      "page": {
+        "id": "stackedAreaChart2"
+      }
+    },
+    {
+      "id": "stackedBarChart2",
+      "routingPattern": "stackedBarChart2",
+      "page": {
+        "id": "stackedBarChart2"
+      }
+    }
+  ],
+  "applicationId": "pmdWidgetDictionary_nkzjqw",
+  "dataProviders": [
+    {
+      "key": "wdayRef",
+      "value": "https://api.workday.com/referenceData"
+    },
+    {
+      "key": "wdayCom",
+      "value": "https://api.workday.com/common/v1"
+    }
+  ]
+}

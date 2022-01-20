@@ -1,0 +1,75 @@
+{
+  "id": "lineChart2",
+  "include": [
+        "chartData.script"
+  ],
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "lineChart2"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "section",
+          "horizontal": true,
+          "children": [
+            {
+              "type": "pod",
+              "podId": "header"
+            },
+            {
+              "type": "text",
+              "label": "lineChart2",
+              "value": "Please see the below example of a line chart 2. The metrics are just for demo purposes. Feel free to edit the PMD, to see the affect on the graph if certain tags are added / removed "
+            },
+            {
+              "type": "lineChart2",
+              "id": "lineChartExample1",
+              "data": "<% chartData.getChartData() %>",
+              "dataVariableName": "data",
+              "measurementDataSets": [
+                {
+                  "name": "Finance",
+                  "value": "<% data.recruits.finance %>"
+                },
+                {
+                  "name": "Sales",
+                  "value": "<% data.recruits.sales %>"
+                },
+                {
+                  "name": "Support",
+                  "value": "<% data.recruits.support %>"
+                }
+              ],
+              "categoryDataSet": {
+                "name": "Recruiter",
+                "value": "<% data.recruiter %>"
+              },
+              "measurementAxisOptions": {
+                "axisTitle": "Recruits",
+                "axisIncrement": "<% 25 %>",
+                "comparisonLineLabel": "Quota",
+                "comparisonLineValue": "<% 85 %>"
+              },
+              "categoryAxisOptions": {
+                "axisTitle": "Recruiters"
+              }
+            }
+
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "footer"
+        }
+      ]
+    }
+  }
+}

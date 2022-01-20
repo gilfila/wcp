@@ -1,0 +1,633 @@
+{
+  "id": "maintainVaccineManagementConfig",
+  "securityDomains": [
+    "ManageConfiguration"
+  ],
+  "endPoints": [
+    {
+      "baseUrlType": "workday-app",
+      "name": "vaccineManagementConfig",
+      "authType": "sso",
+      "onSend": "<%
+                 //Uncomment the below lines only for debugging purposes
+                 //console.info(json:asJSON(self.data));
+                 return self.data;
+                 %>",
+      "url": "vaccineManagementConfig"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "baseUrlType": "workday-app",
+        "name": "vaccineManagementConfigInit",
+        "authType": "sso",
+        "exclude": "<%!empty vaccineManagementConfig.data %>",
+        "httpMethod": "POST",
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   //console.info('vaccineManagementConfigInit exclude =' + !empty vaccineManagementConfig.data);
+                   //console.info(json:asJSON(self.data));
+                   return self.data;
+                   %>",
+        "url": "vaccineManagementConfig",
+        "values": [
+          {
+            "outboundPath": "vaccineTypeEnabled",
+            "value": "<% true %>"
+          },
+          {
+            "outboundPath": "vaccineTypeLabel",
+            "value": "Vaccine Type"
+          },
+          {
+            "outboundPath": "vaccineTypeRequired",
+            "value": "<% false %>"
+          },
+          {
+            "outboundPath": "isFullyVaccinatedEnabled",
+            "value": "<% true %>"
+          },
+          {
+            "outboundPath": "isFullyVaccinatedLabel",
+            "value": "I verify I am fully vaccinated for COVID-19. (At least two weeks after your second shot for Pfizer, AstraZeneca, or Moderna, or at least two weeks after a single shot of Johnson & Johnson)."
+          },
+          {
+            "outboundPath": "isFullyVaccinatedRequired",
+            "value": "<% false %>"
+          },
+          {
+            "outboundPath": "vaccineManufacturerEnabled",
+            "value": "<% true %>"
+          },
+          {
+            "outboundPath": "vaccineManufacturerLabel",
+            "value": "Vaccine Manufacturer"
+          },
+          {
+            "outboundPath": "vaccineManufacturerRequired",
+            "value": "<% false %>"
+          },
+          {
+            "outboundPath": "vaccineDisclosureDateEnabled",
+            "value": "<% true %>"
+          },
+          {
+            "outboundPath": "vaccineDisclosureDateLabel",
+            "value": "Date of Disclosure"
+          },
+          {
+            "outboundPath": "vaccineDisclosureDateRequired",
+            "value": "<% false %>"
+          },
+          {
+            "outboundPath": "vaccineAttachmentEnabled",
+            "value": "<% true %>"
+          },
+          {
+            "outboundPath": "vaccineAttachmentLabel",
+            "value": "Attachment"
+          },
+          {
+            "outboundPath": "vaccineAttachmentRequired",
+            "value": "<% false %>"
+          },
+          {
+            "outboundPath": "testResultsEnabled",
+            "value": "<% true %>"
+          },
+          {
+            "outboundPath": "testResultsLabel",
+            "value": "Test Result"
+          },
+          {
+            "outboundPath": "testResultsRequired",
+            "value": "<% false %>"
+          },
+          {
+            "outboundPath": "testResultsDateEnabled",
+            "value": "<% true %>"
+          },
+          {
+            "outboundPath": "testResultsDateLabel",
+            "value": "Date of Disclosure"
+          },
+          {
+            "outboundPath": "testResultsDateRequired",
+            "value": "<% false %>"
+          },
+          {
+            "outboundPath": "testResultsAttachmentEnabled",
+            "value": "<% true %>"
+          },
+          {
+            "outboundPath": "testResultsAttachmentLabel",
+            "value": "Attachment"
+          },
+          {
+            "outboundPath": "testResultsAttachmentRequired",
+            "value": "<% false %>"
+          },
+          {
+            "outboundPath": "numberOfTestResults",
+            "value": "<% '1' %>"
+          },
+          {
+            "outboundPath": "workPlacePolicyEnabled",
+            "value": "<% false %>"
+          },
+          {
+            "outboundPath": "workPlacePolicyLabel",
+            "value": "<% 'Heathy Workplace Policy' %>"
+          },
+          {
+            "outboundPath": "workPlacePolicyURL",
+            "value": "<% 'www.workday.com' %>"
+          },
+          {
+            "outboundPath": "siteInformationEnabled",
+            "value": "<% true %>"
+          },
+          {
+            "outboundPath": "siteInformationLabel",
+            "value": "<% 'Site Information Cards' %>"
+          },
+          {
+            "outboundPath": "siteInformationURL",
+            "value": "<% 'www.workday.com' %>"
+          }
+        ]
+      },
+      {
+        "name": "updateVaccineManagmentConfig",
+        "baseUrlType": "workday-app",
+        "url": "<% 'vaccineManagementConfig/' + vaccineManagementConfig.data[0].id %>",
+        "httpMethod": "PUT",
+        "authType": "sso",
+        "exclude": "<% empty vaccineManagementConfig.data %>",
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   //console.info('updateVaccineManagmentConfig exclude =' + empty vaccineManagementConfig.data);
+                   return self.data;
+                   %>",
+        "values": [
+          {
+            "outboundPath": "vaccineTypeEnabled",
+            "value": "<% vaccineTypeEnabled.value %>"
+          },
+          {
+            "outboundPath": "vaccineTypeLabel",
+            "value": "<% vaccineTypeLabel.value %>"
+          },
+          {
+            "outboundPath": "vaccineTypeRequired",
+            "value": "<% vaccineTypeRequired.value %>"
+          },
+          {
+            "outboundPath": "isFullyVaccinatedEnabled",
+            "value": "<% isFullyVaccinatedEnabled.value %>"
+          },
+          {
+            "outboundPath": "isFullyVaccinatedLabel",
+            "value": "<% isFullyVaccinatedLabel.value %>"
+          },
+          {
+            "outboundPath": "isFullyVaccinatedRequired",
+            "value": "<% isFullyVaccinatedRequired.value %>"
+          },
+          {
+            "outboundPath": "vaccineManufacturerEnabled",
+            "value": "<% vaccineManufacturerEnabled.value %>"
+          },
+          {
+            "outboundPath": "vaccineManufacturerLabel",
+            "value": "<% vaccineManufacturerLabel.value %>"
+          },
+          {
+            "outboundPath": "vaccineManufacturerRequired",
+            "value": "<% vaccineManufacturerRequired.value %>"
+          },
+          {
+            "outboundPath": "vaccineDisclosureDateEnabled",
+            "value": "<% vaccineDisclosureDateEnabled.value %>"
+          },
+          {
+            "outboundPath": "vaccineDisclosureDateLabel",
+            "value": "<% vaccineDisclosureDateLabel.value %>"
+          },
+          {
+            "outboundPath": "vaccineDisclosureDateRequired",
+            "value": "<% vaccineDisclosureDateRequired.value %>"
+          },
+          {
+            "outboundPath": "vaccineAttachmentEnabled",
+            "value": "<% vaccineAttachmentEnabled.value %>"
+          },
+          {
+            "outboundPath": "vaccineAttachmentLabel",
+            "value": "<% vaccineAttachmentLabel.value %>"
+          },
+          {
+            "outboundPath": "vaccineAttachmentRequired",
+            "value": "<% vaccineAttachmentRequired.value %>"
+          },
+          {
+            "outboundPath": "testResultsEnabled",
+            "value": "<% testResultsEnabled.value %>"
+          },
+          {
+            "outboundPath": "testResultsLabel",
+            "value": "<% testResultsLabel.value %>"
+          },
+          {
+            "outboundPath": "testResultsRequired",
+            "value": "<% testResultsRequired.value %>"
+          },
+          {
+            "outboundPath": "testResultsDateEnabled",
+            "value": "<% testResultsDateEnabled.value %>"
+          },
+          {
+            "outboundPath": "testResultsDateLabel",
+            "value": "<% testResultsDateLabel.value %>"
+          },
+          {
+            "outboundPath": "testResultsDateRequired",
+            "value": "<% testResultsDateRequired.value %>"
+          },
+          {
+            "outboundPath": "testResultsAttachmentEnabled",
+            "value": "<% testResultsAttachmentEnabled.value %>"
+          },
+          {
+            "outboundPath": "testResultsAttachmentLabel",
+            "value": "<% testResultsAttachmentLabel.value %>"
+          },
+          {
+            "outboundPath": "testResultsAttachmentRequired",
+            "value": "<% testResultsAttachmentRequired.value %>"
+          },
+          {
+            "outboundPath": "numberOfTestResults",
+            "value": "<% numberOfTestResults.value %>"
+          },
+          {
+            "outboundPath": "workPlacePolicyEnabled",
+            "value": "<% workPlacePolicyEnabled.value %>"
+          },
+          {
+            "outboundPath": "workPlacePolicyLabel",
+            "value": "<% workPlacePolicyLabel.value %>"
+          },
+          {
+            "outboundPath": "workPlacePolicyURL",
+            "value": "<% workPlacePolicyURL.value %>"
+          },
+          {
+            "outboundPath": "siteInformationEnabled",
+            "value": "<% siteInformationEnabled.value %>"
+          },
+          {
+            "outboundPath": "siteInformationLabel",
+            "value": "<% siteInformationLabel.value %>"
+          },
+          {
+            "outboundPath": "siteInformationURL",
+            "value": "<% siteInformationURL.value %>"
+          }
+        ]
+      }
+    ]
+  },
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "microConclusion": "true",
+    "pageType": "edit",
+    "title": {
+      "type": "title",
+      "label": "Vaccine Management Configuration",
+      "enabled": false
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "section",
+          "title": "Maintain Dropdowns",
+          "horizontal": true,
+          "children": [
+            {
+              "type": "button",
+              "label": "Maintain Vaccine Types",
+              "taskReference": {
+                "type": "taskReference",
+                "taskId": "maintainVaccineTypes"
+              },
+              "action": "AUXILIARY"
+            },
+            {
+              "type": "button",
+              "label": "Maintain Vaccine Manufacturers",
+              "taskReference": {
+                "type": "taskReference",
+                "taskId": "maintainVaccineManufacturers"
+              },
+              "action": "AUXILIARY"
+            },
+            {
+              "type": "button",
+              "label": "Maintain Exemption Types",
+              "taskReference": {
+                "type": "taskReference",
+                "taskId": "maintainExemptionTypes"
+              },
+              "action": "AUXILIARY"
+            },
+            {
+              "type": "button",
+              "label": "Maintain Back To Office Options",
+              "taskReference": {
+                "type": "taskReference",
+                "taskId": "maintainBackToOfficeOptions"
+              },
+              "action": "AUXILIARY"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "noDefaultsLabel",
+          "label": "<b style='color:red;'>**Click OK to generate default config.**</b>",
+          "enabled": false,
+          "visible": "<% if(!empty vaccineManagementConfig.data){
+              return false;
+          }%>"
+        },
+        {
+          "type": "section",
+          "id": "maintainSection",
+          "horizontal": true,
+          "children": [
+            {
+              "type": "section",
+              "title": "Maintain Fields Submit Test",
+              "id": "maintainSectionTesting",
+              "horizontal": true,
+              "children": [
+                {
+                  "type": "checkBox",
+                  "id": "testResultsEnabled",
+                  "label": "Enable Test Results",
+                  "value": "<% empty vaccineManagementConfig.data[0].testResultsEnabled ? true : vaccineManagementConfig.data[0].testResultsEnabled%>"
+                },
+                {
+                  "type": "checkBox",
+                  "id": "testResultsRequired",
+                  "label": "Test Results Required",
+                  "value": "<% empty vaccineManagementConfig.data[0].testResultsRequired ? false : vaccineManagementConfig.data[0].testResultsRequired%>"
+                },
+                {
+                  "type": "textArea",
+                  "id": "testResultsLabel",
+                  "label": "Test Results Label",
+                  "value": "<% empty vaccineManagementConfig.data[0].testResultsLabel ? '' : vaccineManagementConfig.data[0].testResultsLabel%>"
+                },
+                {
+                  "type": "richText",
+                  "value": "<br>",
+                  "enabled": "false"
+                },
+                {
+                  "type": "checkBox",
+                  "id": "testResultsDateEnabled",
+                  "label": "Enable Test Results Date",
+                  "value": "<% empty vaccineManagementConfig.data[0].testResultsDateEnabled ? true : vaccineManagementConfig.data[0].testResultsDateEnabled%>"
+                },
+                {
+                  "type": "checkBox",
+                  "id": "testResultsDateRequired",
+                  "label": "Test Results Date Required",
+                  "value": "<% empty vaccineManagementConfig.data[0].testResultsDateRequired ? false : vaccineManagementConfig.data[0].testResultsDateRequired%>"
+                },
+                {
+                  "type": "textArea",
+                  "id": "testResultsDateLabel",
+                  "label": "Test Results Date Label",
+                  "value": "<% empty vaccineManagementConfig.data[0].testResultsDateLabel ? '' : vaccineManagementConfig.data[0].testResultsDateLabel%>"
+                },
+                {
+                  "type": "richText",
+                  "value": "<br>",
+                  "enabled": "false"
+                },
+                {
+                  "type": "checkBox",
+                  "id": "testResultsAttachmentEnabled",
+                  "label": "Enable Test Results Attachment",
+                  "value": "<% empty vaccineManagementConfig.data[0].testResultsAttachmentEnabled ? true : vaccineManagementConfig.data[0].testResultsAttachmentEnabled%>"
+                },
+                {
+                  "type": "checkBox",
+                  "id": "testResultsAttachmentRequired",
+                  "label": "Test Results Attachment Required",
+                  "value": "<% empty vaccineManagementConfig.data[0].testResultsAttachmentRequired ? false : vaccineManagementConfig.data[0].testResultsAttachmentRequired%>"
+                },
+                {
+                  "type": "textArea",
+                  "id": "testResultsAttachmentLabel",
+                  "label": "Test Results Attachment Label",
+                  "value": "<% empty vaccineManagementConfig.data[0].testResultsAttachmentLabel ? '' : vaccineManagementConfig.data[0].testResultsAttachmentLabel%>"
+                },
+                {
+                  "type": "number",
+                  "label": "Number of Test Results to retain",
+                  "helpText": "For unlimited results put 0 as the value",
+                  "value": "<% empty vaccineManagementConfig.data[0].numberOfTestResults ? '1' : vaccineManagementConfig.data[0].numberOfTestResults%>",
+                  "id": "numberOfTestResults"
+                }
+              ]
+            },
+            {
+              "type": "section",
+              "title": "Maintain Fields Submit Vaccine (including On Behalf page)",
+              "id": "maintainSectionVaccine",
+              "horizontal": true,
+              "children": [
+                {
+                  "type": "checkBox",
+                  "id": "vaccineTypeEnabled",
+                  "label": "Vaccine Type Enabled",
+                  "value": "<% empty vaccineManagementConfig.data[0].vaccineTypeEnabled ? true : vaccineManagementConfig.data[0].vaccineTypeEnabled%>"
+                },
+                {
+                  "type": "checkBox",
+                  "id": "vaccineTypeRequired",
+                  "label": "Vaccine Type Required",
+                  "value": "<% empty vaccineManagementConfig.data[0].vaccineTypeRequired ? false : vaccineManagementConfig.data[0].vaccineTypeRequired%>"
+                },
+                {
+                  "type": "textArea",
+                  "id": "vaccineTypeLabel",
+                  "label": "Vaccine Type Label",
+                  "value": "<% empty vaccineManagementConfig.data[0].vaccineTypeLabel ? '' : vaccineManagementConfig.data[0].vaccineTypeLabel%>"
+                },
+                {
+                  "type": "richText",
+                  "value": "<br>",
+                  "enabled": "false"
+                },
+                {
+                  "type": "checkBox",
+                  "id": "isFullyVaccinatedEnabled",
+                  "label": "Enable is Fully Vaccinated",
+                  "value": "<% empty vaccineManagementConfig.data[0].isFullyVaccinatedEnabled ? true : vaccineManagementConfig.data[0].isFullyVaccinatedEnabled%>"
+                },
+                {
+                  "type": "checkBox",
+                  "id": "isFullyVaccinatedRequired",
+                  "label": "Is Fully Vaccinated Required",
+                  "value": "<% empty vaccineManagementConfig.data[0].isFullyVaccinatedRequired ? false : vaccineManagementConfig.data[0].isFullyVaccinatedRequired%>"
+                },
+                {
+                  "type": "textArea",
+                  "id": "isFullyVaccinatedLabel",
+                  "label": "Is Fully Vaccinated Label",
+                  "value": "<% empty vaccineManagementConfig.data[0].isFullyVaccinatedLabel ? '' : vaccineManagementConfig.data[0].isFullyVaccinatedLabel%>"
+                },
+                {
+                  "type": "richText",
+                  "value": "<br>",
+                  "enabled": "false"
+                },
+                {
+                  "type": "checkBox",
+                  "id": "vaccineManufacturerEnabled",
+                  "label": "Enable Vaccine Manufacturer",
+                  "value": "<% empty vaccineManagementConfig.data[0].vaccineManufacturerEnabled ? true : vaccineManagementConfig.data[0].vaccineManufacturerEnabled%>"
+                },
+                {
+                  "type": "checkBox",
+                  "id": "vaccineManufacturerRequired",
+                  "label": "Vaccine Manufacturer Required",
+                  "value": "<% empty vaccineManagementConfig.data[0].vaccineManufacturerRequired ? false : vaccineManagementConfig.data[0].vaccineManufacturerRequired%>"
+                },
+                {
+                  "type": "textArea",
+                  "id": "vaccineManufacturerLabel",
+                  "label": "Vaccine Manufacturer Label",
+                  "value": "<% empty vaccineManagementConfig.data[0].vaccineManufacturerLabel ? '' : vaccineManagementConfig.data[0].vaccineManufacturerLabel%>"
+                },
+                {
+                  "type": "richText",
+                  "value": "<br>",
+                  "enabled": "false"
+                },
+                {
+                  "type": "checkBox",
+                  "id": "vaccineDisclosureDateEnabled",
+                  "label": "Enable Vaccine Disclosure Date",
+                  "value": "<% empty vaccineManagementConfig.data[0].vaccineDisclosureDateEnabled ? true : vaccineManagementConfig.data[0].vaccineDisclosureDateEnabled%>"
+                },
+                {
+                  "type": "checkBox",
+                  "id": "vaccineDisclosureDateRequired",
+                  "label": "Vaccine Disclosure Date Required",
+                  "value": "<% empty vaccineManagementConfig.data[0].vaccineDisclosureDateRequired ? false : vaccineManagementConfig.data[0].vaccineDisclosureDateRequired%>"
+                },
+                {
+                  "type": "textArea",
+                  "id": "vaccineDisclosureDateLabel",
+                  "label": "Vaccine Disclosure Date Label",
+                  "value": "<% empty vaccineManagementConfig.data[0].vaccineDisclosureDateLabel ? '' : vaccineManagementConfig.data[0].vaccineDisclosureDateLabel%>"
+                },
+                {
+                  "type": "richText",
+                  "value": "<br>",
+                  "enabled": "false"
+                },
+                {
+                  "type": "checkBox",
+                  "id": "vaccineAttachmentEnabled",
+                  "label": "Enable Vaccine Attachment",
+                  "value": "<% empty vaccineManagementConfig.data[0].vaccineAttachmentEnabled ? true : vaccineManagementConfig.data[0].vaccineAttachmentEnabled%>"
+                },
+                {
+                  "type": "checkBox",
+                  "id": "vaccineAttachmentRequired",
+                  "label": "Vaccine Attachment Required",
+                  "value": "<% empty vaccineManagementConfig.data[0].vaccineAttachmentRequired ? false : vaccineManagementConfig.data[0].vaccineAttachmentRequired%>"
+                },
+                {
+                  "type": "textArea",
+                  "id": "vaccineAttachmentLabel",
+                  "label": "Vaccine Attachment Label",
+                  "value": "<% empty vaccineManagementConfig.data[0].vaccineAttachmentLabel ? '' : vaccineManagementConfig.data[0].vaccineAttachmentLabel%>"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Back to Office Links",
+          "id": "backToOffice",
+          "horizontal": true,
+          "children": [
+            {
+              "type": "checkBox",
+              "id": "workPlacePolicyEnabled",
+              "label": "Work Place Policy Enabled",
+              "value": "<% empty vaccineManagementConfig.data[0].workPlacePolicyEnabled ? false : vaccineManagementConfig.data[0].workPlacePolicyEnabled%>"
+            },
+            {
+              "type": "textArea",
+              "id": "workPlacePolicyLabel",
+              "label": "Work Place Policy Label",
+              "value": "<% empty vaccineManagementConfig.data[0].workPlacePolicyLabel ? '' : vaccineManagementConfig.data[0].workPlacePolicyLabel%>"
+            },
+            {
+              "type": "textArea",
+              "id": "workPlacePolicyURL",
+              "label": "Work Place Policy URL",
+              "value": "<% empty vaccineManagementConfig.data[0].workPlacePolicyURL ? '' : vaccineManagementConfig.data[0].workPlacePolicyURL%>"
+            },
+            {
+              "type": "richText",
+              "value": "<br>",
+              "enabled": "false"
+            },
+            {
+              "type": "checkBox",
+              "id": "siteInformationEnabled",
+              "label": "Site Information Enabled",
+              "value": "<% empty vaccineManagementConfig.data[0].siteInformationEnabled ? false : vaccineManagementConfig.data[0].siteInformationEnabled %>"
+            },
+            {
+              "type": "textArea",
+              "id": "siteInformationLabel",
+              "label": "Site Information Label",
+              "value": "<% empty vaccineManagementConfig.data[0].siteInformationLabel ? '' : vaccineManagementConfig.data[0].siteInformationLabel%>"
+            },
+            {
+              "type": "textArea",
+              "id": "siteInformationURL",
+              "label": "Site Information URL",
+              "value": "<% empty vaccineManagementConfig.data[0].siteInformationURL ? '' : vaccineManagementConfig.data[0].siteInformationURL%>"
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": "false",
+          "value": "Powered By Workday Extend"
+        }
+      ]
+    }
+  }
+}

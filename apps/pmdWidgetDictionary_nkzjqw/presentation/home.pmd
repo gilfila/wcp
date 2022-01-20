@@ -1,0 +1,362 @@
+{
+  "id": "home",
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "PMD Widget Dictionary"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "section",
+          "columnWidthRatios": [
+            0.3,
+            0.3,
+            0.3
+          ],
+          "horizontal": true,
+          "children": [
+            {
+              "type": "section",
+              "children": [
+                {
+                  "type": "fieldSet",
+                  "title": "Page Layout",
+                  "children": [
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "Sections",
+                      "taskReference": {
+                        "taskId": "sections"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "Micro Pop-up",
+                      "taskReference": {
+                        "taskId": "micro"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "Tabs",
+                      "taskReference": {
+                        "taskId": "tabs"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "fieldSet",
+                  "title": "Basic UI Widgets",
+                  "children": [
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "Simple Types (text, textArea, number, checkBox, date)",
+                      "taskReference": {
+                        "taskId": "simpleTypes"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "Buttons and Links",
+                      "taskReference": {
+                        "taskId": "buttons"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "Dropdowns",
+                      "taskReference": {
+                        "taskId": "dropdown"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "fieldSet",
+                  "title": "Grids",
+                  "children": [
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "Grids",
+                      "taskReference": {
+                        "taskId": "grids"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "fieldSet",
+                  "title": "Lists",
+                  "children": [
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "Related Action",
+                      "taskReference": {
+                        "taskId": "relatedAction"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "Multi-Select (instanceList)",
+                      "taskReference": {
+                        "taskId": "instanceList"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "fieldSet",
+                  "title": "Images",
+                  "children": [
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "Images",
+                      "taskReference": {
+                        "taskId": "images"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "Icons (labeledImage)",
+                      "taskReference": {
+                        "taskId": "labeledImage"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "section",
+              "children": [
+                {
+                  "type": "fieldSet",
+                  "title": "Charts",
+                  "children": [
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "bubbleChart",
+                      "taskReference": {
+                        "taskId": "bubbleChart"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "clusteredBarChart",
+                      "taskReference": {
+                        "taskId": "clusteredBarChart"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "clusteredColumnChart",
+                      "taskReference": {
+                        "taskId": "clusteredColumnChart"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "lineChart",
+                      "taskReference": {
+                        "taskId": "lineChart"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "stackedBarChart",
+                      "taskReference": {
+                        "taskId": "stackedBarChart"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "stackedColumnChart",
+                      "taskReference": {
+                        "taskId": "stackedColumnChart"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "pieChart",
+                      "taskReference": {
+                        "taskId": "pieChart"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+
+            {
+              "type": "section",
+              "children": [
+                {
+                  "type": "fieldSet",
+                  "title": "Charts 2.0",
+                  "children": [
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "bubbleChart2",
+                      "taskReference": {
+                        "taskId": "bubbleChart2"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "clusteredBarChart2",
+                      "taskReference": {
+                        "taskId": "clusteredBarChart2"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "comboChart2",
+                      "taskReference": {
+                        "taskId": "comboChart2"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "donutChart2",
+                      "taskReference": {
+                        "taskId": "donutChart2"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "dualAxisChart2",
+                      "taskReference": {
+                        "taskId": "dualAxisChart2"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "lineChart2",
+                      "taskReference": {
+                        "taskId": "lineChart2"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "overlaidAreaChart2",
+                      "taskReference": {
+                        "taskId": "overlaidAreaChart2"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "percentAreaChart2",
+                      "taskReference": {
+                        "taskId": "percentAreaChart2"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "percentBarChart2",
+                      "taskReference": {
+                        "taskId": "percentBarChart2"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "scatterChart2",
+                      "taskReference": {
+                        "taskId": "scatterChart2"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "stackedAreaChart2",
+                      "taskReference": {
+                        "taskId": "stackedAreaChart2"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "stackedBarChart2",
+                      "taskReference": {
+                        "taskId": "stackedBarChart2"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "fieldSet",
+                  "title": "Functions",
+                  "children": [
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "Boolean and Date",
+                      "taskReference": {
+                        "taskId": "functionsBooleanDate"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "List and Map",
+                      "taskReference": {
+                        "taskId": "functionsListAndMap"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "action": "LINK",
+                      "label": "String",
+                      "taskReference": {
+                        "taskId": "functionsString"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "footer"
+        }
+      ]
+    }
+  }
+}

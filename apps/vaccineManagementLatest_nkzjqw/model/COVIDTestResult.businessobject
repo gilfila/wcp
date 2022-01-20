@@ -1,0 +1,49 @@
+{
+  "id": 3,
+  "name": "COVIDTestResult",
+  "label": "COVID Test Result",
+  "defaultSecurityDomains": [
+    "ManageVaccineOrTestResults"
+  ],
+  "defaultCollection": {
+    "name": "cOVIDTestResults",
+    "label": "COVID Test Results"
+  },
+  "fields": [
+    {
+      "id": 2,
+      "name": "testResult",
+      "label": "Test Result",
+      "type": "TEXT"
+    },
+    {
+      "id": 3,
+      "name": "testDate",
+      "label": "Test Date",
+      "type": "DATE",
+      "precision": "DAY"
+    },
+    {
+      "id": 4,
+      "name": "submittedBy",
+      "type": "SINGLE_INSTANCE",
+      "label": "Submitted By",
+      "target": "WORKER",
+      "secureByTarget": true
+    },
+    {
+      "id": 5,
+      "name": "image",
+      "type": "SINGLE_INSTANCE",
+      "label": "Image",
+      "target": "TestResultVerificationFile"
+    },
+    {
+      "id": 6,
+      "name": "submissionDate",
+      "label": "Submission Date",
+      "type": "DATE",
+      "precision": "DAY"
+    }
+  ]
+}

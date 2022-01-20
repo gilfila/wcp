@@ -1,0 +1,99 @@
+{
+  "id": "postOnSend",
+  "endPoints": [
+    {
+      "baseUrlType": "app",
+      "name": "testObjectInbound",
+      "authType": "sso",
+      "url": "testObjects"
+    }
+  ],
+  "outboundData": {
+  "outboundEndPoints": [
+    {
+      "baseUrlType": "app",
+      "name": "testObjectPostOnSend",
+      "authType": "sso",
+      "exclude": "<% ! empty idCell.value %>",
+      "httpMethod":"POST",
+      "onSend": "<%
+                {
+                     'myField1' : field1Cell.getValue(),
+                     'myField2' : field2Cell.getValue()
+                 };
+                 %>",
+      "url": "testObjects"
+    },
+    {
+      "baseUrlType": "app",
+      "name": "testObjectDelete",
+      "authType": "sso",
+      "httpMethod":"DELETE",
+      "url": "<% 'testObjects/' + idCell.value %>"
+    }
+  ]
+  },
+  "presentation": {
+    "pageType":"edit",
+    "title": {
+      "type": "title",
+      "label": "Workday Extend"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+
+        {
+          "type": "text",
+          "label": "testObjectPostOnSend",
+          "enabled":false
+        },
+        {
+          "type": "grid",
+          "gridType": "LIST",
+          "deleteEndPoint": "testObjectDelete",
+          "id": "viewFields",
+          "rows": "<% testObjectInbound.data ?: [''] %>",
+          "rowVariableName": "data",
+          "label": "Test Objects",
+          "columns": [
+            {
+              "type": "column",
+              "id": "idColumn",
+              "columnId": "idColumn",
+              "cellTemplate": {
+                "type": "text",
+                "id":"idCell",
+                "value": "<% data.id %>",
+                "enabled":false
+              },
+              "label": "WID"
+            },
+            {
+              "type": "column",
+              "id": "field1Column",
+              "columnId": "field1Column",
+              "cellTemplate": {
+                "type": "text",
+                "id":"field1Cell",
+                "value": "<% data.myField1 %>"
+              },
+              "label": "Field 1"
+            },
+            {
+              "type": "column",
+              "id": "field2Column",
+              "columnId": "field2Column",
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% data.myField2 %>",
+                "id":"field2Cell"
+              },
+              "label": "Field 2"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

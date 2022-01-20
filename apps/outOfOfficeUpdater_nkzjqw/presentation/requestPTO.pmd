@@ -1,0 +1,67 @@
+{
+  "id": "requestPTO",
+  "endPoints": [
+    {
+      "name": "worker",
+      "baseUrlType": "workday-staffing",
+      "url": "workers/me",
+      "authType": "sso"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "createBusinessObject",
+        "baseUrlType": "app",
+        "url": "v1/ptoSlackStatuses",
+        "httpMethod": "POST",
+        "authType": "sso",
+        "onSend": "<%
+                   self.data.user = {'id':worker.id};
+                   self.data;
+                   %>"
+      },
+      {
+        "name": "successPageData",
+        "type": "outboundVariable",
+        "variableScope": "flow",
+        "values": [
+          {
+            "outboundPath": "response",
+            "value": "<% createBusinessObject %>"
+          }
+        ]
+      }
+    ],
+    "responseErrorDetail": {
+      "errorSummary": "<% error + '. Once you have successfully fixed the error(s), deploy this app to proceed.' %>",
+      "errors": "<% list:mapAttribute(errors, 'error') %>"
+    }
+  },
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "Slack Status"
+    },
+    "headerSize": "STANDARD",
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "sorted": false,
+      "children": [
+        {
+          "type": "textArea",
+          "label": "Slack Status",
+          "id": "slackStatus",
+          "required": "<% true %>",
+          "valueOutBinding": "createBusinessObject.slackStatus"
+        },
+        {
+          "type": "readOnlyText",
+          "label": "Worker",
+          "value": "<% worker.descriptor %>"
+        }
+      ]
+    }
+  }
+}

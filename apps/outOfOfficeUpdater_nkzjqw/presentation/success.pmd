@@ -1,0 +1,38 @@
+{
+  "id": "success",
+  "endPoints": [ ],
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "Success! Slack Status stored."
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "text",
+          "id": "emplid",
+          "label": "User",
+          "value": "<% flowVariables.response.user.descriptor %>"
+        },
+        {
+          "type": "text",
+          "id": "slack status",
+          "label": "Slack Status",
+          "value": "<% flowVariables.response.slackStatus %>"
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": "false",
+          "value": "Powered By Workday Extend"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "id": "confirmation",
+  "endPoints": [ ],
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "title": {
+      "type": "title",
+      "label": "Confirmation"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "button",
+          "label": "⤺ Back",
+          "taskReference": {
+            "type": "taskReference",
+            "taskId": "root"
+          },
+          "action": "LINK"
+        },
+        {
+          "type": "richText",
+          "id": "confirmation",
+          "label": "Thank you",
+          "value": "This is a confirmation page."
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": "false",
+          "value": "Powered By Workday Extend"
+        }
+      ]
+    }
+  }
+}

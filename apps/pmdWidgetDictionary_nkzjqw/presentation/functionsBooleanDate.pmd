@@ -1,0 +1,184 @@
+{
+  "id": "functionsBooleanDate",
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "functionsBooleanDate"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "header"
+        },
+        {
+          "type": "section",
+          "horizontal": true,
+          "columnWidthRatios": [
+            0.5,
+            0.5
+          ],
+          "children": [
+            {
+              "type": "fieldSet",
+              "title": "Boolean Logic & Functions",
+              "children": [
+                {
+                  "type": "text",
+                  "label": "OR",
+                  "value": "<% true || false  %>"
+                },
+                {
+                  "type": "text",
+                  "label": "AND",
+                  "value": "<% true && false  %>"
+                },
+                {
+                  "type": "text",
+                  "label": "NOT",
+                  "value": "<% true != false  %>"
+                },
+                {
+                  "type": "text",
+                  "label": "EQUAL",
+                  "value": "<% true == false  %>"
+                },
+                {
+                  "type": "text",
+                  "label": "Less Than",
+                  "value": "<% 2 < 3  %>"
+                },
+                {
+                  "type": "text",
+                  "label": "Greater Than",
+                  "value": "<% 2 > 3  %>"
+                },
+                {
+                  "type": "text",
+                  "label": "Ternary (If/Then/Else)",
+                  "value": "<% 2 > 3 ? 5 : 8  %>"
+                },
+                {
+                  "type": "text",
+                  "label": "all",
+                  "value": "<% bool:all(true, true, false) %>"
+                },
+                {
+                  "type": "text",
+                  "label": "any",
+                  "value": "<% bool:any(true, true, false) %>"
+                },
+                {
+                  "type": "text",
+                  "label": "Boolean as Int (true -> 1, false -> 0)",
+                  "value": "<% converter:booleanAsInt(true) * 5  %>"
+                },
+                {
+                  "type": "text",
+                  "label": "Boolean as String (true -> '1', false -> '0')",
+                  "value": "<% converter:booleanAsString(true) %>"
+                }
+              ]
+            },
+            {
+              "type": "fieldSet",
+              "title": "Date Functions",
+              "children": [
+                {
+                  "type": "text",
+                  "label": "parseDateString",
+                  "value": "<% date:parseDateString('2019-03-21') %>"
+                },
+                {
+                  "type": "text",
+                  "label": "add - Parse a date in 1988 and add 30 years",
+                  "value": "<% date:add(date:parseDateString('1988-03-15'), 'YEAR', 30) %>"
+                },
+                {
+                  "type": "text",
+                  "label": "after - Check if date in 2019 is after date in 1988",
+                  "value": "<% date:after(date:parseDateString('1988-03-15'), date:parseDateString('2019-03-15')) %>"
+                },
+                {
+                  "type": "text",
+                  "label": "checkTodaysDate - Check if a date is today in a specified timezone",
+                  "value": "<% date:checkTodaysDate(date:parseDateString('2019-03-20'), clientTimeZone) %>"
+                },
+                {
+                  "type": "text",
+                  "label": "createMonth - Returns a Date object that corresponds to the given month and year integers",
+                  "value": "<% date:createMonth(3, 2019) %>"
+                },
+                {
+                  "type": "text",
+                  "label": "createYear - Returns a Date object with the given integer year",
+                  "value": "<% date:createYear(2019) %>"
+                },
+                {
+                  "type": "text",
+                  "label": "extractValue - Returns the extracted integer number from a give date or time, using the provided precision",
+                  "value": "<% date:extractValue('YEAR', date:parseDateString('1988-03-15')) %>"
+                },
+                {
+                  "type": "text",
+                  "label": "format - Format a given date object against a format string template",
+                  "value": "<% date:format(date:parseDateString('2019-03-15'), 'dd/MM/yyyy') %>"
+                },
+                {
+                  "type": "text",
+                  "label": "formatDateWithTimeZones - Returns a string representation of a date adjusted with the given time zone. The returned date uses the specified output date and time zone format",
+                  "value": "<% date:formatDateWithTimeZones('2017-08-18 03:00:00.000Z', 'America/Denver', 'yyyy-MM-dd HH:mm:ss.SSS', 'America/Denver', 'yyyy-MM-dd HH:mm:ss.SSSXXX') %>"
+                },
+                {
+                  "type": "text",
+                  "label": "formatWithTimeZone - Format a given date object against a format string template and a provided timezone",
+                  "value": "<% date:formatWithTimeZone(date:parseDateString('2016-10-31'), 'dd/MM/yyyy', 'America/Denver') %>"
+                },
+                {
+                  "type": "text",
+                  "label": "getDateTimeZone - returns dateTimeZone object for other functions",
+                  "value": "<% date:getDateTimeZone('America/Denver') %>"
+                },
+                {
+                  "type": "text",
+                  "label": "getTodaysDate - Returns today's date in a provided timezone",
+                  "value": "<% date:getTodaysDate(date:getDateTimeZone('America/Denver')) %>"
+                },
+                {
+                  "type": "text",
+                  "label": "getTodaysDateFormatted - Returns today's date in a provided timezone in a given format",
+                  "value": "<% date:getTodaysDateFormatted(date:getDateTimeZone(clientTimeZone), 'yyyy-MM-dd') %>"
+                },
+                {
+                  "type": "text",
+                  "label": "month - Returns the integer month for a given date, i.e. 3 for March",
+                  "value": "<% date:month(date:parseDateString('1988-03-15')) %>"
+                },
+                {
+                  "type": "text",
+                  "label": "parseFormattedDateString - Returns a Date object after reading a date String following a provided format",
+                  "value": "<% date:parseFormattedDateString('3/21/2019','MM/dd/yyyy') %>"
+                },
+                {
+                  "type": "text",
+                  "label": "year - Returns the integer year for a given date, i.e. 1988 for a date in the year 1988",
+                  "value": "<% date:year(date:parseDateString('1988-03-15')) %>"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "footer"
+        }
+      ]
+    }
+  }
+}

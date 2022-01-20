@@ -1,0 +1,148 @@
+{
+  "id": "functionsString",
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "functionsString"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "header"
+        },
+        {
+          "type": "fieldSet",
+          "title": "String Functions",
+          "children": [
+            {
+              "type": "text",
+              "label": "toString - Returns the string representation of a given value.",
+              "value": "<% string:toString(123) %>"
+            },
+            {
+              "type": "text",
+              "label": "concat - Concatenates exactly two strings into one.",
+              "value": "<% 'hello ' + 'world' %>"
+            },
+            {
+              "type": "text",
+              "label": "contains - Returns true if a substring is present within the string.",
+              "value": "<% 'hello world'.contains('o wo') %>"
+            },
+            {
+              "type": "text",
+              "label": "endsWith - Returns true if a given string ends with a given suffix.",
+              "value": "<% 'hello world'.endsWith('world') %>"
+            },
+            {
+              "type": "text",
+              "label": "startsWith - Returns true if a substring starts at the given index within a given string.",
+              "value": "<% string:startsWith('hello world', 'he', 0) %>"
+            },
+            {
+              "type": "text",
+              "label": "formatListToString - Returns a string containing the _values in the given list separated by the given list separator.",
+              "value": "<% ['eggs', 'milk', 'apples', 'cat food'].join(', ') %>"
+            },
+            {
+              "type": "text",
+              "label": "formatMessage - Replaces a variable set of parameters within a message.",
+              "value": "<% string:formatMessage('My {0} message', 'formatted') %>"
+            },
+            {
+              "type": "text",
+              "label": "fuzzyMatchIndex - Returns the zero-based index position of the closest match in a list with a given comparison string.",
+              "value": "<% string:fuzzyMatchIndex(['dog', 'cat', 'koala'], 'kat') %>"
+            },
+            {
+              "type": "text",
+              "label": "fuzzyMatchString - Returns the closest matched string in a list with a given comparison string.",
+              "value": "<% string:fuzzyMatchString(['dog', 'cat', 'koala'], 'kuala') %>"
+            },
+            {
+              "type": "text",
+              "label": "isString - Returns true if the given parameter is a string.",
+              "value": "<% string:isString('hello world') %>"
+            },
+            {
+              "type": "text",
+              "label": "indexOf - Returns the index of the first occurrence of a substring in a given string, starting at the specified index.",
+              "value": "<% string:indexOf('Hello World!', 'o', 0) %>"
+            },
+            {
+              "type": "text",
+              "label": "join - Joins two or more strings into one.",
+              "value": "<% 'hello' + ' Workday' + ' world!' %>"
+            },
+            {
+              "type": "text",
+              "label": "length - Returns the length of a given string.",
+              "value": "<% 'Hello World!'.size() %>"
+            },
+            {
+              "type": "text",
+              "label": "lastIndexOf - Returns the index of the last occurrence of a substring in a given string, searching backwards starting at the specified index.",
+              "value": "<% string:lastIndexOf('Hello World!', 'o', string:length('Hello World!') - 1) %>"
+            },
+            {
+              "type": "text",
+              "label": "replaceSubstring",
+              "value": "<% 'Hello World!'.replace('World', 'Workday') %>"
+            },
+            {
+              "type": "text",
+              "label": "split - Splits a given string around characters that match a given separator.",
+              "value": "<% 'eggs,milk,cheese,apples'.split(',') %>"
+            },
+            {
+              "type": "text",
+              "label": "substring - Returns a substring at the given index within a given string.",
+              "value": "<% 'Hello World!'.substring(2, 5) %>"
+            },
+            {
+              "type": "text",
+              "label": "substringAfterLast - Returns the remainder of the string after the given substring.",
+              "value": "<% 'My longer string'.substringAfterLast('longer') %>"
+            },
+            {
+              "type": "text",
+              "label": "trim - Returns a copy of a given string, omitting any leading and trailing white space.",
+              "value": "<% ' eggs, milk, cheese, apples '.trim() %>"
+            },
+            {
+              "type": "text",
+              "label": "upperCase - Converts all of the characters in the string to uppercase, using the default locale.",
+              "value": "<% 'hello world'.upperCase() %>"
+            },
+            {
+              "type": "text",
+              "label": "lowerCase - Converts all of the characters in the string to lowercase, using the default locale.",
+              "value": "<% 'TO BE LOWER CASED'.lowerCase() %>"
+            },
+            {
+              "type": "text",
+              "label": "urlDecode - Decodes the given URL string as a standard UTF-8 url.",
+              "value": "<% 'http%3A%2F%2Fwww.workday.com'.urlDecode() %>"
+            },
+            {
+              "type": "text",
+              "label": "urlEncode - Encodes the given URL string as a standard UTF-8 encoded url.",
+              "value": "<% 'url?this=that'.urlEncode() %>"
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "footer"
+        }
+      ]
+    }
+  }
+}

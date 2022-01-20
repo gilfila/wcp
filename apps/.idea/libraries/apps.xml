@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="apps">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/pmdWidgetDictionary_nkzjqw.zip!/" />
+      <root url="jar://$PROJECT_DIR$/taxratestest_nkzjqw.zip!/" />
+      <root url="jar://$PROJECT_DIR$/tuitionReimbursement.zip!/" />
+      <root url="jar://$PROJECT_DIR$/vaccineManagementv3_nkzjqw 2.zip!/" />
+      <root url="jar://$PROJECT_DIR$/taxrates2_nkzjqw.zip!/" />
+      <root url="jar://$PROJECT_DIR$/vaccineManagementv3_nkzjqw.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

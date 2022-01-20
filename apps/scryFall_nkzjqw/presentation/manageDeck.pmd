@@ -1,0 +1,168 @@
+{
+  "id": "manageDeck",
+  "endPoints": [
+    {
+      "baseUrlType": "workday-wql",
+      "name": "cards",
+      "authType": "sso",
+      "onSend": "<%
+                 //Uncomment the below lines only for debugging purposes
+                 console.info(json:asJSON(self.data));
+                 return self.data;
+                 %>",
+      "url": "<% 'data?query=' + string:urlEncode('select imageURI, workdayID, assignedDeck, cardName, submittedBy FROM ') + string:urlEncode(site.applicationId) + string:urlEncode('_cards where assignedDeck=') + string:urlEncode(string:urlDecode('%22')) + queryParams.deckName + string:urlEncode(string:urlDecode('%22')) + string:urlEncode(' ORDER BY assignedDeck DESC')  %>"
+    },
+    {
+      "baseUrlType": "scryfall",
+      "name": "card",
+      "authType": "noAuth",
+      "deferred": "true",
+      "exclude" : "<% empty cardSearch.value %>",
+      "url": "<% 'cards/search?q=' + string:urlEncode(cardSearch.value) %>",
+      "httpMethod":"GET"
+    },
+    {
+      "baseUrlType": "workday-common",
+      "name": "me",
+      "authType": "sso",
+      "url": "workers/me?view=workerProfile"
+    }
+  ],
+  "outboundData":{
+    "outboundEndPoints":[
+      {
+        "type":"outboundVariable",
+        "name":"cardVariable",
+        "variableScope":"flow"
+      },
+      {
+        "type":"outboundVariable",
+        "name":"deckVariable",
+        "variableScope":"flow"
+      }
+    ]
+  },
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "title": {
+      "type": "title",
+      "label": "Deck Manager"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type":"textArea",
+          "label":"WQL Query Encoded",
+          "value":"<%'data?query=' + string:urlEncode('select imageURI, workdayID, assignedDeck, cardName, submittedBy FROM ') + string:urlEncode(site.applicationId) + string:urlEncode('_cards where assignedDeck=') + string:urlEncode(string:urlDecode('%22')) + queryParams.deckName + string:urlEncode(string:urlDecode('%22')) + string:urlEncode(' ORDER BY assignedDeck DESC') %>"
+        },
+        {
+          "type":"textArea",
+          "label":"queryParam from view page",
+          "value":"<% queryParams.deckName %>"
+        },
+        {
+          "type": "grid",
+          "gridType": "LIST",
+          "multiViewStylingEnabled": true,
+          "id": "Cards",
+          "rows": "<% cards.data %>",
+          "rowVariableName": "cardRow",
+          "enabled": false,
+          "doNotAdd": true,
+          "doNotRemove": true,
+          "label": "My Cards",
+          "columns": [
+            {
+              "type": "column",
+              "id": "columnAssignedDeck",
+              "columnId": "columnAssignedDeck",
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% cardRow.assignedDeck %>"
+              },
+              "label": "Deck"
+            },
+            {
+              "type": "column",
+              "id": "columnImage",
+              "columnId": "columnImage",
+              "cellTemplate": {
+                "type": "externalLink",
+                "descriptor":"<% cardRow.cardName %>",
+                "url":"<% cardRow.imageURI %>"
+              },
+              "label": "Image"
+            },
+            {
+              "type": "column",
+              "id": "columnName",
+              "columnId": "columnName",
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% cardRow.cardName %>"
+              },
+              "label": "Card Name"
+            }
+          ]
+        },
+        {
+          "type": "textArea",
+          "id": "cardSearch",
+          "enabled": "true",
+          "label": "Enter Search Text:",
+          "onChange": "<%
+                       var card = card.invoke();
+                       test.setValue(empty card.data? '' : card.data);
+                       testDeckName.setValue(queryParams.deckName);
+                       %>"
+        },
+        {
+          "type": "textArea",
+          "id": "test",
+          "label":"Scryfall Response data",
+          "enabled": "true",
+          "valueOutBinding": "cardVariable.data"
+        },
+        {
+          "type": "textArea",
+          "id": "testDeckName",
+          "label":"Deck Name Variable",
+          "enabled": "true",
+          "valueOutBinding": "deckVariable.deckName"
+        },
+        {
+          "type":"editButtonBar",
+          "editButtons": [
+            {
+              "type": "editButton",
+              "label": "Search Cards",
+              "id": "1",
+              "buttonType": "PRIMARY",
+              "ignoreRequiredFields": "false"
+
+            },
+            {
+              "type": "editButton",
+              "label": "Cancel",
+              "id": "2",
+              "buttonType": "AUXILIARY",
+              "render": "<% false %>"
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": "false",
+          "value": "Powered By Workday Extend"
+        }
+      ]
+    }
+  }
+}

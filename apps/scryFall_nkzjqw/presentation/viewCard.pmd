@@ -1,0 +1,107 @@
+{
+  "id": "viewCard",
+  "endPoints":[
+    {
+      "baseUrlType": "workday-common",
+      "name": "me",
+      "authType": "sso",
+      "url": "workers/me?view=workerProfile"
+    }
+  ],
+  "outboundData":{
+    "outboundEndPoints":[
+      {
+        "name": "postCard",
+        "baseUrlType": "workday-app",
+        "url": "cards",
+        "httpMethod": "POST",
+        "authType": "sso",
+        "allowEmptyValue":false,
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   console.info(json:asJSON(self.data));
+                   return self.data;
+                   %>",
+        "values": [
+          {
+            "outboundPath": "submittedBy.id",
+            "value": "<% me.id %>"
+          }
+        ]
+      }
+    ]
+  },
+  "presentation": {
+    "pageType":"edit",
+    "title": {
+      "type": "title",
+      "label": "View"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+
+        {
+          "type": "text",
+          "value": "<% flowVariables.cardVariable.data[0].name %>",
+          "valueOutBinding":"postCard.cardName"
+        },
+        {
+          "type": "image",
+          "label":"<% cardRow.name %>",
+          "imageUri":"<% flowVariables.cardVariable.data[0].image_uris.small %>"
+        },
+        {
+          "type": "text",
+          "value": "<% flowVariables.cardVariable.data[0].image_uris.small %>",
+          "valueOutBinding":"postCard.imageURI"
+
+        },
+
+        {
+          "type":"textArea",
+          "id":"dataTest",
+          "label":"Inbound Card Data",
+          "value":"<% flowVariables.cardVariable.data %>"
+        },
+        {
+          "type":"textArea",
+          "id":"queryParam",
+          "label":"Outbound Deck Name",
+          "valueOutBinding":"postCard.assignedDeck",
+          "value":"<% flowVariables.deckVariable.deckName %>"
+        },
+        {
+          "type":"editButtonBar",
+          "editButtons": [
+            {
+              "type": "editButton",
+              "label": "Search Cards",
+              "id": "1",
+              "buttonType": "PRIMARY",
+              "ignoreRequiredFields": "false",
+              ""
+            },
+            {
+              "type": "editButton",
+              "label": "Cancel",
+              "id": "2",
+              "buttonType": "AUXILIARY",
+              "render": "<% false %>"
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": "false",
+          "value": "Powered By Workday Extend"
+        }
+      ]
+    }
+  }
+}

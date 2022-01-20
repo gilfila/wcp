@@ -1,0 +1,106 @@
+{
+  "appProperties": [],
+  "flowDefinitions": [
+    {
+      "id": "manageDeckFlow",
+      "flowSteps": [
+        {
+          "id": "manageDeckStep",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "viewCardStep",
+              "condition": "true"
+            }
+          ],
+          "taskId": "manageDeck"
+        },
+        {
+          "id": "viewCardStep",
+          "taskId": "viewCard"
+        }
+      ]
+    },
+    {
+      "id": "viewFlow",
+      "flowSteps": [
+        {
+          "id": "viewStep",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "manageStep",
+              "condition": "true"
+            }
+          ],
+          "taskId": "viewCard"
+        },
+        {
+          "id": "manageStep",
+          "taskId": "manageDeck"
+        }
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "home",
+      "routingPattern": "/",
+      "page": {
+        "id": "viewDecks"
+      }
+    },
+    {
+      "id": "viewCard",
+      "routingPattern": "viewCard",
+      "page": {
+        "id": "viewCard"
+      }
+    },
+    {
+      "id": "manageDeck",
+      "routingPattern": "manageDeck/{deckName}",
+      "page": {
+        "id": "manageDeck"
+      }
+    },
+    {
+      "id": "viewDecks",
+      "routingPattern": "viewDecks",
+      "page": {
+        "id": "viewDecks"
+      }
+    }
+  ],
+  "applicationId": "scryFall_nkzjqw",
+  "dataProviders": [
+    {
+      "key": "scryfall",
+      "value": "https://api.scryfall.com/"
+    },
+    {
+      "key": "workday-app",
+      "value": "https://api.workday.com/apps/<% site.applicationId %>/v1/"
+    },
+    {
+      "key": "workday-bp",
+      "value": "https://api.workday.com/businessProcess/v1/"
+    },
+    {
+      "key": "workday-common",
+      "value": "https://api.workday.com/common/v1/"
+    },
+    {
+      "key": "workday-staffing",
+      "value": "https://api.workday.com/staffing/v1/"
+    },
+    {
+      "key": "workday-orchestration",
+      "value": "https://api.workday.com/orchestrate/v1/apps/<% site.applicationId %>/orchestrations/"
+    },
+    {
+      "key": "workday-wql",
+      "value": "https://api.workday.com/wql/v1/"
+    }
+  ]
+}

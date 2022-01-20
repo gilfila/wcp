@@ -1,0 +1,161 @@
+{
+  "id": "viewTickets",
+  "endPoints": [
+    {
+      "baseUrlType": "app",
+      "name": "ticketData",
+      "authType": "sso",
+      "onSend": "<%
+                 //Uncomment the below lines only for debugging purposes
+                 console.info(json:asJSON(self.data));
+                 return self.data;
+                 %>",
+      "url": "tickets"
+    }
+  ],
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "title": {
+      "type": "title",
+      "label": "Ticketing App"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "button",
+          "id": "createTicket",
+          "label": "Create Ticket",
+          "action": "PRIMARY",
+          "taskReference": {
+            "taskId": "createTicket"
+          }
+        },
+        {
+          "type": "grid",
+          "excelExportEnabled": true,
+          "gridType": "LIST",
+          "multiViewStylingEnabled": true,
+          "id": "tickets",
+          "rows": "<% ticketData.data %>",
+          "rowVariableName": "ticket",
+          "enabled": false,
+          "doNotAdd": true,
+          "doNotRemove": true,
+          "label": "My Tickets",
+          "columns": [
+            {
+              "type": "column",
+              "id": "status",
+              "columnId": "columnStatus",
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% ticket.status %>"
+              },
+              "label": "Status"
+            },
+            {
+              "type": "column",
+              "id": "priority",
+              "columnId": "columnPriority",
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% ticket.priority %>"
+              },
+              "label": "Priority"
+            },
+            {
+              "type": "column",
+              "id": "project",
+              "columnId": "columnProject",
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% ticket.project %>"
+              },
+              "label": "Project"
+            },
+            {
+              "type": "column",
+              "id": "descriptor",
+              "columnId": "columnDescriptor",
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% ticket.descriptor %>"
+              },
+              "label": "Descriptor"
+            },
+            {
+              "type": "column",
+              "id": "summary",
+              "columnId": "columnSummary",
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% ticket.summary %>"
+              },
+              "label": "Summary"
+            },
+            {
+              "type": "column",
+              "id": "issueType",
+              "columnId": "columnIssueType",
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% ticket.issueType %>"
+              },
+              "label": "Issue Type"
+            },
+            {
+              "type": "column",
+              "id": "assignee",
+              "columnId": "columnAssignee",
+              "_comment": "Don't want the instanceList to render if the data is null",
+              "cellTemplate": {
+                "type": "instanceList",
+                "render": "<%  !empty ticket.assignee.id %>",
+                "instanceList": [
+                  {
+                    "id": "<% ticket.assignee.id %>",
+                    "descriptor": "<% ticket.assignee.descriptor %>",
+                    "wid": "<% ticket.assignee.id %>"
+                  }
+                ]
+              },
+              "label": "Assignee",
+              "sortableAndFilterable": "<% true %>"
+            },
+            {
+              "type": "column",
+              "id": "reporter",
+              "_comment": "Don't want the instanceList to render if the data is null",
+              "columnId": "columnReporter",
+              "cellTemplate": {
+                "type": "instanceList",
+                "render": "<%  !empty ticket.reporter.id %>",
+                "instanceList": [
+                  {
+                    "id": "<% ticket.reporter.id %>",
+                    "descriptor": "<% ticket.reporter.descriptor %>",
+                    "wid": "<% ticket.reporter.id %>"
+                  }
+                ]
+              },
+              "label": "Reporter",
+              "sortableAndFilterable": "<% true %>"
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": "false",
+          "value": "Powered By Workday Extend"
+        }
+      ]
+    }
+  }
+}

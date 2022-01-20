@@ -1,0 +1,47 @@
+{
+  "id": "eventDetails",
+  "endPoints": [
+    {
+      "name": "event",
+      "baseUrlType": "WORKDAY-BP",
+      "url": "<% '/events/' + queryParams.eventId %>",
+      "authType": "sso",
+      "exclude": "<% empty(queryParams.eventId) %>"
+    },
+    {
+      "baseUrlType": "app",
+      "name": "ticketData",
+      "authType": "sso",
+      "url": "tickets/<% event.for.id %>"
+    }
+  ],
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "title": {
+      "type": "title",
+      "label": "Workday Extend"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "text",
+          "id": "hello",
+          "label": "Raw Data",
+          "value": "<% json:asJSON(ticketData) %>"
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": "false",
+          "value": "Powered By Workday Extend"
+        }
+      ]
+    }
+  }
+}

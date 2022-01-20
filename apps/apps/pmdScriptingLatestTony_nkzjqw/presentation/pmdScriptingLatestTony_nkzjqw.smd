@@ -1,0 +1,21 @@
+{
+  "id": "pmdScriptingLatestTony_nkzjqw",
+  "languages": [
+    {
+      "code": "en-US",
+      "description": "English"
+    }
+  ],
+  "siteAuth": {
+    "authTypes": [
+      {
+        "scheme": "SSO",
+        "id": "sso"
+      }
+    ]
+  },
+  "siteId": "pmdScriptingLatestTony_nkzjqw",
+  "cdnEnabled": true,
+  "siteProperties": [ ],
+  "applicationId": "pmdScriptingLatestTony_nkzjqw"
+}

@@ -1,0 +1,65 @@
+{
+  "appProperties": [],
+  "tasks": [
+    {
+      "id": "root",
+      "routingPattern": "/",
+      "page": {
+        "id": "home"
+      }
+    },
+    {
+      "id": "postValueOutBinding",
+      "routingPattern": "postValueOutBinding",
+      "page": {
+        "id": "postValueOutBinding"
+      }
+    },
+    {
+      "id": "postValues",
+      "routingPattern": "postValues",
+      "page": {
+        "id": "postValues"
+      }
+    },
+    {
+      "id": "postOnSend",
+      "routingPattern": "postOnSend",
+      "page": {
+        "id": "postOnSend"
+      }
+    },
+    {
+      "id": "micro",
+      "routingPattern": "micro",
+      "page": {
+        "id": "micro"
+      }
+    },
+    {
+      "id": "microConclusion",
+      "routingPattern": "microConclusion",
+      "page": {
+        "id": "microConclusion"
+      }
+    },
+    {
+      "id": "confirmation",
+      "routingPattern": "confirmation",
+      "page": {
+        "id": "confirmation"
+      }
+    }
+  ],
+  "applicationId": "outboundEndpointDemo_nkzjqw",
+  "dataProviders": [
+    {
+      "key": "app",
+      "value": "https://api.workday.com/apps/<%site.applicationId%>/v1/"
+    },
+    {
+      "key": "WORKDAY-WQL",
+      "value": "https://api.workday.com/wql/v1"
+    }
+  ]
+}

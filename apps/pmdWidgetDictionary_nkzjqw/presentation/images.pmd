@@ -1,0 +1,44 @@
+{
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "Images"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "sorted": false,
+      "children": [
+        {
+          "type": "pod",
+          "podId": "header"
+        },
+        {
+          "type": "text",
+          "value": "For all images, there are very limited options to resize."
+        },
+        {
+          "type": "image",
+          "label": "Image by URL",
+          "imageUri": "https://cdn.workday.com/blogs/uploads/2015/03/wday_logo_dub_circle_600x600.png"
+        },
+        {
+          "type": "image",
+          "label": "Shrink Image",
+          "imageUri": "https://cdn.workday.com/blogs/uploads/2015/03/wday_logo_dub_circle_600x600.png",
+          "userPhoto": "true"
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "footer"
+        }
+      ]
+    }
+  },
+  "id": "images"
+}

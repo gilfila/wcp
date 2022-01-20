@@ -1,0 +1,25 @@
+{
+  "id": "pmdWidgetDictionary_nkzjqw",
+  "languages": [
+    {
+      "code": "en-US",
+      "description": "English"
+    }
+  ],
+  "siteAuth": {
+    "authTypes": [
+      {
+        "scheme": "SSO",
+        "id": "sso"
+      },
+      {
+        "scheme": "NoAuth",
+        "id": "noauth"
+      }
+    ]
+  },
+  "siteId": "pmdWidgetDictionary_nkzjqw",
+  "cdnEnabled": true,
+  "siteProperties": [ ],
+  "applicationId": "pmdWidgetDictionary_nkzjqw"
+}

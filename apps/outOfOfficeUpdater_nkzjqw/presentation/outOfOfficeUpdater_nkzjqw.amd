@@ -1,0 +1,77 @@
+{
+  "appProperties": [ ],
+  "flowDefinitions": [
+    {
+      "id": "myFlowId",
+      "name": "myFlow",
+      "flowSteps": [
+        {
+          "id": "flowStep1",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "flowStep2",
+              "condition": "<% string:contains(flowVariables.response.value, 'Error') %>"
+            },
+            {
+              "order": "b",
+              "value": "flowStep3",
+              "condition": "<% true %>"
+            }
+          ],
+          "startsFlow": true,
+          "taskId": "requestPTO"
+        },
+        {
+          "id": "flowStep2",
+          "taskId": "fail"
+        },
+        {
+          "id": "flowStep3",
+          "taskId": "success"
+        }
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "root",
+      "routingPattern": "/",
+      "page": {
+        "id": "home"
+      }
+    },
+    {
+      "id": "requestPTO",
+      "routingPattern": "/requestPTO",
+      "page": {
+        "id": "requestPTO"
+      }
+    },
+    {
+      "id": "success",
+      "routingPattern": "/success",
+      "page": {
+        "id": "success"
+      }
+    },
+    {
+      "id": "fail",
+      "routingPattern": "fail",
+      "page": {
+        "id": "fail"
+      }
+    }
+  ],
+  "applicationId": "outOfOfficeUpdater_nkzjqw",
+  "dataProviders": [
+    {
+      "key": "app",
+      "value": "https://api.workday.com/apps/requestPTO_nkzjqw/"
+    },
+    {
+      "key": "workday-staffing",
+      "value": "https://api.workday.com/staffing/v1/"
+    }
+  ]
+}

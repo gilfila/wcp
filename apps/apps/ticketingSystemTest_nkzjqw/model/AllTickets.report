@@ -1,0 +1,65 @@
+{
+  "id": 1,
+  "name": "AllTickets",
+  "businessObject": "Ticket",
+  "defaultSecurityDomains": [
+    "ManageTickets"
+  ],
+  "sortConfigs": [
+    {
+      "id": 1,
+      "order": "a",
+      "field": "reporter",
+      "direction": "ASCENDING"
+    }
+  ],
+  "columns": [
+    {
+      "id": 1,
+      "name": "Ticket",
+      "order": "a",
+      "isSelfReferencing": true
+    },
+    {
+      "id": 2,
+      "name": "Project",
+      "order": "b",
+      "field": "project"
+    },
+    {
+      "id": 3,
+      "name": "Issue Type",
+      "order": "c",
+      "field": "issueType"
+    },
+    {
+      "id": 4,
+      "name": "Summary",
+      "order": "d",
+      "field": "summary"
+    },
+    {
+      "id": 5,
+      "name": "Priority",
+      "order": "e",
+      "field": "priority"
+    },
+    {
+      "id": 6,
+      "name": "Reporter",
+      "order": "f",
+      "field": "reporter"
+    },
+    {
+      "id": 7,
+      "name": "Assignee",
+      "order": "g",
+      "field": "assignee"
+    },{
+      "id": 8,
+      "name": "Status",
+      "order": "h",
+      "field": "status"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "scryFall_nkzjqw",
+  "languages": [
+    {
+      "code": "en-US",
+      "description": "English"
+    }
+  ],
+  "siteAuth": {
+    "authTypes": [
+      {
+        "id": "sso",
+        "scheme": "SSO"
+      },
+      {
+        "id" : "noAuth",
+        "scheme" : "NoAuth"
+      }
+    ]
+  },
+  "siteId": "scryFall_nkzjqw",
+  "cdnEnabled": true,
+  "siteProperties": [ ],
+  "applicationId": "scryFall_nkzjqw"
+}

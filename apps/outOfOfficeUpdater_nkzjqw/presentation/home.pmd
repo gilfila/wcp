@@ -1,0 +1,32 @@
+{
+  "id": "home",
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "Slack Status"
+    },
+    "headerSize": "STANDARD",
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "sorted": false,
+      "children": [
+        {
+          "type": "readOnlyText",
+          "id": "hello",
+          "label": "Instructions",
+          "value": "This task will store a slack status that will display once your PTO is approved by your manager.."
+        },
+        {
+          "type": "button",
+          "id": "requestPTOButton",
+          "label": "Set Slack Status for PTO",
+          "action": "PRIMARY",
+          "taskReference": {
+            "taskId": "requestPTO"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "id": "dualAxisChart2",
+  "include": [
+        "chartData.script"
+  ],
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "dualAxisChart2"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "section",
+          "horizontal": true,
+          "children": [
+            {
+              "type": "pod",
+              "podId": "header"
+            },
+            {
+              "type": "text",
+              "label": "dualAxisChart2",
+              "value": "Please see the below example of a dual axis chart 2. The metrics are just for demo purposes. Feel free to edit the PMD, to see the affect on the graph if certain tags are added / removed "
+            },
+            {
+              "type": "dualAxisChart2",
+              "id": "dualAxisChartExample1",
+              "data": "<% chartData.getChartData() %>",
+              "dataVariableName": "data",
+              "measurementDataSets": [
+                {
+                  "name": "Finance",
+                  "value": "<% data.recruits.finance %>",
+                  "chartMarkType": "BAR",
+                  "axisPosition": "LEFT"
+                },
+                {
+                  "name": "Sales",
+                  "value": "<% data.recruits.sales %>",
+                  "chartMarkType": "BAR",
+                  "axisPosition": "LEFT"
+                },
+                {
+                  "name": "Hired Recruits",
+                  "value": "<% data.hiredRecruits %>",
+                  "chartMarkType": "LINE",
+                  "chartMarkLabel": "<% data.hiredRecruits + ' hired' %>",
+                  "axisPosition": "RIGHT"
+                }
+              ],
+              "categoryDataSet": {
+                "name": "Recruiter",
+                "value": "<% data.recruiter %>"
+              },
+              "leftAxisOptions": {
+                "axisTitle": "Recruits"
+              },
+              "rightAxisOptions": {
+                "axisTitle": "Hired Recruits"
+              },
+              "categoryAxisOptions": {
+                "axisTitle": "Recruiters"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "footer"
+        }
+      ]
+    }
+  }
+}

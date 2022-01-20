@@ -1,7 +1,7 @@
 {
   "id": "maintainVaccineTypes",
   "securityDomains": [
-    "ManageVaccines"
+    "ManageConfiguration"
   ],
   "endPoints": [
     {
@@ -88,38 +88,6 @@
               "columns": [
                 {
                   "type": "column",
-                  "id": "columnVaccineTypeEnabled",
-                  "columnId": "columnVaccineEnabled",
-                  "cellTemplate": {
-                    "type": "checkBox",
-                    "value": "<% vaccineType.enabled %>",
-                    "valuesOut": [
-                      {
-                        "value": "<% self.value %>",
-                        "valueOutBinding": "vaccineTypesPut.enabled"
-                      },
-                      {
-                        "value": "<% self.value %>",
-                        "valueOutBinding": "vaccineTypesPost.enabled"
-                      }
-                    ]
-                  },
-                  "label": "Enabled"
-                },
-                {
-                  "type": "column",
-                  "id": "columnvaccineTypeId",
-                  "columnId": "columnvaccineTypeId",
-                  "cellTemplate": {
-                    "type": "text",
-                    "value": "<% vaccineType.id %>",
-                    "id": "vaccineTypeId",
-                    "enabled": false
-                  },
-                  "label": "Vaccine Type ID"
-                },
-                {
-                  "type": "column",
                   "id": "columnVaccineTypeName",
                   "columnId": "columnVaccineTypeName",
                   "cellTemplate": {
@@ -137,8 +105,29 @@
                     ]
                   },
                   "label": "Vaccine Type Name"
+                },
+                {
+                  "type": "column",
+                  "id": "columnvaccineTypeId",
+                  "columnId": "columnvaccineTypeId",
+                  "cellTemplate": {
+                    "type": "text",
+                    "value": "<% vaccineType.id %>",
+                    "id": "vaccineTypeId",
+                    "enabled": false
+                  },
+                  "label": "Vaccine Type ID"
                 }
               ]
+            },
+            {
+              "type": "button",
+              "label": "Return to Main Configuration",
+              "taskReference": {
+                "type": "taskReference",
+                "taskId": "maintainVaccineManagementConfig"
+              },
+              "action": "AUXILIARY"
             }
           ]
         }

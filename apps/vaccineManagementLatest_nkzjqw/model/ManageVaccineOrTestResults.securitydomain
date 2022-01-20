@@ -1,0 +1,6 @@
+{
+  "id": 2,
+  "name": "ManageVaccineOrTestResults",
+  "label": "Manage: COVID Vaccine or Test Results",
+  "enabledForPageSecurity": true
+}

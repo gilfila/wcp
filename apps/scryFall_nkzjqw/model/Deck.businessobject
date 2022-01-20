@@ -1,0 +1,28 @@
+{
+  "id": 2,
+  "name": "Deck",
+  "label": "Deck",
+  "defaultSecurityDomains": [
+    "ViewCards"
+  ],
+  "defaultCollection": {
+    "name": "decks",
+    "label": "Decks"
+  },
+  "fields": [
+    {
+      "id": 1,
+      "name": "deckName",
+      "label": "Deck Name",
+      "type": "TEXT"
+    },
+    {
+      "id": 2,
+      "name": "submittedBy",
+      "type": "SINGLE_INSTANCE",
+      "label": "Submitted By",
+      "target": "WORKER",
+      "secureByTarget": true
+    }
+  ]
+}

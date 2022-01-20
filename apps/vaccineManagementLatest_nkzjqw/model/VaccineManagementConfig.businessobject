@@ -1,0 +1,200 @@
+{
+  "id": 6,
+  "name": "VaccineManagementConfig",
+  "label": "Vaccine Management Config",
+  "defaultSecurityDomains": [
+    "ManageConfiguration"
+  ],
+  "defaultCollection": {
+    "name": "vaccineManagementConfig",
+    "label": "Vaccine Management Config"
+  },
+  "fields": [
+    {
+      "id": 2,
+      "name": "vaccineTypeEnabled",
+      "label": "Vaccine Type Enabled",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 3,
+      "name": "vaccineTypeLabel",
+      "label": "Vaccine Type Label",
+      "type": "TEXT"
+    },
+    {
+      "id": 20,
+      "name": "vaccineTypeRequired",
+      "label": "Vaccine Type Required",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 4,
+      "name": "isFullyVaccinatedEnabled",
+      "label": "Is Fully Vaccinated Enabled",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 5,
+      "name": "isFullyVaccinatedLabel",
+      "label": "Is Fully Vaccinated Label",
+      "type": "TEXT"
+    },
+    {
+      "id": 21,
+      "name": "isFullyVaccinatedRequired",
+      "label": "Is Fully Vaccinated Required",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 6,
+      "name": "vaccineManufacturerEnabled",
+      "label": "Vaccine Manufacturer Enabled",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 7,
+      "name": "vaccineManufacturerLabel",
+      "label": "Vaccine Manufacturer Label",
+      "type": "TEXT"
+    },
+    {
+      "id": 22,
+      "name": "vaccineManufacturerRequired",
+      "label": "Vaccine Manufacturer Required",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 10,
+      "name": "vaccineDisclosureDateEnabled",
+      "label": "Vaccine Disclosure Date Enabled",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 11,
+      "name": "vaccineDisclosureDateLabel",
+      "label": "Disclosure Date Label",
+      "type": "TEXT"
+    },
+    {
+      "id": 23,
+      "name": "vaccineDisclosureDateRequired",
+      "label": "Vaccine Disclosure Date Required",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 12,
+      "name": "vaccineAttachmentEnabled",
+      "label": "Vaccine Attachment Enabled",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 13,
+      "name": "vaccineAttachmentLabel",
+      "label": "Vaccine Attachment Label",
+      "type": "TEXT"
+    },
+    {
+      "id": 24,
+      "name": "vaccineAttachmentRequired",
+      "label": "Vaccine Attachment Required",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 14,
+      "name": "testResultsEnabled",
+      "label": "Test Results Enabled",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 15,
+      "name": "testResultsLabel",
+      "label": "Test Results Label",
+      "type": "TEXT"
+    },
+    {
+      "id": 25,
+      "name": "testResultsRequired",
+      "label": "Test Results Required",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 16,
+      "name": "testResultsDateEnabled",
+      "label": "Test Results Date Enabled",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 17,
+      "name": "testResultsDateLabel",
+      "label": "Test Results Date Label",
+      "type": "TEXT"
+    },
+    {
+      "id": 26,
+      "name": "testResultsDateRequired",
+      "label": "Test Results Date Required",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 18,
+      "name": "testResultsAttachmentEnabled",
+      "label": "Test Results Attachment Enabled",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 19,
+      "name": "testResultsAttachmentLabel",
+      "label": "Test Results Attachment Label",
+      "type": "TEXT"
+    },
+    {
+      "id": 27,
+      "name": "testResultsAttachmentRequired",
+      "label": "Test Results Attachment Required",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 28,
+      "name": "numberOfTestResults",
+      "label": "Number Of Test Results",
+      "type": "TEXT"
+    },
+    {
+      "id": 29,
+      "name": "workPlacePolicyEnabled",
+      "label": "Work Place Policy Enabled",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 30,
+      "name": "workPlacePolicyLabel",
+      "label": "Work Place Policy Label",
+      "type": "TEXT"
+    },
+    {
+      "id": 31,
+      "name": "workPlacePolicyURL",
+      "label": "Work Place Policy URL",
+      "type": "TEXT"
+    },
+    {
+      "id": 32,
+      "name": "siteInformationEnabled",
+      "label": "Site Information Enabled",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": 33,
+      "name": "siteInformationLabel",
+      "label": "Site Information Label",
+      "type": "TEXT"
+    },
+    {
+      "id": 34,
+      "name": "siteInformationURL",
+      "label": "Site Information URL",
+      "type": "TEXT"
+    }
+  ]
+}

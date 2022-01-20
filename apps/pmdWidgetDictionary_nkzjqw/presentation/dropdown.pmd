@@ -1,0 +1,78 @@
+{
+  "id": "dropdown",
+  "endPoints": [
+    {
+      "name": "countries",
+      "baseUrlType": "wdayRef",
+      "url": "/country/vers/latest/items?pageLimit=15",
+      "authType": "sso",
+      "bestEffort": "true"
+    }
+  ],
+  "presentation": {
+    "pageType": "edit",
+    "title": {
+      "type": "title",
+      "label": "dropdown"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "sorted": false,
+      "children": [
+        {
+          "type": "pod",
+          "podId": "header"
+        },
+        {
+          "type": "dropdown",
+          "label": "Country - Reference Data",
+          "id": "country",
+          "idKey": "ISO_3166_1_Alpha_3_Code",
+          "displayKey": "name",
+          "values": "<% countries.items %>",
+          "onChange": "<% displayCountry.value = !empty self.value ? self.value.get(0) : '' %>"
+        },
+        {
+          "type": "text",
+          "enabled": false,
+          "id": "displayCountry",
+          "label": "Selected Country"
+        },
+        {
+          "type": "dropdown",
+          "label": "Hardcoded Data 1",
+          "id": "hardcoded",
+          "selectedValues": "<% ['id2'] %>",
+          "onChange": "<% displayHardcodedData.value = !empty self.value ? self.value.get(0) : '' %>",
+          "instanceList": [
+            {
+              "id": "id1",
+              "descriptor": "Option 1"
+            },
+            {
+              "id": "id2",
+              "descriptor": "Option 2"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "enabled": false,
+          "id": "displayHardcodedData",
+          "label": "Selected Data",
+          "value": "<% hardcoded.value[0] ?:  '' %>"
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "footer"
+        }
+      ]
+    }
+  }
+}

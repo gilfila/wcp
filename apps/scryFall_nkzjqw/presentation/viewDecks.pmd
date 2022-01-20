@@ -1,0 +1,175 @@
+{
+  "id": "viewDecks",
+  "endPoints": [
+    {
+      "baseUrlType": "workday-wql",
+      "name": "decks",
+      "authType": "sso",
+      "onSend": "<%
+                 //Uncomment the below lines only for debugging purposes
+                 console.info(json:asJSON(self.data));
+                 return self.data;
+                 %>",
+      "url": "<% 'data?query=' + string:urlEncode('select workdayID, deckName, submittedBy FROM ') + string:urlEncode(site.applicationId) + string:urlEncode('_decks where submittedBy=') + me.id + string:urlEncode(' ORDER BY deckName DESC') %>"
+    },
+    {
+      "baseUrlType": "workday-common",
+      "name": "me",
+      "authType": "sso",
+      "url": "workers/me?view=workerProfile"
+    }
+
+  ],
+  "outboundData":{
+    "outboundEndPoints":[
+      {
+        "name": "putDeck",
+        "url": "<% 'decks/' + widCell.value %>",
+        "httpMethod": "PUT",
+        "baseUrlType": "workday-app",
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   console.info(json:asJSON(self.data));
+                   return self.data;
+                   %>",
+        "exclude": "<% empty widCell.value %>"
+      },
+      {
+        "name": "postDeck",
+        "baseUrlType": "workday-app",
+        "url": "decks",
+        "httpMethod": "POST",
+        "authType": "sso",
+        "exclude": "<% ! empty widCell.value %>",
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   console.info(json:asJSON(self.data));
+                   return self.data;
+                   %>",
+        "values": [
+          {
+            "outboundPath": "submittedBy.id",
+            "value": "<% me.id %>"
+          }
+        ]
+      },
+      {
+        "name": "decksDelete",
+        "baseUrlType": "workday-app",
+        "url": "decks/<% widCell.value %>",
+        "httpMethod": "DELETE",
+        "authType": "sso"
+      }
+    ]
+  },
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "title": {
+      "type": "title",
+      "label": "View All Decks"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type":"textArea",
+          "id":"test1",
+          "value":"<% decks %>"
+        },
+        {
+          "type": "grid",
+          "gridType": "LIST",
+          "multiViewStylingEnabled": true,
+          "id": "cardsGrid",
+          "rows": "<% empty decks.data? [] : decks.data %>",
+          "rowVariableName": "deck",
+          "enabled": true,
+          "deleteEndPoint":"decksDelete",
+          "label": "My Cards",
+          "columns": [
+            {
+              "type": "column",
+              "id": "columnWID",
+              "columnId": "columnWID",
+              "cellTemplate": {
+                "id":"widCell",
+                "enabled":false,
+                "type": "text",
+                "value": "<% deck.workdayID %>"
+              },
+              "label": "Deck"
+            },
+            {
+              "type": "column",
+              "id": "columnAssignedDeck",
+              "columnId": "columnAssignedDeck",
+              "cellTemplate": {
+                "id":"deckNameCell",
+                "type": "text",
+                "value": "<% deck.deckName %>",
+                "valuesOut": [
+                  {
+                    "value": "<% self.value %>",
+                    "valueOutBinding": "putDeck.deckName"
+                  },
+                  {
+                    "value": "<% self.value %>",
+                    "valueOutBinding": "postDeck.deckName"
+                  }
+                  ]
+              },
+              "label": "Deck"
+            },
+            {
+              "type": "column",
+              "id": "columnName",
+              "label": "Edit",
+              "columnId": "columnName",
+              "cellTemplate": {
+                "type": "button",
+                "label": "Edit",
+                "action": "SECONDARY",
+                "taskReference": {
+                  "taskId": "manageDeck",
+                  "parameterBindings": {
+                    "deckName": "<% deckNameCell.value %>"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type":"editButtonBar",
+          "editButtons": [
+            {
+              "type": "editButton",
+              "label": "Save",
+              "id": "1",
+              "buttonType": "PRIMARY",
+              "ignoreRequiredFields": "false"
+            },
+            {
+              "type": "editButton",
+              "label": "Cancel",
+              "id": "2",
+              "buttonType": "AUXILIARY",
+              "render": "<% false %>"
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": "false",
+          "value": "Powered By Workday Extend"
+        }
+      ]
+    }
+  }
+}

@@ -384,6 +384,7 @@
                           "required": "<% vaccineManagementConfig.data[0].vaccineAttachmentRequired %>",
                           "visible": "<% vaccineManagementConfig.data[0].vaccineAttachmentEnabled %>",
                           "id": "verificationFile",
+                          "maxImageDimension":"1024",
                           "label": "<% vaccineManagementConfig.data[0].vaccineAttachmentLabel %>",
                           "singular": "<% true %>",
                           "compact": "<% false %>",

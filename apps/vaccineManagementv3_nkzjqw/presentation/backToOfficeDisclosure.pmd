@@ -70,7 +70,7 @@
       {
         "name": "backToOfficeDisclosure",
         "baseUrlType": "workday-app",
-        "url": "/backToOfficeDisclosures",
+        "url": "backToOfficeDisclosures",
         "httpMethod": "POST",
         "authType": "sso",
         "onSend": "<%

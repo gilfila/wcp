@@ -1,0 +1,184 @@
+{
+  "id": "functionsListAndMap",
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "functionsListAndMap"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "header"
+        },
+        {
+          "type": "section",
+          "horizontal": true,
+          "columnWidthRatios": [
+            0.5,
+            0.5
+          ],
+          "children": [
+            {
+              "type": "fieldSet",
+              "title": "List Functions",
+              "children": [
+                {
+                  "type": "text",
+                  "label": "toList - Takes any number of provided items and returns a List containing those items. If an item is null, it is excluded from the list.",
+                  "value": "<% return ['1', '2', '3', null].toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "toListIncludeNull - Takes any number of provided items and returns a List containing those items. If an item is null, it is included in the list.",
+                  "value": "<% return ['1', '2', '3', null ].toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "add - Given a list, returns a list with a given Object to that list at a specifies index. This does not work with primitive types, such as strings, ints or booleans.",
+                  "value": "<% return ['1', '2', '3'].add({'id':'2'}).toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "contains - Returns true if a list contains a requested value, otherwise returns false.",
+                  "value": "<% ['1', '2', '3'].contains('2') %>"
+                },
+                {
+                  "type": "text",
+                  "label": "createMapList - Takes a list of items and transforms it into a list of objects where the original values are associated with a given key.",
+                  "value": "<% list:createMapList(['hello', 'world'], 'key').toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "createMapListWithKeys - Takes a list of items and transforms it into a list of objects with each item value associated with a provided key.",
+                  "value": "<% list:createMapListWithKeys(['hello', 'world'], ['key1', 'key2']).toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "emptyList - Creates an empty list",
+                  "value": "<% {:}.toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "exclude - Returns objects from a given list whose values do not match the comparison value for the given key.",
+                  "value": "<% list:exclude( [{'id': '1'}, {'id': '2'}, {'id': '3'}], 'id', '2').toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "excludeEmptyAttribute - Returns a list of objects with a given property that is not empty.",
+                  "value": "<% list:excludeEmptyAttribute([{'id': '1'}, {'id2': '2'}, {'id': '3'}], 'id').toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "excludeMultiple - Returns objects from a given list whose values do not match the comparison values for the given key",
+                  "value": "<% list:excludeMultiple([{'id': '1'}, {'id': '2'}, {'id': '3'}], 'id', ['1', '2']).toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "excludeRegex - Returns objects from a given list whose values do not match a provided regular expression.",
+                  "value": "<% list:excludeRegex(['my','123','regex','list'], '[a-z]+').toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "filter - Returns objects from a given list whose values match a provided filter parameter.",
+                  "value": "<% list:filter([{'id': '1'}, {'id': '2'}, {'id': '3'}], 'id', '2').toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "filterEmptyAttribute - Returns all objects in a list which have no value for a given key.",
+                  "value": "<% list:filterEmptyAttribute([{'id': '1'}, {'id2': '2'}, {'id': '3'}], 'id').toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "filterMultiple - Returns a filtered list of Objects whose key values match a given list of comparison values.",
+                  "value": "<% list:filterMultiple([{'id': '1'}, {'id': '2'}, {'id': '3'}], 'id', ['1', '2']).toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "filterRegex - Returns a filtered list of strings that match a Regex value.",
+                  "value": "<% list:filterRegex(['my','123','regex','list'], '[a-z]+').toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "firstNonEmpty - Returns the first occurrence of a non-null and non-empty parameter in a variable set of parameters.",
+                  "value": "<% list:firstNonEmpty([], [null, '', 'nonEmpty']).toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "indexOf - Returns the index of the first occurance of the requested object in a list.",
+                  "value": "<% list:indexOf({'id': '2'}, [{'id': '1'}, {'id': '2'}, {'id': '3'}]) %>"
+                },
+                {
+                  "type": "text",
+                  "label": "isList - Returns true if an object is a list, otherwise returns false.",
+                  "value": "<% list:isList(['0', '1']) %>"
+                },
+                {
+                  "type": "text",
+                  "label": "join - Combines two lists into one.",
+                  "value": "<% ['1', '2', '3'].addAll(['0']).toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "mapAttribute - Returns a list of attribute values whose key matches a given key in a list of key/value pairs.",
+                  "value": "<% list:mapAttribute([{'id': '1'}, {'id': '2'}, {'id': '3'}], 'id').toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "size - Returns an integer representing the size of the provided list.",
+                  "value": "<% ['0', '1', '2', '3'].size() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "sort - Sorts a list of objects by the value within a given property. true sorts by ascending, false sorts by descending.",
+                  "value": "<% list:sort([{'id': '3'}, {'id': '1'}, {'id': '2'}], 'id', true).toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "toMap - Converts a list to a map by extracting the values of a given key, and using the values as the new keys in the new map.",
+                  "value": "<% list:toMap([{'id': '1', 'word': 'hello'}, {'id': '2', 'word': 'world'}], 'id').toString() %>"
+                }
+              ]
+            },
+            {
+              "type": "fieldSet",
+              "title": "Map Functions",
+              "children": [
+                {
+                  "type": "text",
+                  "label": "getKeys - Returns a list of all keys from a given map of key/value pairs. If the given map is null, getKeys returns an empty list.",
+                  "value": "<% list:toMap([{'id': '1', 'word': 'hello'}, {'id': '2', 'word': 'world'}], 'id').keys().toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "getObject - Finds a value in a key/value map using a given key. getObject is null-safe.",
+                  "value": "<% {'key': 'value'}.key %>"
+                },
+                {
+                  "type": "text",
+                  "label": "getValues - Returns a list of all values from a given map of key/value pairs. getValues is null-safe.",
+                  "value": "<% {'key0': 'value0', 'key1': 'value1', 'key2': 'value2'}.values().toString() %>"
+                },
+                {
+                  "type": "text",
+                  "label": "getValuesFromKeys - Returns all values that match a list of keys in a given map of key/value pairs.",
+                  "value": "<% map:getValuesFromKeys({'key0': 'value0', 'key1': 'value1', 'key2': 'value2'}, ['key0', 'key2']).toString() %>"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "footer"
+        }
+      ]
+    }
+  }
+}

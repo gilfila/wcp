@@ -1,0 +1,11 @@
+{
+  "referenceID": "vaccineManagementv3_nkzjqw-default",
+  "name": "default",
+  "attributes": [
+    {
+      "type": "numeric",
+      "name": "maxFileSize",
+      "alias": "maxFileSize"
+    }
+  ]
+}

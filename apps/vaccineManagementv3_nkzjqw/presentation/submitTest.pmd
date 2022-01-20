@@ -363,6 +363,7 @@
                           "id": "verificationFile",
                           "label": "<% vaccineManagementConfig.data[0].testResultsAttachmentLabel %>",
                           "singular": "<% true %>",
+                          "maxImageDimension":"1024",
                           "compact": "<% false %>",
                           "fileTypes": "gif,jpg,jpeg,png",
                           "valuesOut": [

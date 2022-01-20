@@ -394,6 +394,7 @@
                           "label": "<% vaccineManagementConfig.data[0].vaccineAttachmentLabel %>",
                           "singular": "<% true %>",
                           "compact": "<% false %>",
+                          "maxImageDimension":"1024",
                           "fileTypes": "gif,jpg,jpeg,png",
                           "valuesOut": [
                             {

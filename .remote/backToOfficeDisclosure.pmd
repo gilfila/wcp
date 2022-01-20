@@ -3,8 +3,14 @@
   "securityDomains": [
     "ManageBackToOfficeDisclosure"
   ],
-  "script": "<%%>",
   "endPoints": [
+    {
+      "baseUrlType": "workday-app",
+      "name": "vaccineManagementConfig",
+      "authType": "sso",
+      "onSend": "<%\n                 //Uncomment the below lines only for debugging purposes\n                 console.info(json:asJSON(self.data));\n                 return self.data;\n                 %>",
+      "url": "vaccineManagementConfig"
+    },
     {
       "baseUrlType": "workday-common",
       "name": "me",
@@ -27,10 +33,19 @@
       "baseUrlType": "workday-wql",
       "name": "disclosureHistory",
       "authType": "sso",
-      "url": "<%var query = 'select vaccinated, disclosureDate, exemptionType, submittedBy, optIn, businessProcesses{status,workdayID as id, businessProcessStepAwaitingAction} FROM ' + site.applicationId + '_backToOfficeDisclosures WHERE submittedBy=' + me.id + ' ORDER BY createdMoment DESC';
-              console.info(query);
-              return '/data?query=' + query.urlEncode()
-              %>"
+      "url": "<%var query = 'select vaccinated, disclosureDate, exemptionType, submittedBy, optIn, businessProcesses{status,workdayID as id, businessProcessStepAwaitingAction} FROM ' + site.applicationId + '_backToOfficeDisclosures WHERE submittedBy=' + me.id + ' ORDER BY createdMoment DESC';\n              console.info(query);\n              return '/data?query=' + query.urlEncode()\n              %>"
+    },
+    {
+      "baseUrlType": "workday-app",
+      "name": "backToOfficeOptions",
+      "authType": "sso",
+      "url": "backToOfficeOptions"
+    },
+    {
+      "baseUrlType": "workday-app",
+      "name": "exemptionTypes",
+      "authType": "sso",
+      "url": "exemptionTypes"
     }
   ],
   "outboundData": {
@@ -51,11 +66,7 @@
         "url": "/backToOfficeDisclosures",
         "httpMethod": "POST",
         "authType": "sso",
-        "onSend": "<%
-                   //Uncomment the below lines only for debugging purposes
-                   console.info(json:asJSON(self.data));
-                   return self.data;
-                   %>",
+        "onSend": "<%\n                   //Uncomment the below lines only for debugging purposes\n                   console.info(json:asJSON(self.data));\n                   return self.data;\n                   %>",
         "values": [
           {
             "outboundPath": "submittedBy.id",
@@ -67,7 +78,7 @@
           },
           {
             "outboundPath": "optIn",
-            "value": "<% optIn.value[0] %>"
+            "value": "<% backToOfficeOptionDropDown.value[0] %>"
           },
           {
             "outboundPath": "vaccinated",
@@ -75,7 +86,7 @@
           },
           {
             "outboundPath": "exemptionType",
-            "value": "<% empty exemption.value[0] ? null : exemption.value[0]  %>"
+            "value": "<% empty exemptionTypesDropDown.value[0] ? null : exemptionTypesDropDown.value[0]  %>"
           }
         ]
       },
@@ -86,11 +97,7 @@
         "url": "submitBackToOfficeDisclosureEvents",
         "httpMethod": "POST",
         "authType": "sso",
-        "onSend": "<%
-                   //Uncomment the below lines only for debugging purposes
-                   console.info(json:asJSON(self.data));
-                   return self.data;
-                   %>",
+        "onSend": "<%\n                   //Uncomment the below lines only for debugging purposes\n                   console.info(json:asJSON(self.data));\n                   return self.data;\n                   %>",
         "values": [
           {
             "outboundPath": "businessProcessTarget.id",
@@ -171,12 +178,32 @@
                   "children": [
                     {
                       "type": "richText",
-                      "value": "Please review the following documents:
-
-<ul>
-<li><a href='https://www.workday.com'>Healthy Workplace Policy</a> </li>
-<li><a href='https://www.workday.com'>Site Information Cards</a> </li>
-</ul>",
+                      "value": "Please Review the following Documents:<br>",
+                      "enabled": "false",
+                      "visible": "<%  !empty vaccineManagementConfig.data[0].workPlacePolicyEnabled || !empty vaccineManagementConfig.data[0].siteInformationEnabled  %>"
+                    },
+                    {
+                      "id": "workPlacePolicyLink",
+                      "descriptor": "<%vaccineManagementConfig.data[0].workPlacePolicyLabel %>",
+                      "type": "externalLink",
+                      "url": "<% vaccineManagementConfig.data[0].workPlacePolicyURL %>",
+                      "render": "<%vaccineManagementConfig.data[0].workPlacePolicyEnabled %>"
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
+                      "enabled": "false"
+                    },
+                    {
+                      "id": "siteCardsLink",
+                      "descriptor": "<%vaccineManagementConfig.data[0].siteInformationLabel %>",
+                      "type": "externalLink",
+                      "url": "<% vaccineManagementConfig.data[0].siteInformationURL %>",
+                      "render": "<% vaccineManagementConfig.data[0].siteInformationEnabled %>"
+                    },
+                    {
+                      "type": "richText",
+                      "value": "<br>",
                       "enabled": "false"
                     },
                     {
@@ -199,23 +226,19 @@
                   "children": [
                     {
                       "type": "dropdown",
-                      "id": "optIn",
+                      "id": "backToOfficeOptionDropDown",
                       "label": "Back To Office Options",
-                      "instanceList": [
-                        {
-                          "id": "Office",
-                          "descriptor": "I prefer to return to the office"
+                      "instanceListLoopTag": {
+                        "id": "backToOfficeOptionsList",
+                        "type": "instanceLoop",
+                        "templateInstance": {
+                          "id": "<% option.backToOfficeOptionName %>",
+                          "descriptor": "<% option.backToOfficeOptionName %>"
                         },
-                        {
-                          "id": "Hybrid",
-                          "descriptor": "I prefer a few days a week in the office"
-                        },
-                        {
-                          "id": "Home",
-                          "descriptor": "I prefer to continue working from home"
-                        }
-                      ],
-                      "required": "true"
+                        "on": "<% backToOfficeOptions.data %>",
+                        "as": "option"
+                      },
+                      "required": false
                     },
                     {
                       "type": "richText",
@@ -226,7 +249,7 @@
                 },
                 {
                   "type": "section",
-                  "title": "Exemption Type",
+                  "title": "Vaccination Status",
                   "horizontal": true,
                   "children": [
                     {
@@ -236,11 +259,7 @@
                       "required": true,
                       "hideDisplayOption": true,
                       "selectedValues": "<% ['yes']  %>",
-                      "onChange": "<% if ( vaccinated.value[0] == 'I confirm I am fully vaccinated' || vaccinated.value[0] == 'I am not fully vaccinated but I intend to be' || vaccinated.value[0] == 'Booster') {
-                          exemption.setVisible(false)
-                      } else {
-                          exemption.setVisible(true);
-                      }%>",
+                      "onChange": "<% if ( vaccinated.value[0] == 'I confirm I am fully vaccinated' || vaccinated.value[0] == 'I am not fully vaccinated but I intend to be' || vaccinated.value[0] == 'Booster') {\n                          exemptionTypesDropDown.setVisible(false)\n                      } else {\n                          exemptionTypesDropDown.setVisible(true);\n                      }%>",
                       "instanceList": [
                         {
                           "id": "I confirm I am fully vaccinated",
@@ -258,24 +277,20 @@
                     },
                     {
                       "type": "dropdown",
-                      "id": "exemption",
-                      "label": "Optionally select a Vaccination Exemption Type",
-                      "visible": false,
-                      "instanceList": [
-                        {
-                          "id": "Medical",
-                          "descriptor": "Medical"
+                      "id": "exemptionTypesDropDown",
+                      "label": "Exemption Types",
+                      "instanceListLoopTag": {
+                        "id": "exemptionTypesList",
+                        "type": "instanceLoop",
+                        "templateInstance": {
+                          "id": "<% exemptionType.exemptionTypeName %>",
+                          "descriptor": "<% exemptionType.exemptionTypeName %>"
                         },
-                        {
-                          "id": "Religious",
-                          "descriptor": "Religious"
-                        },
-                        {
-                          "id": "Personal",
-                          "descriptor": "Personal"
-                        }
-                      ],
-                      "required": "false"
+                        "on": "<% exemptionTypes.data %>",
+                        "as": "exemptionType"
+                      },
+                      "required": false,
+                      "visible": false
                     },
                     {
                       "type": "richText",

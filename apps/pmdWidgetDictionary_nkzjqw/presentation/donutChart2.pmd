@@ -1,0 +1,63 @@
+{
+  "id": "donutChart2",
+  "include": [
+        "chartData.script"
+  ],
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "donutChart2"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "section",
+          "horizontal": true,
+          "children": [
+            {
+              "type": "pod",
+              "podId": "header"
+            },
+            {
+              "type": "text",
+              "label": "donutChart2",
+              "value": "Please see the below example of a donut chart 2. The metrics are just for demo purposes. Feel free to edit the PMD, to see the affect on the graph if certain tags are added / removed "
+            },
+            {
+              "type": "donutChart2",
+              "id": "donutExample",
+              "data": "<% chartData.getChartData() %>",
+              "dataVariableName": "data",
+              "sliceSizeDataSet": {
+                "name": "Finance Recruits",
+                "value": "<% data.recruits.finance %>"
+              },
+              "sliceColorDataSet": {
+                "name": "Recruiter",
+                "value": "<% data.recruiter %>"
+              },
+              "sliceDetailDataSet": {
+                "name": "Region",
+                "value": "<% data.region %>"
+              },
+              "title": "<% 'Finance Recruits' %>",
+              "subtitle": "<% 'RegionA and RegionB' %>",
+              "showLabelLines": true,
+              "showPercentLabels": true
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "footer"
+        }
+      ]
+    }
+  }
+}

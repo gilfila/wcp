@@ -1,0 +1,242 @@
+{
+  "id": "manageTickets",
+  "endPoints": [
+    {
+      "baseUrlType": "app",
+      "name": "ticketData",
+      "authType": "sso",
+      "onSend": "<%
+                 //Uncomment the below lines only for debugging purposes
+                 console.info(json:asJSON(self.data));
+                 return self.data;
+                 %>",
+      "url": "tickets"
+    },
+    {
+      "name": "workerSearch",
+      "baseUrlType": "workday-staffing",
+      "url": "<% 'workers?search=' + instanceListQuery %>",
+      "exclude": "<% empty(instanceListQuery) %>",
+      "authType": "sso",
+      "deferred": "true"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "ticketOutboundEndpoint",
+        "baseUrlType": "app",
+        "url": "tickets",
+        "httpMethod": "POST",
+        "updateUrl": "tickets/<% ticketId.value %>",
+        "updateId": "<% ticketId.value %>",
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   console.info(json:asJSON(self.data));
+                   return self.data;
+                   %>",
+        "authType": "sso"
+      },
+      {
+        "name": "deleteTicket",
+        "baseUrlType": "app",
+        "url": "tickets/<% ticketId.value %>",
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   console.info(json:asJSON(self.data));
+                   return self.data;
+                   %>",
+        "httpMethod": "DELETE",
+        "authType": "sso"
+      }
+    ],
+    "responseErrorDetail": {
+      "errorSummary": "<% error %>",
+      "errors": "<% errors.map(item => { item.error }); %>"
+    }
+  },
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "title": {
+      "type": "title",
+      "label": "Manage Tickets"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "button",
+          "id": "createTicket",
+          "label": "Create Ticket",
+          "action": "PRIMARY",
+          "taskReference": {
+            "taskId": "createTicket"
+          }
+        },
+        {
+          "type": "grid",
+          "gridType": "LIST",
+          "multiViewStylingEnabled": true,
+          "id": "tickets",
+          "rows": "<% ticketData.data %>",
+          "rowVariableName": "ticket",
+          "isArrayOutBinding": false,
+          "enabled": true,
+          "doNotAdd": false,
+          "doNotRemove": false,
+          "deleteEndPoint": "deleteTicket",
+          "label": "My Tickets",
+          "columns": [
+            {
+              "type": "column",
+              "id": "status",
+              "columnId": "columnStatus",
+              "cellTemplate": {
+                "type": "fieldSet",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "<% ticket.status %>",
+                    "valueOutBinding": "ticketOutboundEndpoint.status"
+                  },
+                  {
+                    "type": "hidden",
+                    "value": "<% ticket.id %>",
+                    "id": "ticketId"
+                  }
+                ]
+              },
+              "label": "Status"
+            },
+            {
+              "type": "column",
+              "id": "priority",
+              "columnId": "columnPriority",
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% ticket.priority %>",
+                "valueOutBinding": "ticketOutboundEndpoint.priority"
+              },
+              "label": "Priority"
+            },
+            {
+              "type": "column",
+              "id": "project",
+              "columnId": "columnProject",
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% ticket.project %>",
+                "valueOutBinding": "ticketOutboundEndpoint.project"
+              },
+              "label": "Project"
+            },
+            {
+              "type": "column",
+              "id": "descriptor",
+              "columnId": "columnDescriptor",
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% ticket.descriptor %>",
+                "valueOutBinding": "ticketOutboundEndpoint.descriptor"
+              },
+              "label": "Descriptor"
+            },
+            {
+              "type": "column",
+              "id": "summary",
+              "columnId": "columnSummary",
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% ticket.summary %>",
+                "valueOutBinding": "ticketOutboundEndpoint.summary"
+              },
+              "label": "Summary"
+            },
+            {
+              "type": "column",
+              "id": "issueType",
+              "columnId": "columnIssueType",
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% ticket.issueType %>",
+                "valueOutBinding": "ticketOutboundEndpoint.issueType"
+              },
+              "label": "Issue Type"
+            },
+            {
+              "type": "column",
+              "id": "assignee",
+              "columnId": "columnAssignee",
+              "_comment": "Don't want the instanceList to render if the data is null",
+              "cellTemplate": {
+                "type": "instanceList",
+                "searchEndPoint": "<% endpoints.workerSearch %>",
+                "multiSelect": "false",
+                "id": "instanceListWorkerSearch",
+                "label": "Assignee",
+                "searchResultValues": "<% workerSearch.data %>",
+                "selectedValues": "<%
+                                  var myList = [];
+                                  if(!empty ticket.assignee){
+                                      myList = [ticket.assignee];
+                                  }
+                                  return myList;
+                                  %>",
+                "required": "<% true %>",
+                "values": "<%
+                           var myList = [];
+                           if(!empty ticket.assignee){
+                               myList = [ticket.assignee];
+                           }
+                           return myList;
+                           %>",
+                "valueOutBinding": "ticketOutboundEndpoint.assignee.id",
+                "_comment": "Name of valueOutBinding is based on name of outboundEndpoint for BO. Set default value at page load to the current worker. They can search for a different worker by typing in the instanceList and hitting Enter."
+              },
+              "label": "Assignee",
+              "sortableAndFilterable": "<% true %>"
+            },
+            {
+              "type": "column",
+              "id": "reporter",
+              "_comment": "Don't want the instanceList to render if the data is null",
+              "columnId": "columnReporter",
+              "cellTemplate": {
+                "type": "instanceList",
+                "enabled": false,
+                "valueOutBinding": "ticketOutboundEndpoint.reporter.id",
+                "selectedValues": "<%
+                var myList = [];
+                if(!empty ticket.reporter){
+                myList = [ticket.reporter];
+                                  }
+                return myList;
+                                  %>",
+                "values": "<%
+                           var myList = [];
+                           if(!empty ticket.reporter){
+                    myList = [ticket.reporter];
+                }
+                return myList;
+                           %>"
+              },
+              "label": "Reporter",
+              "sortableAndFilterable": "<% true %>"
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": "false",
+          "value": "Powered By Workday Extend"
+        }
+      ]
+    }
+  }
+}

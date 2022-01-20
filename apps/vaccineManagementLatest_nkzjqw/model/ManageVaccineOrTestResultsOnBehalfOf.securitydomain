@@ -1,0 +1,6 @@
+{
+  "id": 9,
+  "name": "ManageOnBehalfOf",
+  "label": "Manage On Behalf Of",
+  "enabledForPageSecurity": true
+}

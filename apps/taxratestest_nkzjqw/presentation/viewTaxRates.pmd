@@ -1,0 +1,270 @@
+{
+  "id": "viewTaxRates",
+  "endPoints": [
+    {
+      "name": "companySearch",
+      "baseUrlType": "payroll",
+      "url": "/values/taxRatesGroup/companyInstances/",
+      "authType": "sso"
+    },
+    {
+      "name": "stateSearch",
+      "baseUrlType": "payroll",
+      "url": "/values/taxRatesGroup/stateInstances/",
+      "authType": "sso"
+    },
+    {
+      "name": "suiRatesData",
+      "baseUrlType": "payroll",
+      "url": "<%
+              var url = '/taxRates?bulk=true'
+              var selectedCompany = null;
+              var selectedState = null;
+              var effectiveDate = null;
+              var limit = pagingVariables.limit ?: 100;
+              var offset = pagingVariables.offset ?: 0;
+              var limitAndOffset = 'limit=' + limit + '&offset=' + offset;
+
+              if (flowVariables.selectedCompany != null){
+                  var selectedCompany = 'company=' + flowVariables.selectedCompany.toString().stripPrefix('{company=').remove('}').remove('[').remove(']').replace(', ','&company=');
+              }
+              if (flowVariables.selectedState != null){
+                  var selectedState = 'payrollStateAuthorityTaxCode=' + flowVariables.selectedState.toString().stripPrefix('{payrollStateAuthorityTaxCode=').remove('}').remove('[').remove(']').replace(', ','&payrollStateAuthorityTaxCode=');
+              }
+              if (flowVariables.effectiveDate != null){
+                  var effectiveDate = 'effective=' + flowVariables.effectiveDate.toString().stripPrefix('{effectiveDate=').remove('}').remove('[').remove(']').replace(', ','&effectiveDate=');
+              }
+
+              if (selectedCompany != null && selectedState != null && effectiveDate != null){
+                  url + selectedCompany + '&' + selectedState + '&' + effectiveDate + '&' + limitAndOffset;
+              } else if (selectedCompany != null && effectiveDate != null){
+                  url + selectedCompany + '&' + effectiveDate + '&' + limitAndOffset;
+              } else if (selectedCompany != null && selectedState != null){
+                  url + selectedCompany + '&' + selectedState + '&' + limitAndOffset;
+              } else if (selectedState != null && effectiveDate != null){
+                  url + selectedState + '&' + effectiveDate + '&' + limitAndOffset;
+              } else if (selectedCompany != null){
+                  url + selectedCompany + '&' + limitAndOffset;
+              } else if (selectedState != null){
+                  url + selectedState + '&' + limitAndOffset;
+              } else if (effectiveDate != null){
+                  url + effectiveDate + '&' + limitAndOffset;
+              } else {
+                  url + limitAndOffset;
+              }
+              %>",
+      "authType": "sso"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "postSuiRatesData",
+        "baseUrlType": "payroll",
+        "url": "/taxRates",
+        "httpMethod": "POST",
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   console.info(json:asJSON(self.data));
+                   console.info('TONY 12345');
+                   return self.data;
+                   %>",
+        "authType": "sso",
+        "exclude": "<% !empty payrollStateAuthorityCodeCell %>",
+        "failOnStatusCodes":[ {"code": 400}]
+      }
+    ],
+    "responseErrorDetail": {
+      "errorSummary": "<% error %>",
+      "errors": "<% errors.map(item => { item.error }); %>"
+    }
+  },
+  "presentation": {
+    "pageType": "edit",
+    "title": {
+      "type": "title",
+      "label": "Company State US Tax Reporting"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "textArea",
+          "_comment": "text area used for debugging, delete after app is working.",
+          "value": "<% suiRatesData.data %>"
+        },
+        {
+          "type": "grid",
+          "id": "apiExp",
+          "enabled": true,
+          "gridType": "LIST",
+          "excelExportEnabled": true,
+          "label": "Unemployment",
+          "rows": "<% suiRatesData.data %>",
+          "rowVariableName": "data",
+          "columns": [
+            {
+              "type": "column",
+              "cellTemplate": {
+                "type": "text",
+                "value": "<% data.id %>",
+                "enabled": false,
+                "id": "taxRateId"
+              },
+              "columnId": "col11",
+              "label": "Tax Rate Id"
+            },
+            {
+              "cellTemplate": {
+                "type": "instanceList",
+                "searchEndPoint": "<% endpoints.companySearch %>",
+                "multiSelect": "false",
+                "id": "instanceListCompanySearch",
+                "enabled": "<% empty data.companyInstance %>",
+                "label": "Company",
+                "searchResultValues": "<% companySearch.data %>",
+                "values": "<% companySearch.data ?: '' %>",
+                "selectedValues": "<% [data.companyInstance] %>",
+                "valueOutBinding": "postSuiRatesData.companyInstance.id"
+              },
+              "columnId": "col1",
+              "label": "Company",
+              "type": "column",
+              "sortableAndFilterable": "<% true %>",
+              "excel": {
+                "value": "<% currentRowVariable.value %>"
+              }
+            },
+            {
+              "cellTemplate": {
+                "type": "instanceList",
+                "searchEndPoint": "<% endpoints.stateSearch %>",
+                "multiSelect": "false",
+                "id": "instanceListStateSearch",
+                "enabled": "<% empty data.stateInstance %>",
+                "label": "State",
+                "searchResultValues": "<% stateSearch.data %>",
+                "values": "<% stateSearch.data ?: '' %>",
+                "selectedValues": "<% [data.stateInstance] %>",
+                "valueOutBinding": "postSuiRatesData.stateInstance.id"
+              },
+              "columnId": "col2",
+              "label": "State",
+              "type": "column",
+              "sortableAndFilterable": "<% true %>",
+              "excel": {
+                "value": "<% currentRowVariable.value %>"
+              }
+            },
+            {
+              "cellTemplate": {
+                "enabled":  false,
+                "type": "text",
+                "id": "payrollStateAuthorityCodeCell",
+                "value": "<% data.stateInstance.payrollStateAuthorityTaxCode ?: ''  %>",
+                "valueOutBinding": "postSuiRatesData.stateInstance.payrollStateAuthorityTaxCode"
+              },
+              "columnId": "col3",
+              "label": "Payroll State Authority Tax Code",
+              "type": "column"
+            },
+            {
+              "cellTemplate": {
+                "enabled": "<% empty data.startDate %>",
+                "type": "date",
+                "value": "<% data.startDate ?: '' %>",
+                "valueOutBinding": "postSuiRatesData.startDate"
+              },
+              "columnId": "col4",
+              "label": "Start Date",
+              "type": "column",
+              "datePrecision": "DAY",
+              "sortableAndFilterable": "<% true %>"
+            },
+            {
+              "cellTemplate": {
+                "enabled": "<% empty data.endDate %>",
+                "type": "date",
+                "value": "<% data.endDate ?: '' %>",
+                "valueOutBinding": "postSuiRatesData.endDate"
+              },
+              "columnId": "col5",
+              "label": "End Date",
+              "type": "column",
+              "datePrecision": "DAY",
+              "sortableAndFilterable": "<% true %>"
+            },
+            {
+              "cellTemplate": {
+                "enabled": "<% empty data.taxCode %>",
+                "type": "text",
+                "value": "<% data.taxCode ?: 'W_SUIER' %>",
+                "valueOutBinding": "postSuiRatesData.taxCode"
+              },
+              "columnId": "col6",
+              "label": "Tax",
+              "type": "column",
+              "sortableAndFilterable": "<% true %>"
+            },
+            {
+              "cellTemplate": {
+                "enabled":  "<% empty data.ein %>",
+                "type": "text",
+                "value": "<% data.ein ?: ''  %>",
+                "valueOutBinding": "postSuiRatesData.ein"
+              },
+              "columnId": "col7",
+              "label": "EIN",
+              "type": "column"
+            },
+            {
+              "cellTemplate": {
+                "enabled":false,
+                "type": "text",
+                "value":"<% data.einType ?: 'SUI EIN' %>"
+              },
+              "columnId": "col8",
+              "label": "EIN Type",
+              "type": "column",
+              "sortableAndFilterable": "<% true %>"
+            },
+            {
+              "cellTemplate": {
+                "enabled": "<% empty data.exempt %>",
+                "type": "checkBox",
+                "value": "<% data.exempt ?: '' %>",
+                "valueOutBinding": "postSuiRatesData.exempt"
+              },
+              "columnId": "col9",
+              "label": "Exempt",
+              "type": "column"
+            },
+            {
+              "cellTemplate": {
+                "enabled": "<% empty data.applicableRate %>",
+                "type": "number",
+                "required": true,
+                "fractionDigits": 6,
+                "value": "<% data.applicableRate ?: '' %>",
+                "valueOutBinding": "postSuiRatesData.applicableRate"
+              },
+              "columnId": "col10",
+              "label": "Applicable Rate",
+              "type": "column"
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": "false",
+          "value": "Powered By Workday Extend"
+        }
+      ]
+    }
+  }
+}

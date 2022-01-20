@@ -1,0 +1,29 @@
+{
+  "id": "ticketingSystemTest_nkzjqw",
+  "languages": [
+    {
+      "code": "en-US",
+      "description": "English"
+    }
+  ],
+  "siteAuth": {
+    "authTypes": [
+      {
+        "scheme": "SSO",
+        "id": "sso"
+      }
+    ]
+  },
+  "siteId": "ticketingSystemTest_nkzjqw",
+  "errorPageConfigurations": [
+    {
+      "statusCode": "500",
+      "page": {
+        "id": "errorPage"
+      }
+    }
+  ],
+  "cdnEnabled": true,
+  "siteProperties": [ ],
+  "applicationId": "ticketingSystemTest_nkzjqw"
+}

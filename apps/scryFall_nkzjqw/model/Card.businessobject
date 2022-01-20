@@ -1,0 +1,40 @@
+{
+  "id": 1,
+  "name": "Card",
+  "label": "Card",
+  "defaultSecurityDomains": [
+    "ViewCards"
+  ],
+  "defaultCollection": {
+    "name": "cards",
+    "label": "Cards"
+  },
+  "fields": [
+    {
+      "id": 1,
+      "name": "imageURI",
+      "label": "Image URI",
+      "type": "TEXT"
+    },
+    {
+      "id": 2,
+      "name": "assignedDeck",
+      "label": "Assigned Deck",
+      "type": "TEXT"
+    },
+    {
+      "id": 3,
+      "name": "submittedBy",
+      "type": "SINGLE_INSTANCE",
+      "label": "Submitted By",
+      "target": "WORKER",
+      "secureByTarget": true
+    },
+    {
+      "id": 4,
+      "name": "cardName",
+      "label": "Card Name",
+      "type": "TEXT"
+    }
+  ]
+}

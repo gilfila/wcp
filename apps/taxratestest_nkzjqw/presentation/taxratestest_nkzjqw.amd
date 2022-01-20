@@ -1,0 +1,71 @@
+{
+  "appProperties": [],
+  "flowDefinitions": [
+    {
+      "id": "taxRatesFlow",
+      "flowSteps": [
+        {
+          "id": "home",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "viewTaxRates",
+              "condition": "true"
+            }
+          ],
+          "startsFlow": true,
+          "taskId": "home"
+        },
+        {
+          "id": "viewTaxRates",
+          "transitions": [
+            {
+              "order": "a",
+              "value": "viewTaxRates",
+              "condition": "true"
+            }
+          ],
+          "endsFlow": true,
+          "taskId": "viewTaxRates"
+        }
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "home",
+      "routingPattern": "/",
+      "page": {
+        "id": "home"
+      }
+    },
+    {
+      "id": "addTaxRates",
+      "routingPattern": "/addTaxRates",
+      "page": {
+        "id": "addTaxRates"
+      }
+    },
+    {
+      "id": "logging",
+      "routingPattern": "/logging",
+      "page": {
+        "id": "logging"
+      }
+    },
+    {
+      "id": "viewTaxRates",
+      "routingPattern": "/viewTaxRates",
+      "page": {
+        "id": "viewTaxRates"
+      }
+    }
+  ],
+  "applicationId": "taxratestest_nkzjqw",
+  "dataProviders": [
+    {
+      "key": "payroll",
+      "value": "https://api.workday.com/payroll/v1"
+    }
+  ]
+}

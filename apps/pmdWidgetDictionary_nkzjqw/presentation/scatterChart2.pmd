@@ -1,0 +1,71 @@
+{
+  "id": "scatterChart2",
+  "include": [
+        "chartData.script"
+  ],
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "scatterChart2"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "section",
+          "horizontal": true,
+          "children": [
+            {
+              "type": "pod",
+              "podId": "header"
+            },
+            {
+              "type": "text",
+              "label": "scatterChart2",
+              "value": "Please see the below example of a scatter Chart. The metrics are just for demo purposes. Feel free to edit the PMD, to see the affect on the graph if certain tags are added / removed "
+            },
+            {
+              "type": "scatterChart2",
+              "id": "scatterChartExample1",
+              "data": "<% chartData.getChartData() %>",
+              "dataVariableName": "data",
+              "verticalAxisPositions": {
+                "name": "Finance Recruits",
+                "value": "<% data.recruits.finance %>"
+              },
+              "horizontalAxisPositions": {
+                "name": "Quota",
+                "value": "<% data.quota %>"
+              },
+              "bubbleSizeDataSet": {
+                "name": "Hired Recruits",
+                "value": "<% data.hiredRecruits %>"
+              },
+              "bubbleColorDataSet": {
+                "name": "Region",
+                "value": "<% data.region %>"
+              },
+              "verticalAxisOptions": {
+                "axisTitle": "Recruits",
+                "axisMinimum": "<% -25 %>"
+              },
+              "horizontalAxisOptions": {
+                "axisTitle": "Recruiters"
+              },
+              "showRegressionLine": true
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "footer"
+        }
+      ]
+    }
+  }
+}

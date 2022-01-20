@@ -1,0 +1,128 @@
+{
+  "id": "createTicket",
+  "endPoints": [
+    {
+      "name": "workerSearch",
+      "baseUrlType": "workday-staffing",
+      "url": "<% 'workers?search=' + instanceListQuery %>",
+      "exclude": "<% empty(instanceListQuery) %>",
+      "authType": "sso",
+      "deferred": "true"
+    },
+    {
+      "name": "worker",
+      "baseUrlType": "workday-staffing",
+      "url": "workers/me",
+      "authType": "sso"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "baseUrlType": "app",
+        "name": "ticketOutboundEndpoint",
+        "authType": "sso",
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   console.info(json:asJSON(self.data));
+                   return self.data;
+                   %>",
+        "url": "tickets",
+        "values": [
+          {
+            "outboundPath": "reporter.id",
+            "value": "<% worker.id %>"
+          }
+        ]
+      },
+      {
+        "baseUrlType": "app",
+        "name": "ticketBPEndpoint",
+        "authType": "sso",
+        "onSend": "<%
+                   //Uncomment the below lines only for debugging purposes
+                   console.info(json:asJSON(self.data));
+                   return self.data;
+                   %>",
+        "url": "ticketTriageEvents",
+        "values": [
+          {
+            "outboundPath": "businessProcessTarget.id",
+            "value": "<% ticketOutboundEndpoint.id %>"
+          }
+        ]
+      }
+    ]
+  },
+  "presentation": {
+    "pageType": "edit",
+    "title": {
+      "type": "title",
+      "label": "Ticketing App"
+    },
+    "body": {
+      "type": "section",
+      "children": [
+        {
+          "type": "text",
+          "label": "Project",
+          "id": "project",
+          "valueOutBinding": "ticketOutboundEndpoint.project"
+        },
+        {
+          "type": "text",
+          "label": "Issue Type",
+          "id": "issueType",
+          "valueOutBinding": "ticketOutboundEndpoint.issueType"
+        },
+        {
+          "type": "text",
+          "label": "Summary",
+          "id": "summary",
+          "valueOutBinding": "ticketOutboundEndpoint.summary"
+        },
+        {
+          "type": "text",
+          "label": "Priority",
+          "id": "priority",
+          "valueOutBinding": "ticketOutboundEndpoint.priority"
+        },
+        {
+          "type": "instanceList",
+          "searchEndPoint": "<% endpoints.workerSearch %>",
+          "multiSelect": "false",
+          "id": "instanceListWorkerSearch",
+          "label": "Assignee",
+          "searchResultValues": "<% workerSearch.data %>",
+          "required": "<% true %>",
+          "values": "<% [worker] %>",
+          "selectedValues": "<% [worker] %>",
+          "valueOutBinding": "ticketOutboundEndpoint.assignee.id",
+          "_comment": "Name of valueOutBinding is based on name of outboundEndpoint for BO. Set default value at page load to the current worker. They can search for a different worker by typing in the instanceList and hitting Enter."
+        },
+        {
+          "type": "text",
+          "label": "Description",
+          "id": "description",
+          "valueOutBinding": "ticketOutboundEndpoint.description"
+        },
+        {
+          "type": "text",
+          "label": "Status",
+          "id": "status",
+          "valueOutBinding": "ticketOutboundEndpoint.status"
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "richText",
+          "enabled": "false",
+          "value": "Powered By Workday Extend"
+        }
+      ]
+    }
+  }
+}

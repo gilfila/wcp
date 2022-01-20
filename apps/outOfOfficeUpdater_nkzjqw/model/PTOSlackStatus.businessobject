@@ -1,0 +1,29 @@
+{
+  "id": 1,
+  "name": "PTOSlackStatus",
+  "label": "PTO Slack Status",
+  "defaultSecurityDomains": [
+    "ManagePTOStatus"
+  ],
+  "defaultCollection": {
+    "name": "ptoSlackStatuses",
+    "label": "PTO Slack Statuses"
+  },
+  "fields": [
+    {
+      "id": 1,
+      "name": "user",
+      "label": "User",
+      "type": "SINGLE_INSTANCE",
+      "target": "WORKER",
+      "useForDisplay": true,
+      "secureByTarget": true
+    },
+    {
+      "id": 2,
+      "name": "slackStatus",
+      "label": "Slack Status",
+      "type": "TEXT"
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "id": "maintainExemptionTypes",
+  "securityDomains": [
+    "ManageConfiguration"
+  ],
+  "endPoints": [
+    {
+      "name": "selectedWorker",
+      "baseUrlType": "workday-common",
+      "url": "workers/me",
+      "authType": "sso"
+    },
+    {
+      "baseUrlType": "workday-app",
+      "name": "exemptionTypes",
+      "authType": "sso",
+      "url": "exemptionTypes"
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "exemptionTypesPut",
+        "url": "<% 'exemptionTypes/' + exemptionTypeId.value %>",
+        "httpMethod": "PUT",
+        "baseUrlType": "workday-app",
+        "onSend": "<%
+                  //Uncomment the below lines only for debugging purposes
+                  //console.info(json:asJSON(self.data));
+                  return self.data;
+                  %>",
+        "exclude": "<% empty exemptionTypeId.value %>"
+      },
+      {
+        "name": "exemptionTypesPost",
+        "baseUrlType": "workday-app",
+        "url": "exemptionTypes",
+        "httpMethod": "POST",
+        "exclude": "<% ! empty exemptionTypeId.value %>",
+        "authType": "sso",
+        "onSend": "<%
+                  //Uncomment the below lines only for debugging purposes
+                  //console.info(json:asJSON(self.data));
+                  return self.data;
+                  %>",
+        "values": [
+          {
+            "outboundPath": "createdBy.id",
+            "value": "<% selectedWorker.id %>"
+          }
+        ]
+      },
+      {
+        "name": "exemptionTypesDelete",
+        "baseUrlType": "workday-app",
+        "url": "exemptionTypes/<%exemptionTypeId.value%>",
+        "httpMethod": "DELETE",
+        "authType": "SSO"
+      }
+    ]
+  },
+  "presentation": {
+    "headerSize": "VPS_DEFAULT",
+    "pageType": "edit",
+    "title": {
+      "type": "title",
+      "label": "Manage Exemption Type",
+      "enabled": false
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "section",
+          "horizontal": true,
+          "children": [
+            {
+              "type": "grid",
+              "gridType": "LIST",
+              "multiViewStylingEnabled": true,
+              "id": "ExemptionTypes",
+              "rows": "<% exemptionTypes.data %>",
+              "rowVariableName": "exemptionType",
+              "deleteEndPoint": "exemptionTypesDelete",
+              "enabled": true,
+              "label": "Current Exemption Types",
+              "columns": [
+                {
+                  "type": "column",
+                  "id": "columnExemptionTypeName",
+                  "columnId": "columnExemptionTypeName",
+                  "cellTemplate": {
+                    "type": "text",
+                    "value": "<% exemptionType.exemptionTypeName %>",
+                    "valuesOut": [
+                      {
+                        "value": "<% self.value %>",
+                        "valueOutBinding": "exemptionTypesPut.exemptionTypeName"
+                      },
+                      {
+                        "value": "<% self.value %>",
+                        "valueOutBinding": "exemptionTypesPost.exemptionTypeName"
+                      }
+                    ]
+                  },
+                  "label": "Exemption Type Name"
+                },
+                {
+                  "type": "column",
+                  "id": "columnExemptionTypeId",
+                  "columnId": "columnExemptionTypeId",
+                  "cellTemplate": {
+                    "type": "text",
+                    "value": "<% exemptionType.id %>",
+                    "id": "exemptionTypeId",
+                    "enabled": false
+                  },
+                  "label": "Exemption Type ID"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "button",
+          "label": "Return to Main Configuration",
+          "taskReference": {
+            "type": "taskReference",
+            "taskId": "maintainVaccineManagementConfig"
+          },
+          "action": "AUXILIARY"
+        }
+      ]
+    }
+  }
+}
